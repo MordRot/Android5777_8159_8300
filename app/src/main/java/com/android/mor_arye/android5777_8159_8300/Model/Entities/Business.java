@@ -6,6 +6,6 @@ package com.android.mor_arye.android5777_8159_8300.Model.Entities;
 
 public class Business {
     public Business() {
-        System.out.println("hello ");
+        System.out.println("hello");
     }
 }
