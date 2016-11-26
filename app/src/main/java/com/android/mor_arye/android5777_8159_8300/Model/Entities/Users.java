@@ -9,6 +9,7 @@ public class Users {
     private String nameUser; // ?
     private String password;
 
+    // TODO constructor
 
     //<editor-fold desc="geters and seters">
     public int getIdUser() {
