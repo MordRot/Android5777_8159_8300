@@ -1,13 +1,11 @@
 package com.android.mor_arye.android5777_8159_8300.Model.DataSource;
 
-import android.util.ArrayMap;
-
 import com.android.mor_arye.android5777_8159_8300.Model.Backend.IDSManager;
 import com.android.mor_arye.android5777_8159_8300.Model.Entities.Actions;
 import com.android.mor_arye.android5777_8159_8300.Model.Entities.Business;
 import com.android.mor_arye.android5777_8159_8300.Model.Entities.Users;
 
-import java.lang.reflect.Array;
+import java.util.Collection;
 import java.util.HashMap;
 
 /**
@@ -50,21 +48,19 @@ public class ListDsManager implements IDSManager {
     }
 
     @Override
-    public void getAllUsers() {
-        return usersArrayMap;
-                //return array list or list
-        // לשנות את משתנה ההחזרה בפרוטוטייפ
+    public Collection<Users> getAllUsers() {
+        return usersArrayMap.values();
     }
 
     @Override
-    public void getAllBusiness() {
-        return businessArrayMap;
+    public Collection<Business> getAllBusiness() {
+        return businessArrayMap.values();
 
     }
 
     @Override
-    public void getAllActions() {
-        return actionsArrayMap;
+    public Collection<Actions> getAllActions() {
+        return actionsArrayMap.values();
     }
 
     @Override
