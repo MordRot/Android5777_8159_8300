@@ -9,25 +9,15 @@ import android.view.ViewOutlineProvider;
  * Created by mor on 26 נובמבר 2016.
  */
 
-public class IDSManager {
+public interface IDSManager {
 
-    public void insertUser(Users newUser){
-        ListDsManager.usersArrayMap.put(newUser.getIdUser(), newUser);
-    }
-
-    public void insertBusiness()    { }
-
-    public void insertActions(){}
-
-    public boolean checkNewInBusinessOrActions(){ return true;}
-
-    public void getAllUsers(){}
-
-    public void getAllBusiness(){}
-
-    public void getAllActions(){}
-
-    public void checkChanges(){}    //TODO איפה לבדוק שינויים? ברשימות? כלומר האם היום שינויים ברשומות קיימות?
-
-
+    public void insertUser(Users newUser);
+    public void insertBusiness();
+    public void insertActions();
+    public boolean checkNewInBusinessOrActions();
+    public void getAllUsers();
+    public void getAllBusiness();
+    public void getAllActions();
+    public void checkChanges();
+    //איפה לבדוק שינויים? ברשימות? כלומר האם היום שינויים ברשומות קיימות?
 }
