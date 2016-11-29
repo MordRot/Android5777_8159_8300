@@ -6,8 +6,8 @@ import java.util.GregorianCalendar;
  * Created by Leon on 23-Nov-16.
  */
 
-public class Actions {
-    TypeOfAction typeOfAction;
+public class Recreation {
+    TypeOfRecreation typeOfRecreation;
     String NameOfCountry;
     GregorianCalendar dateOfBeginning;
     GregorianCalendar dateOfEnding;

@@ -1,7 +1,7 @@
 package com.android.mor_arye.android5777_8159_8300.Model.DataSource;
 
 import com.android.mor_arye.android5777_8159_8300.Model.Backend.IDSManager;
-import com.android.mor_arye.android5777_8159_8300.Model.Entities.Actions;
+import com.android.mor_arye.android5777_8159_8300.Model.Entities.Recreation;
 import com.android.mor_arye.android5777_8159_8300.Model.Entities.Business;
 import com.android.mor_arye.android5777_8159_8300.Model.Entities.Users;
 
@@ -17,7 +17,7 @@ public class ListDsManager implements IDSManager {
 
     public HashMap<Integer, Users> usersArrayMap;
     public HashMap<Integer, Business> businessArrayMap;
-    public HashMap<Integer, Actions> actionsArrayMap;
+    public HashMap<Integer, Recreation> actionsArrayMap;
 
 
     public ListDsManager() {
@@ -59,7 +59,7 @@ public class ListDsManager implements IDSManager {
     }
 
     @Override
-    public Collection<Actions> getAllActions() {
+    public Collection<Recreation> getAllActions() {
         return actionsArrayMap.values();
     }
 
