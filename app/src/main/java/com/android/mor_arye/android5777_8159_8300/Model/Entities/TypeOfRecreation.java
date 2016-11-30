@@ -8,5 +8,6 @@ public enum TypeOfRecreation {
     HOTEL,
     TRAVEL_AGENCY,
     ENTERTAINMENT_SHOW,
-    AIRLINE_COMPANY
+    AIRLINE_COMPANY,
+    OTHER
 }

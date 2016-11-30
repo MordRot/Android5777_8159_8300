@@ -1,8 +1,10 @@
 package com.android.mor_arye.android5777_8159_8300.Model.Backend;
 
+import android.content.ContentValues;
+
 import com.android.mor_arye.android5777_8159_8300.Model.Entities.Recreation;
 import com.android.mor_arye.android5777_8159_8300.Model.Entities.Business;
-import com.android.mor_arye.android5777_8159_8300.Model.Entities.Users;
+import com.android.mor_arye.android5777_8159_8300.Model.Entities.User;
 
 import java.util.Collection;
 
@@ -12,13 +14,13 @@ import java.util.Collection;
 
 public interface IDSManager {
 
-    public void insertUser(Users newUser);
-    public void insertBusiness();
-    public void insertActions();
-    public boolean checkNewInBusinessOrActions();
-    public Collection<Users> getAllUsers();
+    public void insertUser(ContentValues newUser);
+    public void insertBusiness(ContentValues newBusiness);
+    public void insertRecreation(ContentValues newRecreation);
+    public boolean checkNewInBusinessOrRecreation();
+    public Collection<User> getAllUsers();
     public Collection<Business> getAllBusiness();
-    public Collection<Recreation> getAllActions();
+    public Collection<Recreation> getAllRecreation();
     public void checkChanges();
     //איפה לבדוק שינויים? ברשימות? כלומר האם היום שינויים ברשומות קיימות?
 }

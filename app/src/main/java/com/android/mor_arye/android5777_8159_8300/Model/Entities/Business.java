@@ -8,6 +8,7 @@ import android.provider.ContactsContract;
  */
 
 public class Business {
+    private static int currentID = 1;
     private int idBusiness;
     private String nameBusiness;
     private Address addressBusiness;
@@ -15,11 +16,21 @@ public class Business {
     private ContactsContract.CommonDataKinds.Email emailAddress;
     private ContactsContract.CommonDataKinds.Website websiteLink;
 
-// TODO constructor
+    public Business(String nameBusiness, Address addressBusiness,
+                    ContactsContract.CommonDataKinds.Phone phoneNumber,
+                    ContactsContract.CommonDataKinds.Email emailAddress,
+                    ContactsContract.CommonDataKinds.Website websiteLink) {
 
-
+        this.idBusiness = currentID++;
+        this.nameBusiness = nameBusiness;
+        this.addressBusiness = addressBusiness;
+        this.phoneNumber = phoneNumber;
+        this.emailAddress = emailAddress;
+        this.websiteLink = websiteLink;
+    }
 
     //<editor-fold desc="geters and seters">
+    //TODO get/set id? integer overflow
     public int getIdBusiness() {
         return idBusiness;
     }

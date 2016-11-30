@@ -1,12 +1,18 @@
 package com.android.mor_arye.android5777_8159_8300.Model.DataSource;
 
+import android.content.ContentValues;
+import android.location.Address;
+import android.provider.ContactsContract;
+
 import com.android.mor_arye.android5777_8159_8300.Model.Backend.IDSManager;
 import com.android.mor_arye.android5777_8159_8300.Model.Entities.Recreation;
 import com.android.mor_arye.android5777_8159_8300.Model.Entities.Business;
-import com.android.mor_arye.android5777_8159_8300.Model.Entities.Users;
+import com.android.mor_arye.android5777_8159_8300.Model.Entities.User;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by mor on 26 נובמבר 2016.
@@ -15,52 +21,65 @@ import java.util.HashMap;
 
 public class ListDsManager implements IDSManager {
 
-    public HashMap<Integer, Users> usersArrayMap;
-    public HashMap<Integer, Business> businessArrayMap;
-    public HashMap<Integer, Recreation> actionsArrayMap;
+    public List<User> users;
+    public List<Business> businesses;
+    public List<Recreation> recreeations;
 
+    private boolean useresUpdates=false;
+    private boolean businessesUpdates=false;
+    private boolean recreeationsUpdates=false;
 
     public ListDsManager() {
-        usersArrayMap = new HashMap<>();
-        businessArrayMap = new HashMap<>();
-        actionsArrayMap = new HashMap<>();
+        users = new ArrayList<>();
+        businesses = new ArrayList<>();
+        actions = new ArrayList<>();
     }
 
 
     @Override
-    public void insertUser(Users newUser) {
+    public void insertUser(ContentValues newUser) {
+        useresUpdates=true;
+        users.add(new User())
+                //TODO
 
     }
 
     @Override
-    public void insertBusiness() {
+    public void insertBusiness(ContentValues newBusiness) {
+        businessesUpdates=true;
+        businesses.add(new Business(
+                newBusiness.getAsString("nameBusiness"),
+                newBusiness.getAsString("addressBusiness"),
+                newBusiness.getAsString("phoneNumber"),
+                newBusiness.getAsString("emailAddress"),
+                newBusiness.getAsString("websiteLink")
+        ));
 
     }
 
     @Override
-    public void insertActions() {
-
+    public void insertRecreation(ContentValues newRecreation) {
+        //TODO
     }
 
     @Override
-    public boolean checkNewInBusinessOrActions() {
+    public boolean checkNewInBusinessOrRecreation() {
         return false;
     }
 
     @Override
-    public Collection<Users> getAllUsers() {
-        return usersArrayMap.values();
+    public Collection<User> getAllUsers() {
+        return users;
     }
 
     @Override
     public Collection<Business> getAllBusiness() {
-        return businessArrayMap.values();
-
+        return businesses;
     }
 
     @Override
-    public Collection<Recreation> getAllActions() {
-        return actionsArrayMap.values();
+    public Collection<Recreation> getAllRecreation() {
+        return actions;
     }
 
     @Override

@@ -4,7 +4,7 @@ package com.android.mor_arye.android5777_8159_8300.Model.Entities;
  * Created by mor on 23 נובמבר 2016.
  */
 
-public class Users {
+public class User {
     private int idUser;
     private String nameUser; // ?
     private String password;
