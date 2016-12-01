@@ -15,12 +15,18 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        CustomContentProvider myCP = new CustomContentProvider();
 
-        new AsyncTask<Void>(this.getActivity(), " add a new agency",
-                (ProgressBar) getDialog().findViewById(R.id.addAgencyProgressBar)) {
-            myCP.insert()
+        addToDSWithCP();
 
         }
+
+
+    private void addToDSWithCP() {
+        CustomContentProvider myCP = new CustomContentProvider();
+
+        //    new AsyncTask<Void>(this.getActivity(), " add a new agency",
+        //            (ProgressBar) getDialog().findViewById(R.id.addAgencyProgressBar)) {
+
+        getContentResolver().insert(); //TODO insert new items
     }
 }
