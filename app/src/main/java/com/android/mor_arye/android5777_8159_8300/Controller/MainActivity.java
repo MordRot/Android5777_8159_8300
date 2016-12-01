@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void addToDSWithCP() {
-        CustomContentProvider myCP = new CustomContentProvider();
+        //CustomContentProvider myCP = new CustomContentProvider();
 
         //    new AsyncTask<Void>(this.getActivity(), " add a new agency",
         //            (ProgressBar) getDialog().findViewById(R.id.addAgencyProgressBar)) {
