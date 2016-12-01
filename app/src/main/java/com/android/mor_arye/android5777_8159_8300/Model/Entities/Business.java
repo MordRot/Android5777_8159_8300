@@ -3,6 +3,8 @@ package com.android.mor_arye.android5777_8159_8300.Model.Entities;
 import android.location.Address;
 import android.provider.ContactsContract;
 
+import java.util.Locale;
+
 /**
  * Created by mor on 20 נובמבר 2016.
  */

@@ -1,6 +1,9 @@
 package com.android.mor_arye.android5777_8159_8300.Controller;
 
+import android.content.ContentValues;
+import android.net.Uri;
 import android.os.AsyncTask;
+import android.speech.tts.Voice;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ProgressBar;
@@ -22,11 +25,35 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void addToDSWithCP() {
-        //CustomContentProvider myCP = new CustomContentProvider();
+        try {
+            //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+            final ContentValues newBusiness = new ContentValues();
+            newBusiness.put("nameBusiness", "city of david");
+            newBusiness.put("addressBusiness", "king david street");
+            newBusiness.put("phoneNumber", "0123456789");
+            newBusiness.put("emailAddress", "exmp@gmail.com");
+            newBusiness.put("websiteLink", "jct.ac.il");
 
-        //    new AsyncTask<Void>(this.getActivity(), " add a new agency",
-        //            (ProgressBar) getDialog().findViewById(R.id.addAgencyProgressBar)) {
+            new AsyncTask<Void, Void, Void>() {
+                @Override
+                protected Void doInBackground(Void... params) {
 
-        getContentResolver().insert(); //TODO insert new items
+                    getContentResolver().insert(
+                            Uri.parse("content://com.android.mor_arye.android5777_8159_8300.Model.DataSource/Business"), newBusiness);
+
+                    return null;
+                }
+            }.execute();
+
+            //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+            //TODO the same thing to newRecreation and newUser
+            ContentValues newRecreation = new ContentValues();
+
+
+        }
+        catch (Exception ex){
+            throw ex;
+        }
     }
 }

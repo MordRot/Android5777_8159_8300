@@ -16,7 +16,7 @@ import com.android.mor_arye.android5777_8159_8300.Model.Backend.ManagerFactory;
 
 public class CustomContentProvider extends ContentProvider {
 
-    private static IDSManager manager = ManagerFactory.getDS();
+    private static IDSManager DSmanager = ManagerFactory.getDS();
 
     private static final UriMatcher sUriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
     static {
@@ -51,13 +51,13 @@ public class CustomContentProvider extends ContentProvider {
            int uriCode = sUriMatcher.match(uri);
            switch (uriCode) {
                case 1:
-                   manager.insertBusiness(values);
+                   DSmanager.insertBusiness(values);
                    return null;
                case 2:
-                   manager.insertRecreation(values);
+                   DSmanager.insertRecreation(values);
                    return null;
                case 3:
-                   manager.insertUser(values);
+                   DSmanager.insertUser(values);
                    return null;
            }
        }

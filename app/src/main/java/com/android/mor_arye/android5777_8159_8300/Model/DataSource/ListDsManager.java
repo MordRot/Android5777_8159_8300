@@ -2,6 +2,7 @@ package com.android.mor_arye.android5777_8159_8300.Model.DataSource;
 
 import android.content.ContentValues;
 import android.location.Address;
+import android.net.Uri;
 import android.provider.ContactsContract;
 
 import com.android.mor_arye.android5777_8159_8300.Model.Backend.IDSManager;
@@ -9,10 +10,12 @@ import com.android.mor_arye.android5777_8159_8300.Model.Entities.Recreation;
 import com.android.mor_arye.android5777_8159_8300.Model.Entities.Business;
 import com.android.mor_arye.android5777_8159_8300.Model.Entities.User;
 
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by mor on 26 נובמבר 2016.
@@ -32,7 +35,7 @@ public class ListDsManager implements IDSManager {
     public ListDsManager() {
         users = new ArrayList<>();
         businesses = new ArrayList<>();
-        actions = new ArrayList<>();
+        recreeations = new ArrayList<>();
     }
 
 
@@ -49,7 +52,7 @@ public class ListDsManager implements IDSManager {
         businessesUpdates=true;
         businesses.add(new Business(
                 newBusiness.getAsString("nameBusiness"),
-                newBusiness.getAsString("addressBusiness"),
+                new Address(new Locale(newBusiness.getAsString("addressBusiness"))),
                 newBusiness.getAsString("phoneNumber"),
                 newBusiness.getAsString("emailAddress"),
                 newBusiness.getAsString("websiteLink")
