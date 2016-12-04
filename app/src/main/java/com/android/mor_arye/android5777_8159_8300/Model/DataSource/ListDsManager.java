@@ -11,6 +11,7 @@ import com.android.mor_arye.android5777_8159_8300.Model.Entities.Business;
 import com.android.mor_arye.android5777_8159_8300.Model.Entities.User;
 
 import java.net.URI;
+import java.security.cert.TrustAnchor;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -67,6 +68,12 @@ public class ListDsManager implements IDSManager {
 
     @Override
     public boolean checkNewInBusinessOrRecreation() {
+        if ( useresUpdates ||  businessesUpdates || recreeationsUpdates)
+        {
+            useresUpdates = businessesUpdates = recreeationsUpdates =false;
+            return true;
+        }
+
         return false;
     }
 
@@ -82,7 +89,7 @@ public class ListDsManager implements IDSManager {
 
     @Override
     public Collection<Recreation> getAllRecreation() {
-        return actions;
+        return recreeations;
     }
 
     @Override
