@@ -20,6 +20,8 @@ public class MainActivity extends AppCompatActivity {
 
 
         addToDSWithCP();
+        // TODO
+        // לבדוק את כל הפונקציות של ה DS בנוסף להכנסה
 
         }
 

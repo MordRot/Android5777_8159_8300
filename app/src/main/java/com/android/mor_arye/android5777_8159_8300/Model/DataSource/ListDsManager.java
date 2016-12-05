@@ -51,13 +51,17 @@ public class ListDsManager implements IDSManager {
     @Override
     public void insertBusiness(ContentValues newBusiness) {
         businessesUpdates=true;
+
         businesses.add(new Business(
                 newBusiness.getAsString("nameBusiness"),
                 new Address(new Locale(newBusiness.getAsString("addressBusiness"))),
                 newBusiness.getAsString("phoneNumber"),
+                //new ContactsContract.CommonDataKinds.Phone = newBusiness.getAsString("phoneNumber"),
                 newBusiness.getAsString("emailAddress"),
                 newBusiness.getAsString("websiteLink")
         ));
+        //TODO
+        // להמיר את השלושה האחרונים לנתונים המתאימים
 
     }
 
@@ -93,7 +97,7 @@ public class ListDsManager implements IDSManager {
     }
 
     @Override
-    public void checkChanges() {
+//    public void checkChanges() {
 
     }
 }

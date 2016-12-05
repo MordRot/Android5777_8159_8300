@@ -21,6 +21,5 @@ public interface IDSManager {
     public Collection<User> getAllUsers();
     public Collection<Business> getAllBusiness();
     public Collection<Recreation> getAllRecreation();
-    public void checkChanges();
-    //איפה לבדוק שינויים? ברשימות? כלומר האם היום שינויים ברשומות קיימות?
+//    public void checkChanges();
 }
