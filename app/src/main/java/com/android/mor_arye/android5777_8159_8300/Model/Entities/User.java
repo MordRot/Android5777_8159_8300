@@ -5,11 +5,16 @@ package com.android.mor_arye.android5777_8159_8300.Model.Entities;
  */
 
 public class User {
+    private static int currentID = 1;
     private int idUser;
     private String nameUser; // ?
     private String password;
 
-    // TODO constructor
+    public User(String nameUser, String password) {
+        this.idUser = currentID++;
+        this.nameUser = nameUser;
+        this.password = password;
+    }
 
     //<editor-fold desc="geters and seters">
     public int getIdUser() {

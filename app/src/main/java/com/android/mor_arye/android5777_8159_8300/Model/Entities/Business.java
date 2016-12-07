@@ -32,7 +32,7 @@ public class Business {
     }
 
     //<editor-fold desc="geters and seters">
-    //TODO get/set id? integer overflow
+    //TODO get/set idBusiness? integer overflow
     public int getIdBusiness() {
         return idBusiness;
     }

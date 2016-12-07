@@ -11,9 +11,10 @@ import android.support.annotation.Nullable;
 import com.android.mor_arye.android5777_8159_8300.Model.Backend.IDSManager;
 import com.android.mor_arye.android5777_8159_8300.Model.Backend.ManagerFactory;
 import com.android.mor_arye.android5777_8159_8300.Model.Entities.Business;
+import com.android.mor_arye.android5777_8159_8300.Model.Entities.Recreation;
+import com.android.mor_arye.android5777_8159_8300.Model.Entities.User;
 
 import java.util.Collection;
-import java.util.List;
 
 /**
  * Created by mor on 30 נובמבר 2016.
@@ -21,7 +22,7 @@ import java.util.List;
 
 public class CustomContentProvider extends ContentProvider {
 
-    private static IDSManager DSmanager = ManagerFactory.getDS();
+    private static IDSManager DSManager = ManagerFactory.getDS();
 
     private static final UriMatcher sUriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
     static {
@@ -44,7 +45,7 @@ public class CustomContentProvider extends ContentProvider {
             switch (uriCode) {
 
                 case 1: // Businesses
-                    Collection<Business> businesses = DSmanager.getAllBusiness();
+                    Collection<Business> businesses = DSManager.getAllBusiness();
                     MatrixCursor businessMatrix = new MatrixCursor(new String[]{"idBusiness", "nameBusiness", "addressBusiness", "phoneNumber", "emailAddress", "websiteLink"});
                     for (Business bus : businesses) {
                         businessMatrix.addRow(new Object[]{bus.getIdBusiness(), bus.getNameBusiness(), bus.getAddressBusiness(), bus.getPhoneNumber(), bus.getEmailAddress(), bus.getWebsiteLink()});
@@ -52,12 +53,20 @@ public class CustomContentProvider extends ContentProvider {
                     return businessMatrix;
 
                 case 2: // Recreation
-                    //TODO
-                    return null;
+                    Collection<Recreation> recreations = DSManager.getAllRecreation();
+                    MatrixCursor RecreationMatrix = new MatrixCursor(new String[] {"typeOfRecreation", "nameOfCountry", "dateOfBeginning", "dateOfEnding", "price", "description", "idBuisness"});
+                    for ( Recreation rec : recreations) {
+                        RecreationMatrix.addRow(new Object[]{rec.getTypeOfRecreation(), rec.getNameOfCountry(), rec.getDateOfBeginning(), rec.getDateOfEnding(), rec.getPrice(), rec.getDescription(), rec.getIdBusiness()});
+                    }
+                    return RecreationMatrix;
 
                 case 3: // User
-                    //TODO
-                    return null;
+                    Collection<User> users   = DSManager.getAllUsers();
+                    MatrixCursor userMatrix = new MatrixCursor(new String[] {"idUser", "nameUser", "password"});
+                    for ( User us : users) {
+                        userMatrix.addRow(new Object[]{us.getIdUser(), us.getNameUser(), us.getPassword()});
+                    }
+                    return userMatrix;
             }
         }
         catch (Exception ex) {
@@ -80,13 +89,13 @@ public class CustomContentProvider extends ContentProvider {
            int uriCode = sUriMatcher.match(uri);
            switch (uriCode) {
                case 1:
-                   DSmanager.insertBusiness(values);
+                   DSManager.insertBusiness(values);
                    return null;
                case 2:
-                   DSmanager.insertRecreation(values);
+                   DSManager.insertRecreation(values);
                    return null;
                case 3:
-                   DSmanager.insertUser(values);
+                   DSManager.insertUser(values);
                    return null;
            }
        }
