@@ -54,7 +54,7 @@ public class CustomContentProvider extends ContentProvider {
 
                 case 2: // Recreation
                     Collection<Recreation> recreations = DSManager.getAllRecreation();
-                    MatrixCursor RecreationMatrix = new MatrixCursor(new String[] {"typeOfRecreation", "nameOfCountry", "dateOfBeginning", "dateOfEnding", "price", "description", "idBuisness"});
+                    MatrixCursor RecreationMatrix = new MatrixCursor(new String[] {"typeOfRecreation", "nameOfCountry", "dateOfBeginning", "dateOfEnding", "price", "description", "idBusiness"});
                     for ( Recreation rec : recreations) {
                         RecreationMatrix.addRow(new Object[]{rec.getTypeOfRecreation(), rec.getNameOfCountry(), rec.getDateOfBeginning(), rec.getDateOfEnding(), rec.getPrice(), rec.getDescription(), rec.getIdBusiness()});
                     }

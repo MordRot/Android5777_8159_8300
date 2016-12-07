@@ -22,7 +22,7 @@ public class Recreation {
                       GregorianCalendar dateOfEnding,
                       double price,
                       String description,
-                      int idBuisness) {
+                      int idBusiness) {
 
         this.typeOfRecreation = typeOfRecreation;
         NameOfCountry = nameOfCountry;
@@ -30,7 +30,7 @@ public class Recreation {
         this.dateOfEnding = dateOfEnding;
         this.price = price;
         this.description = description;
-        this.idBusiness = idBuisness;
+        this.idBusiness = idBusiness;
     }
 
 
