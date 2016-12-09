@@ -3,12 +3,9 @@ package com.android.mor_arye.android5777_8159_8300.Controller;
 import android.content.ContentValues;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.speech.tts.Voice;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.widget.ProgressBar;
 
-import com.android.mor_arye.android5777_8159_8300.Model.DataSource.CustomContentProvider;
 import com.android.mor_arye.android5777_8159_8300.R;
 
 public class MainActivity extends AppCompatActivity {
