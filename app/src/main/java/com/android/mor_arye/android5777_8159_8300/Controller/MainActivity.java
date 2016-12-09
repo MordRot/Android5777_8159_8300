@@ -1,11 +1,14 @@
 package com.android.mor_arye.android5777_8159_8300.Controller;
 
 import android.content.ContentValues;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 
+import com.android.mor_arye.android5777_8159_8300.Model.Backend.CustomContentProvider;
 import com.android.mor_arye.android5777_8159_8300.R;
 
 public class MainActivity extends AppCompatActivity {
@@ -58,7 +61,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void getAllUsers() {
-        Uri uriOfUsers = Uri.parse("content://com.android.mor_arye.android5777_8159_8300.Model.DataSource");
-
+        Uri uriOfAllUsers = Uri.parse("content://com.android.mor_arye.android5777_8159_8300/users");
+        Cursor result = getContentResolver().query(uriOfAllUsers,null,null,null,null);
+        Log.d(CustomContentProvider.CP_TAG, result.toString());
     }
 }

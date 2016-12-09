@@ -7,9 +7,8 @@ import android.database.Cursor;
 import android.database.MatrixCursor;
 import android.net.Uri;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
-import com.android.mor_arye.android5777_8159_8300.Model.Backend.IDSManager;
-import com.android.mor_arye.android5777_8159_8300.Model.Backend.ManagerFactory;
 import com.android.mor_arye.android5777_8159_8300.Model.Entities.Business;
 import com.android.mor_arye.android5777_8159_8300.Model.Entities.Recreation;
 import com.android.mor_arye.android5777_8159_8300.Model.Entities.User;
@@ -23,6 +22,7 @@ import java.util.Collection;
 public class CustomContentProvider extends ContentProvider {
 
     private static IDSManager DSManager = ManagerFactory.getDS();
+    public static final String CP_TAG = "EntertainmentContent";
 
     private static final UriMatcher sUriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
     static {
@@ -71,7 +71,7 @@ public class CustomContentProvider extends ContentProvider {
             }
         }
         catch (Exception ex) {
-            throw ex;
+            Log.d(CP_TAG, ex.getMessage());
         }
         return null;
     }
@@ -103,7 +103,7 @@ public class CustomContentProvider extends ContentProvider {
            }
        }
        catch (Exception ex) {
-           throw ex;
+           Log.d(CP_TAG, ex.getMessage());
        }
         return null;
     }
