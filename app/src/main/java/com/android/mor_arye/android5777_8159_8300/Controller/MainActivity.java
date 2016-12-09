@@ -19,9 +19,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
-        addToDSWithCP();
+        //addToDSWithCP();
         // TODO
         // לבדוק את כל הפונקציות של ה DS בנוסף להכנסה
+        getAllUsers();
 
         }
 
@@ -57,5 +58,10 @@ public class MainActivity extends AppCompatActivity {
         catch (Exception ex){
             throw ex;
         }
+    }
+
+    private void getAllUsers() {
+        Uri uriOfUsers = Uri.parse("content://com.android.mor_arye.android5777_8159_8300.Model.DataSource");
+
     }
 }

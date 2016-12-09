@@ -26,9 +26,9 @@ public class CustomContentProvider extends ContentProvider {
 
     private static final UriMatcher sUriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
     static {
-        sUriMatcher.addURI("com.android.mor_arye.android5777_8159_8300.Model.DataSource", "Business", 1);
-        sUriMatcher.addURI("com.android.mor_arye.android5777_8159_8300.Model.DataSource", "Recreation", 2);
-        sUriMatcher.addURI("com.android.mor_arye.android5777_8159_8300.Model.DataSource", "User", 3);
+        sUriMatcher.addURI("com.android.mor_arye.android5777_8159_8300.Model.DataSource", "businesses", 1);
+        sUriMatcher.addURI("com.android.mor_arye.android5777_8159_8300.Model.DataSource", "recreations", 2);
+        sUriMatcher.addURI("com.android.mor_arye.android5777_8159_8300.Model.DataSource", "users", 3);
     }
 
 
@@ -43,8 +43,9 @@ public class CustomContentProvider extends ContentProvider {
         try {
             int uriCode = sUriMatcher.match(uri);
             switch (uriCode) {
-
-                case 1: // Businesses
+                case -1:
+                    throw new Exception("invalid query, no such path.");
+                case 1: // businesses
                     Collection<Business> businesses = DSManager.getAllBusiness();
                     MatrixCursor businessMatrix = new MatrixCursor(new String[]{"idBusiness", "nameBusiness", "addressBusiness", "phoneNumber", "emailAddress", "websiteLink"});
                     for (Business bus : businesses) {
@@ -52,7 +53,7 @@ public class CustomContentProvider extends ContentProvider {
                     }
                     return businessMatrix;
 
-                case 2: // Recreation
+                case 2: // recreations
                     Collection<Recreation> recreations = DSManager.getAllRecreation();
                     MatrixCursor RecreationMatrix = new MatrixCursor(new String[] {"typeOfRecreation", "nameOfCountry", "dateOfBeginning", "dateOfEnding", "price", "description", "idBusiness"});
                     for ( Recreation rec : recreations) {
@@ -60,7 +61,7 @@ public class CustomContentProvider extends ContentProvider {
                     }
                     return RecreationMatrix;
 
-                case 3: // User
+                case 3: // users
                     Collection<User> users   = DSManager.getAllUsers();
                     MatrixCursor userMatrix = new MatrixCursor(new String[] {"idUser", "nameUser", "password"});
                     for ( User us : users) {
@@ -88,6 +89,8 @@ public class CustomContentProvider extends ContentProvider {
 
            int uriCode = sUriMatcher.match(uri);
            switch (uriCode) {
+               case -1:
+                   throw new Exception("invalid query, no such path.");
                case 1:
                    DSManager.insertBusiness(values);
                    return null;
