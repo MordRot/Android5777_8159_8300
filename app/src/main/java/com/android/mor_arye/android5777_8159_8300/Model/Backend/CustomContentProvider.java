@@ -26,9 +26,9 @@ public class CustomContentProvider extends ContentProvider {
 
     private static final UriMatcher sUriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
     static {
-        sUriMatcher.addURI("com.android.mor_arye.android5777_8159_8300.Model.DataSource", "businesses", 1);
-        sUriMatcher.addURI("com.android.mor_arye.android5777_8159_8300.Model.DataSource", "recreations", 2);
-        sUriMatcher.addURI("com.android.mor_arye.android5777_8159_8300.Model.DataSource", "users", 3);
+        sUriMatcher.addURI("com.android.mor_arye.android5777_8159_8300.Model.Backend", "businesses", 1);
+        sUriMatcher.addURI("com.android.mor_arye.android5777_8159_8300.Model.Backend", "recreations", 2);
+        sUriMatcher.addURI("com.android.mor_arye.android5777_8159_8300.Model.Backend", "users", 3);
     }
 
 

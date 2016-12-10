@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.android.mor_arye.android5777_8159_8300.Model.Backend.CustomContentProvider;
+import com.android.mor_arye.android5777_8159_8300.Model.Backend.ManagerFactory;
 import com.android.mor_arye.android5777_8159_8300.R;
 
 public class MainActivity extends AppCompatActivity {
@@ -61,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void getAllUsers() {
+        ManagerFactory.getDS();
         Uri uriOfAllUsers = Uri.parse("content://com.android.mor_arye.android5777_8159_8300/users");
         Cursor result = getContentResolver().query(uriOfAllUsers,null,null,null,null);
         Log.d(CustomContentProvider.CP_TAG, result.toString());
