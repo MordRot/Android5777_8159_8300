@@ -32,7 +32,7 @@ public class ListDsManager implements IDSManager {
         users = new ArrayList<>();
         businesses = new ArrayList<>();
         recreeations = new ArrayList<>();
-        users.add(new User("check", "check"));
+        users.add(new User("check", "password"));
     }
 
 
