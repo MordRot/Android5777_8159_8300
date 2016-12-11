@@ -43,8 +43,6 @@ public class CustomContentProvider extends ContentProvider {
         try {
             int uriCode = sUriMatcher.match(uri);
             switch (uriCode) {
-                case -1:
-                    throw new Exception("invalid query, no such path.");
                 case 1: // businesses
                     Collection<Business> businesses = DSManager.getAllBusiness();
                     MatrixCursor businessMatrix = new MatrixCursor(new String[]{"idBusiness", "nameBusiness", "addressBusiness", "phoneNumber", "emailAddress", "websiteLink"});
@@ -55,26 +53,61 @@ public class CustomContentProvider extends ContentProvider {
 
                 case 2: // recreations
                     Collection<Recreation> recreations = DSManager.getAllRecreation();
-                    MatrixCursor RecreationMatrix = new MatrixCursor(new String[] {"typeOfRecreation", "nameOfCountry", "dateOfBeginning", "dateOfEnding", "price", "description", "idBusiness"});
-                    for ( Recreation rec : recreations) {
+                    MatrixCursor RecreationMatrix = new MatrixCursor(new String[]{"typeOfRecreation", "nameOfCountry", "dateOfBeginning", "dateOfEnding", "price", "description", "idBusiness"});
+                    for (Recreation rec : recreations) {
                         RecreationMatrix.addRow(new Object[]{rec.getTypeOfRecreation(), rec.getNameOfCountry(), rec.getDateOfBeginning(), rec.getDateOfEnding(), rec.getPrice(), rec.getDescription(), rec.getIdBusiness()});
                     }
                     return RecreationMatrix;
 
                 case 3: // users
-                    Collection<User> users   = DSManager.getAllUsers();
-                    MatrixCursor userMatrix = new MatrixCursor(new String[] {"idUser", "nameUser", "password"});
-                    for ( User us : users) {
+                    Collection<User> users = DSManager.getAllUsers();
+                    MatrixCursor userMatrix = new MatrixCursor(new String[]{"idUser", "nameUser", "password"});
+                    for (User us : users) {
                         userMatrix.addRow(new Object[]{us.getIdUser(), us.getNameUser(), us.getPassword()});
                     }
                     return userMatrix;
+                default:
+                    throw new IllegalArgumentException("invalid query, no such path.");
             }
-        }
-        catch (Exception ex) {
+        } catch (Exception ex) {
             Log.d(CP_TAG, ex.getMessage());
+            return null;
         }
-        return null;
     }
+        /*int uriCode = sUriMatcher.match(uri);
+        Cursor result = new MatrixCursor(new String[]{"nnm1", "nnm2", "nnm3"});
+        switch (uriCode) {
+            case 1: // businesses
+                Collection<Business> businesses = DSManager.getAllBusiness();
+                MatrixCursor businessMatrix = new MatrixCursor(new String[]{"idBusiness", "nameBusiness", "addressBusiness", "phoneNumber", "emailAddress", "websiteLink"});
+                for (Business bus : businesses) {
+                    businessMatrix.addRow(new Object[]{bus.getIdBusiness(), bus.getNameBusiness(), bus.getAddressBusiness(), bus.getPhoneNumber(), bus.getEmailAddress(), bus.getWebsiteLink()});
+                }
+                result = businessMatrix;
+                break;
+
+            case 2: // recreations
+                Collection<Recreation> recreations = DSManager.getAllRecreation();
+                MatrixCursor RecreationMatrix = new MatrixCursor(new String[]{"typeOfRecreation", "nameOfCountry", "dateOfBeginning", "dateOfEnding", "price", "description", "idBusiness"});
+                for (Recreation rec : recreations) {
+                    RecreationMatrix.addRow(new Object[]{rec.getTypeOfRecreation(), rec.getNameOfCountry(), rec.getDateOfBeginning(), rec.getDateOfEnding(), rec.getPrice(), rec.getDescription(), rec.getIdBusiness()});
+                }
+                result = RecreationMatrix;
+                break;
+
+            case 3: // users
+                Collection<User> users = DSManager.getAllUsers();
+                MatrixCursor userMatrix = new MatrixCursor(new String[]{"idUser", "nameUser", "password"});
+                for (User us : users) {
+                    userMatrix.addRow(new Object[]{us.getIdUser(), us.getNameUser(), us.getPassword()});
+                }
+                result = userMatrix;
+                break;
+            default:
+                break;
+        }
+        return result;
+    }*/
 
     @Nullable
     @Override
@@ -86,11 +119,8 @@ public class CustomContentProvider extends ContentProvider {
     @Override
     public Uri insert(Uri uri, ContentValues values) {
        try {
-
            int uriCode = sUriMatcher.match(uri);
            switch (uriCode) {
-               case -1:
-                   throw new Exception("invalid query, no such path.");
                case 1:
                    DSManager.insertBusiness(values);
                    return null;
@@ -100,12 +130,14 @@ public class CustomContentProvider extends ContentProvider {
                case 3:
                    DSManager.insertUser(values);
                    return null;
+               default:
+                   throw new IllegalArgumentException("invalid query, no such path.");
            }
        }
        catch (Exception ex) {
            Log.d(CP_TAG, ex.getMessage());
+           return null;
        }
-        return null;
     }
 
     @Override

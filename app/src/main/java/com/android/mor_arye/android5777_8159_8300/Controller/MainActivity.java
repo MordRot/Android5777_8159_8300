@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
         //addToDSWithCP();
         // TODO
         // לבדוק את כל הפונקציות של ה DS בנוסף להכנסה
-        getAllUsers();
+        Log.d(CustomContentProvider.CP_TAG, getAllUsers());
 
         }
 
@@ -61,10 +61,9 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void getAllUsers() {
-        ManagerFactory.getDS();
+    private String getAllUsers() {
         Uri uriOfAllUsers = Uri.parse("content://com.android.mor_arye.android5777_8159_8300/users");
         Cursor result = getContentResolver().query(uriOfAllUsers,null,null,null,null);
-        Log.d(CustomContentProvider.CP_TAG, result.toString());
+        return result.getString(result.getColumnIndex("nameUser"));
     }
 }
