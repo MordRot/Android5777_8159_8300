@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
                 protected Void doInBackground(Void... params) {
 
                     getContentResolver().insert(
-                            Uri.parse("content://com.android.mor_arye.android5777_8159_8300.Model.DataSource/Business"), newBusiness);
+                            Uri.parse("content://com.android.mor_arye.android5777_8159_8300/businesses"), newBusiness);
 
                     return null;
                 }
@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
                 protected Void doInBackground(Void... params) {
 
                     getContentResolver().insert(
-                            Uri.parse("content://com.android.mor_arye.android5777_8159_8300.Model.DataSource/recreations"), newRecreation);
+                            Uri.parse("content://com.android.mor_arye.android5777_8159_8300/recreations"), newRecreation);
 
                     return null;
                 }
@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
                 protected Void doInBackground(Void... params) {
 
                     getContentResolver().insert(
-                            Uri.parse("content://com.android.mor_arye.android5777_8159_8300.Model.DataSource/user"), newUser);
+                            Uri.parse("content://com.android.mor_arye.android5777_8159_8300/users"), newUser);
 
                     return null;
                 }
