@@ -37,6 +37,7 @@ public class ListDsManager implements IDSManager {
     private boolean businessesUpdates=false;
     private boolean recreeationsUpdates=false;
 
+    // constructor
     public ListDsManager() {
         users = new ArrayList<>();
         businesses = new ArrayList<>();
@@ -44,6 +45,7 @@ public class ListDsManager implements IDSManager {
     }
 
 
+    // ~~~~~~ insert ~~~~~~
     @Override
     public void insertUser(ContentValues newUser) {
         useresUpdates=true;
@@ -65,8 +67,6 @@ public class ListDsManager implements IDSManager {
                 newBusiness.getAsString("emailAddress"),
                 newBusiness.getAsString("websiteLink")
         ));
-        //TODO
-        // להמיר את השלושה האחרונים לנתונים המתאימים
     }
 
     @Override
@@ -90,6 +90,7 @@ public class ListDsManager implements IDSManager {
                 newRecreation.getAsInteger("idBusiness")
         ));
     }
+    // ~~~~~~~~~~~~~~~~~
 
     @Override
     public boolean checkNewInBusinessOrRecreation() {
@@ -102,6 +103,8 @@ public class ListDsManager implements IDSManager {
         return false;
     }
 
+
+    // ~~~~~~~ get all collections ~~~~~~~
     @Override
     public Collection<User> getAllUsers() {
         return users;
@@ -116,6 +119,7 @@ public class ListDsManager implements IDSManager {
     public Collection<Recreation> getAllRecreation() {
         return recreeations;
     }
+    // ~~~~~~~~~~~~~~
 
 //    @Override
 //    public void checkChanges() {    }

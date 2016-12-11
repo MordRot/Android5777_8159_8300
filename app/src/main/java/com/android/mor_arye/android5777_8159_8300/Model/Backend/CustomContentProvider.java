@@ -30,7 +30,8 @@ public class CustomContentProvider extends ContentProvider {
         sUriMatcher.addURI("com.android.mor_arye.android5777_8159_8300.Model.DataSource", "recreations", 2);
         sUriMatcher.addURI("com.android.mor_arye.android5777_8159_8300.Model.DataSource", "users", 3);
     }
-
+//TODO
+    // הכתובות URI נכונות? או שצריך לעבור דרך ה factory איכשהו?
 
     @Override
     public boolean onCreate() {
