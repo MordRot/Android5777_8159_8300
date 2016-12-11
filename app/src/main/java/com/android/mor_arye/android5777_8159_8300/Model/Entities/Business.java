@@ -1,9 +1,6 @@
 package com.android.mor_arye.android5777_8159_8300.Model.Entities;
 
 import android.location.Address;
-import android.provider.ContactsContract;
-
-import java.util.Locale;
 
 /**
  * Created by mor on 20 נובמבר 2016.
@@ -14,14 +11,14 @@ public class Business {
     private int idBusiness;
     private String nameBusiness;
     private Address addressBusiness;
-    private ContactsContract.CommonDataKinds.Phone phoneNumber;
-    private ContactsContract.CommonDataKinds.Email emailAddress;
-    private ContactsContract.CommonDataKinds.Website websiteLink;
+    private String phoneNumber;
+    private String emailAddress;
+    private String websiteLink;
 
     public Business(String nameBusiness, Address addressBusiness,
-                    ContactsContract.CommonDataKinds.Phone phoneNumber,
-                    ContactsContract.CommonDataKinds.Email emailAddress,
-                    ContactsContract.CommonDataKinds.Website websiteLink) {
+                    String phoneNumber,
+                    String emailAddress,
+                    String websiteLink) {
 
         this.idBusiness = currentID++;
         this.nameBusiness = nameBusiness;
@@ -57,27 +54,27 @@ public class Business {
         this.addressBusiness = addressBusiness;
     }
 
-    public ContactsContract.CommonDataKinds.Phone getPhoneNumber() {
+    public String getPhoneNumber() {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(ContactsContract.CommonDataKinds.Phone phoneNumber) {
+    public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 
-    public ContactsContract.CommonDataKinds.Email getEmailAddress() {
+    public String getEmailAddress() {
         return emailAddress;
     }
 
-    public void setEmailAddress(ContactsContract.CommonDataKinds.Email emailAddress) {
+    public void setEmailAddress(String emailAddress) {
         this.emailAddress = emailAddress;
     }
 
-    public ContactsContract.CommonDataKinds.Website getWebsiteLink() {
+    public String getWebsiteLink() {
         return websiteLink;
     }
 
-    public void setWebsiteLink(ContactsContract.CommonDataKinds.Website websiteLink) {
+    public void setWebsiteLink(String websiteLink) {
         this.websiteLink = websiteLink;
     }
     //</editor-fold>
