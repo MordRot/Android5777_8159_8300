@@ -44,8 +44,6 @@ public class CustomContentProvider extends ContentProvider {
         try {
             int uriCode = sUriMatcher.match(uri);
             switch (uriCode) {
-                case -1:
-                    throw new Exception("invalid query, no such path.");
                 case 1: // businesses
                     Collection<Business> businesses = DSManager.getAllBusiness();
                     MatrixCursor businessMatrix = new MatrixCursor(new String[]{"idBusiness", "nameBusiness", "addressBusiness", "phoneNumber", "emailAddress", "websiteLink"});
@@ -69,12 +67,14 @@ public class CustomContentProvider extends ContentProvider {
                         userMatrix.addRow(new Object[]{us.getIdUser(), us.getNameUser(), us.getPassword()});
                     }
                     return userMatrix;
+                default:
+                    throw new IllegalArgumentException("invalid query, no such path.");
             }
         }
         catch (Exception ex) {
             Log.d(CP_TAG, ex.getMessage());
+            return null;
         }
-        return null;
     }
 
     @Nullable
@@ -90,8 +90,6 @@ public class CustomContentProvider extends ContentProvider {
 
            int uriCode = sUriMatcher.match(uri);
            switch (uriCode) {
-               case -1:
-                   throw new Exception("invalid query, no such path.");
                case 1:
                    DSManager.insertBusiness(values);
                    return null;
@@ -101,12 +99,14 @@ public class CustomContentProvider extends ContentProvider {
                case 3:
                    DSManager.insertUser(values);
                    return null;
+               default:
+                   throw new IllegalArgumentException("invalid query, no such path.");
            }
        }
        catch (Exception ex) {
            Log.d(CP_TAG, ex.getMessage());
+           return null;
        }
-        return null;
     }
 
     @Override
