@@ -22,6 +22,11 @@ public class MainActivity extends AppCompatActivity {
         //addToDSWithCP();
         // TODO
         // לבדוק את כל הפונקציות של ה DS בנוסף להכנסה
+        final ContentValues newUser = new ContentValues();
+        newUser.put("nameUser", "arye");
+        newUser.put("password", "1234");
+        getContentResolver().insert(
+                Uri.parse("content://com.android.mor_arye.android5777_8159_8300/users"), newUser);
         getAllUsers();
 
         }
@@ -103,6 +108,14 @@ public class MainActivity extends AppCompatActivity {
     private void getAllUsers() {
         Uri uriOfAllUsers = Uri.parse("content://com.android.mor_arye.android5777_8159_8300/users");
         Cursor result = getContentResolver().query(uriOfAllUsers,null,null,null,null);
-        Log.d(CustomContentProvider.CP_TAG, result.toString());
+        String data = new String("");
+        if (result.moveToFirst()){
+            do{
+                data.concat(result.getString(result.getColumnIndex("data")));
+                // do what ever you want here
+            }while(result.moveToNext());
+        }
+        result.close();
+        Log.d(CustomContentProvider.CP_TAG, data);
     }
 }
