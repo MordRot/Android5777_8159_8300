@@ -7,7 +7,7 @@ package com.android.mor_arye.android5777_8159_8300.Model.Entities;
 public class User {
     private static int currentID = 1;
     private int idUser;
-    private String nameUser; // ?
+    private String nameUser;
     private String password;
 
     public User(String nameUser, String password) {

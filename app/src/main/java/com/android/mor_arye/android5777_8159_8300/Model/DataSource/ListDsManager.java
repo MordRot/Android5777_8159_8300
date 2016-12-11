@@ -47,9 +47,10 @@ public class ListDsManager implements IDSManager {
     @Override
     public void insertUser(ContentValues newUser) {
         useresUpdates=true;
-        users.add(new User())
-                //TODO
-
+        users.add(new User(
+                newUser.getAsString("nameUser"),
+                newUser.getAsString("password")
+        ));
     }
 
     @Override
@@ -66,7 +67,6 @@ public class ListDsManager implements IDSManager {
         ));
         //TODO
         // להמיר את השלושה האחרונים לנתונים המתאימים
-
     }
 
     @Override
@@ -80,20 +80,15 @@ public class ListDsManager implements IDSManager {
                 new GregorianCalendar(
                         new Integer(dateB.substring(6,9)),
                         new Integer(dateB.substring(3,4)),
-                        new Integer(dateB.substring(0,1)));
+                        new Integer(dateB.substring(0,1))),
                 new GregorianCalendar(
                         new Integer(dateE.substring(6,9)),
                         new Integer(dateE.substring(3,4)),
-                        new Integer(dateE.substring(0,1)));
+                        new Integer(dateE.substring(0,1))),
                 newRecreation.getAsDouble("price"),
                 newRecreation.getAsString("description"),
                 newRecreation.getAsInteger("idBusiness")
         ));
-
-
-
-
-        //TODO
     }
 
     @Override
