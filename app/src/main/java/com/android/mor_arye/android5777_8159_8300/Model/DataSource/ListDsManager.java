@@ -26,9 +26,9 @@ public class ListDsManager implements IDSManager {
     public List<Business> businesses;
     public List<Recreation> recreations;
 
-    private boolean useresUpdates=false;
-    private boolean businessesUpdates=false;
-    private boolean recreeationsUpdates=false;
+    private boolean usersUpdates = false;
+    private boolean businessesUpdates = false;
+    private boolean recreationsUpdates = false;
 
     // constructor
     public ListDsManager() {
@@ -41,7 +41,7 @@ public class ListDsManager implements IDSManager {
     // ~~~~~~ insert ~~~~~~
     @Override
     public void insertUser(ContentValues newUser) {
-        useresUpdates=true;
+        usersUpdates =true;
         users.add(new User(
                 newUser.getAsString("nameUser"),
                 newUser.getAsString("password")
@@ -87,9 +87,9 @@ public class ListDsManager implements IDSManager {
 
     @Override
     public boolean checkNewInBusinessOrRecreation() {
-        if ( useresUpdates ||  businessesUpdates || recreeationsUpdates)
+        if ( usersUpdates ||  businessesUpdates || recreationsUpdates)
         {
-            useresUpdates = businessesUpdates = recreeationsUpdates =false;
+            usersUpdates = businessesUpdates = recreationsUpdates = false;
             return true;
         }
 
