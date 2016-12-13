@@ -1,5 +1,6 @@
 package com.android.mor_arye.android5777_8159_8300.Controller;
 
+import android.content.ContentProvider;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.net.Uri;
@@ -27,7 +28,8 @@ public class MainActivity extends AppCompatActivity {
         newUser.put("password", "1234");
         getContentResolver().insert(
                 Uri.parse("content://com.android.mor_arye.android5777_8159_8300/users"), newUser);
-        getAllUsers();
+        String temp = getAllUsers();
+        Log.d(CustomContentProvider.CP_TAG, temp);
 
         }
 
@@ -105,17 +107,10 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void getAllUsers() {
+    private String getAllUsers() {
         Uri uriOfAllUsers = Uri.parse("content://com.android.mor_arye.android5777_8159_8300/users");
         Cursor result = getContentResolver().query(uriOfAllUsers,null,null,null,null);
-        String data = new String("");
-        if (result.moveToFirst()){
-            do{
-                data.concat(result.getString(result.getColumnIndex("data")));
-                // do what ever you want here
-            }while(result.moveToNext());
-        }
-        result.close();
-        Log.d(CustomContentProvider.CP_TAG, data);
+        result.moveToFirst();
+        return result.getString(result.getColumnIndex("nameUser"));
     }
 }
