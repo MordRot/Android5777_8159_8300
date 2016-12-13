@@ -1,12 +1,16 @@
 package com.android.mor_arye.android5777_8159_8300;
 
+import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.android.mor_arye.android5777_8159_8300.Controller.MainActivity;
 
 public class LoginActivity extends AppCompatActivity {
     SharedPreferences sharedpreferences;
@@ -31,18 +35,18 @@ public class LoginActivity extends AppCompatActivity {
             password.setText(sharedpreferences.getString(PASSWORD_KEY, ""));
 
         }
-
+/*
         Button button = (Button) findViewById(R.id.LoginButton_id);
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                /*TODO
-                check if one of the fields is empty
-                 */
+                //TODO
+                //check if one of the fields is empty
+
 
 
             }
         });
-
+*/
     }
     public void SavePrefs(View view) {
         String n = name.getText().toString();
@@ -74,5 +78,11 @@ public class LoginActivity extends AppCompatActivity {
             password.setText(sharedpreferences.getString(PASSWORD_KEY, ""));
 
         }
+    }
+
+    public void onLogin(View view){
+
+        Intent myIntent = new Intent(LoginActivity.this , MainActivity.class);
+        startActivity(myIntent);
     }
 }
