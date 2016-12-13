@@ -3,14 +3,22 @@ package com.android.mor_arye.android5777_8159_8300.Controller;
 import android.content.ContentProvider;
 import android.content.ContentValues;
 import android.database.Cursor;
+//import android.icu.util.Calendar;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import java.util.Calendar;
 
 import com.android.mor_arye.android5777_8159_8300.Model.Backend.CustomContentProvider;
+import com.android.mor_arye.android5777_8159_8300.Model.Backend.ManagerFactory;
+import com.android.mor_arye.android5777_8159_8300.Model.Entities.Recreation;
 import com.android.mor_arye.android5777_8159_8300.R;
+
+import java.util.ArrayList;
+import java.util.GregorianCalendar;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -19,21 +27,28 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+// insert things for example.
+        addToDSWithCP();
 
-        //addToDSWithCP();
-        // TODO
-        // לבדוק את כל הפונקציות של ה DS בנוסף להכנסה
-        final ContentValues newUser = new ContentValues();
-        newUser.put("nameUser", "arye");
-        newUser.put("password", "1234");
-        getContentResolver().insert(
-                Uri.parse("content://com.android.mor_arye.android5777_8159_8300/users"), newUser);
-        String temp = getAllUsers();
-        Log.d(CustomContentProvider.CP_TAG, temp);
+// get a user for example
+        getAllUsers();
+
+// print a date to check if the date is working.
+        new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... params) {
+
+                GregorianCalendar date = ((ArrayList<Recreation>) ManagerFactory.getDS().getAllRecreation()).get(0).getDateOfEnding();
+                Log.d(CustomContentProvider.CP_TAG,  Integer.toString(date.get(Calendar.DATE)) + "/" +Integer.toString(date.get(Calendar.MONTH)) + "/" + Integer.toString(date.get(Calendar.YEAR))) ;
+
+                return null;
+            }
+        }.execute();
 
         }
 
 
+    // insert things for example.
     private void addToDSWithCP() {
         try {
 
@@ -64,8 +79,8 @@ public class MainActivity extends AppCompatActivity {
 
             newRecreation.put("typeOfRecreation", "HOTEL");
             newRecreation.put("nameOfCountry", "israel");
-            newRecreation.put("dateOfBeginning", "11/11/2016");
-            newRecreation.put("dateOfEnding", "12/10/2017");
+            newRecreation.put("dateOfBeginning", "05/09/2016");
+            newRecreation.put("dateOfEnding", "10/09/2016");
             newRecreation.put("price", 100.2);
             newRecreation.put("description", "we will have fun!");
             newRecreation.put("idBusiness", 123);
@@ -107,10 +122,21 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private String getAllUsers() {
-        Uri uriOfAllUsers = Uri.parse("content://com.android.mor_arye.android5777_8159_8300/users");
-        Cursor result = getContentResolver().query(uriOfAllUsers,null,null,null,null);
-        result.moveToFirst();
-        return result.getString(result.getColumnIndex("nameUser"));
+    // print a user for example
+    private void getAllUsers() {
+
+        new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... params) {
+
+                Uri uriOfAllUsers = Uri.parse("content://com.android.mor_arye.android5777_8159_8300/users");
+                Cursor result = getContentResolver().query(uriOfAllUsers,null,null,null,null);
+                result.moveToFirst();
+                String str = result.getString(result.getColumnIndex("nameUser"));
+                Log.d(CustomContentProvider.CP_TAG, str);
+                return null;
+            }
+        }.execute();
+
     }
 }

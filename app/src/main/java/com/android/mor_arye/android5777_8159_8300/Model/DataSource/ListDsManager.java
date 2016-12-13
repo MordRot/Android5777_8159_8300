@@ -56,7 +56,6 @@ public class ListDsManager implements IDSManager {
                 newBusiness.getAsString("nameBusiness"),
                 new Address(new Locale(newBusiness.getAsString("addressBusiness"))),
                 newBusiness.getAsString("phoneNumber"),
-                //new ContactsContract.CommonDataKinds.Phone = newBusiness.getAsString("phoneNumber"),
                 newBusiness.getAsString("emailAddress"),
                 newBusiness.getAsString("websiteLink")
         ));
@@ -65,19 +64,19 @@ public class ListDsManager implements IDSManager {
     @Override
     public void insertRecreation(ContentValues newRecreation) {
         String dateB = newRecreation.getAsString("dateOfBeginning");
-        String dateE = newRecreation.getAsString("dateOfBeginning");
+        String dateE = newRecreation.getAsString("dateOfEnding");
 
         recreations.add(new Recreation(
                 TypeOfRecreation.valueOf(newRecreation.getAsString("typeOfRecreation")),
                 newRecreation.getAsString("nameOfCountry"),
                 new GregorianCalendar(
-                        new Integer(dateB.substring(6,9)),
-                        new Integer(dateB.substring(3,4)),
-                        new Integer(dateB.substring(0,1))),
+                        new Integer(dateB.substring(6,10)),
+                        new Integer(dateB.substring(3,5)),
+                        new Integer(dateB.substring(0,2))),
                 new GregorianCalendar(
-                        new Integer(dateE.substring(6,9)),
-                        new Integer(dateE.substring(3,4)),
-                        new Integer(dateE.substring(0,1))),
+                        new Integer(dateE.substring(6,10)),
+                        new Integer(dateE.substring(3,5)),
+                        new Integer(dateE.substring(0,2))),
                 newRecreation.getAsDouble("price"),
                 newRecreation.getAsString("description"),
                 newRecreation.getAsInteger("idBusiness")

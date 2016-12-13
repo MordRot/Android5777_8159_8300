@@ -21,7 +21,7 @@ import java.util.Collection;
 
 public class CustomContentProvider extends ContentProvider {
 
-    private static IDSManager DSManager = ManagerFactory.getDS();
+        private static IDSManager DSManager = ManagerFactory.getDS();
     public static final String CP_TAG = "EntertainmentContent";
 
     private static final UriMatcher sUriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
@@ -30,8 +30,7 @@ public class CustomContentProvider extends ContentProvider {
         sUriMatcher.addURI("com.android.mor_arye.android5777_8159_8300", "recreations", 2);
         sUriMatcher.addURI("com.android.mor_arye.android5777_8159_8300", "users", 3);
     }
-//TODO
-    // הכתובות URI נכונות? או שצריך לעבור דרך ה factory איכשהו?
+
 
     @Override
     public boolean onCreate() {
