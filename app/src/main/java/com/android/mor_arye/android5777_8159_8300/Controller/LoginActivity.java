@@ -1,16 +1,14 @@
-package com.android.mor_arye.android5777_8159_8300;
+package com.android.mor_arye.android5777_8159_8300.Controller;
 
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 
-import com.android.mor_arye.android5777_8159_8300.Controller.MainActivity;
+import com.android.mor_arye.android5777_8159_8300.R;
 
 public class LoginActivity extends AppCompatActivity {
     SharedPreferences sharedpreferences;
