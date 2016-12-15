@@ -63,7 +63,7 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    private void onLogin(View view) {
+    public void onLogin(View view) {
 
         new AsyncTask<String, Void, Cursor>() {
             @Override
