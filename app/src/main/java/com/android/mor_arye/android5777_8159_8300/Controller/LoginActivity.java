@@ -93,14 +93,15 @@ public class LoginActivity extends AppCompatActivity {
                     Intent myIntent = new Intent(LoginActivity.this, RegistrationActivity.class);
                     startActivity(myIntent);
                 } else{
-                    if (password.getText().toString() !=
-                            result.getString(2))
+                    if (password.getText().toString().equals(
+                            result.getString(2)) == false)
                     {
                         Log.d(CustomContentProvider.CP_TAG, "password is wrong");
                         clearTextViews();
                     }
                     else
                     {
+                        SavePrefs();
                         Intent myIntent = new Intent(LoginActivity.this, MainActivity.class);
                         startActivity(myIntent);
                     }
