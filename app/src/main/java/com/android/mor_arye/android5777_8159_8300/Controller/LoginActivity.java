@@ -29,6 +29,19 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        final ContentValues newUser = new ContentValues();
+        newUser.put("nameUser", "arye");
+        newUser.put("password", "1234");
+        new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... params) {
+
+                getContentResolver().insert(
+                        Uri.parse("content://com.android.mor_arye.android5777_8159_8300/users"), newUser);
+
+                return null;
+            }
+        }.execute();
         GetPrefs();
     }
 
@@ -64,7 +77,6 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void onLogin(View view) {
-
         new AsyncTask<String, Void, Cursor>() {
             @Override
             protected Cursor doInBackground(String... name) {
@@ -77,13 +89,12 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             protected void onPostExecute(Cursor result) {
-                if (result.getCount() < 1) {
+                if (result.moveToFirst() == false) {
                     Intent myIntent = new Intent(LoginActivity.this, RegistrationActivity.class);
                     startActivity(myIntent);
                 } else{
-                    result.moveToFirst();
                     if (password.getText().toString() !=
-                            result.getString((result.getColumnIndex("password"))))
+                            result.getString(2))
                     {
                         Log.d(CustomContentProvider.CP_TAG, "password is wrong");
                         clearTextViews();
