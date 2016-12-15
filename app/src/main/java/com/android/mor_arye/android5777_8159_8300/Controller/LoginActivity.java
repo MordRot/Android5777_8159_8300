@@ -53,7 +53,14 @@ public class LoginActivity extends AppCompatActivity {
         editor.putString(PASSWORD_KEY, p);
         editor.commit();
     }
-
+    public void DeletePrefs() {
+        String n = name.getText().toString();
+        String p = password.getText().toString();
+        SharedPreferences.Editor editor = sharedpreferences.edit();
+        editor.remove(NAME_KEY);
+        editor.remove(PASSWORD_KEY);
+        editor.apply();
+    }
     public void clearTextViews() {
         name = (TextView) findViewById(R.id.etUserName);
         password = (TextView) findViewById(R.id.etPassword);
@@ -90,6 +97,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             protected void onPostExecute(Cursor result) {
                 if (result.moveToFirst() == false) {
+                    DeletePrefs();  // if there was any user, he's already doesn't exist
                     Intent myIntent = new Intent(LoginActivity.this, RegistrationActivity.class);
                     startActivity(myIntent);
                 } else{
