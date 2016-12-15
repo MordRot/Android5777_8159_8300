@@ -1,9 +1,7 @@
 package com.android.mor_arye.android5777_8159_8300.Controller;
 
-import android.content.ContentProvider;
 import android.content.ContentValues;
 import android.database.Cursor;
-//import android.icu.util.Calendar;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
@@ -18,7 +16,6 @@ import com.android.mor_arye.android5777_8159_8300.R;
 
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
