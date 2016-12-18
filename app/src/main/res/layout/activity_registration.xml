@@ -28,6 +28,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@id/NameView"
+            android:hint="israel israeli"
             />
     </LinearLayout>
 
@@ -50,16 +51,19 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@id/passwordView"
-            />
+            android:inputType="textPassword"
+            android:hint="1234"/>
     </LinearLayout>
 
     <Button
         android:id="@+id/registerButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/passwordLiner"
         android:text="Register"
-        />
+        android:layout_below="@+id/passwordLiner"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="32dp"
+        android:onClick="onRegister"/>
 
 
 </RelativeLayout>
