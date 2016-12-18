@@ -25,7 +25,6 @@ public class RegistrationActivity extends AppCompatActivity {
     }
 
     public void onRegister(View view) {
-
         saveToShPref();
         saveToDB();
     }
