@@ -2,6 +2,7 @@ package com.android.mor_arye.android5777_8159_8300.Controller;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -9,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.mor_arye.android5777_8159_8300.R;
 
@@ -19,7 +21,7 @@ import static com.android.mor_arye.android5777_8159_8300.Controller.LoginActivit
 public class RegistrationActivity extends AppCompatActivity {
 
 //  SharedPreferences shPrefRegister;
-    SharedPreferences.Editor editRegiser;
+    SharedPreferences.Editor editRegister;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
@@ -28,19 +30,22 @@ public class RegistrationActivity extends AppCompatActivity {
     public void onRegister(View view) {
         saveToShPref();
         saveToDB();
+        Toast.makeText(this,"You registered successfully",Toast.LENGTH_LONG);
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
     }
 
 
     private void saveToShPref() {
 
-        editRegiser = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE).edit();
+        editRegister = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE).edit();
 
         String name = ((TextView) findViewById(R.id.NameEdit)).getText().toString();
         String pass = ((TextView) findViewById(R.id.passwordEdit)).getText().toString();
 
-        editRegiser.putString(NAME_KEY, name);
-        editRegiser.putString(PASSWORD_KEY, pass);
-        editRegiser.commit();
+        editRegister.putString(NAME_KEY, name);
+        editRegister.putString(PASSWORD_KEY, pass);
+        editRegister.commit();
     }
 
     private void saveToDB() {
