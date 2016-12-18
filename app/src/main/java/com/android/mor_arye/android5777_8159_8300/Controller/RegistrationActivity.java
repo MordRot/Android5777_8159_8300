@@ -14,10 +14,11 @@ import com.android.mor_arye.android5777_8159_8300.R;
 
 import static com.android.mor_arye.android5777_8159_8300.Controller.LoginActivity.NAME_KEY;
 import static com.android.mor_arye.android5777_8159_8300.Controller.LoginActivity.PASSWORD_KEY;
+import static com.android.mor_arye.android5777_8159_8300.Controller.LoginActivity.PREFS_NAME;
 
 public class RegistrationActivity extends AppCompatActivity {
 
-    SharedPreferences shPrefRegister;
+//  SharedPreferences shPrefRegister;
     SharedPreferences.Editor editRegiser;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,7 +32,8 @@ public class RegistrationActivity extends AppCompatActivity {
 
 
     private void saveToShPref() {
-        editRegiser = shPrefRegister.edit();
+
+        editRegiser = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE).edit();
 
         String name = ((TextView) findViewById(R.id.NameEdit)).getText().toString();
         String pass = ((TextView) findViewById(R.id.passwordEdit)).getText().toString();
