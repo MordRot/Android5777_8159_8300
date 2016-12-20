@@ -28,11 +28,11 @@ public class ServiceUpdate extends Service {
                 Thread.sleep(10000);
 
                 if (DSManager.checkNewInBusiness()) {
-                    startActivity(businessUpdateIntent);
+                    startService(businessUpdateIntent);
                 }
 
                 if (DSManager.checkNewRecreation()) {
-                    startActivity(userUpdateIntent);
+                    startService(userUpdateIntent);
                 }
 
             } catch (InterruptedException e) {
