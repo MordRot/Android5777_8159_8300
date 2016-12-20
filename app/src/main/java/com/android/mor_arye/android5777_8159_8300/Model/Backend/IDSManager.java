@@ -17,7 +17,8 @@ public interface IDSManager {
     public void insertUser(ContentValues newUser);
     public void insertBusiness(ContentValues newBusiness);
     public void insertRecreation(ContentValues newRecreation);
-    public boolean checkNewInBusinessOrRecreation();
+    public boolean checkNewInBusiness();
+    public boolean checkNewRecreation();
     public Collection<User> getAllUsers();
     public Collection<Business> getAllBusiness();
     public Collection<Recreation> getAllRecreation();

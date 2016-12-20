@@ -21,7 +21,7 @@ import java.util.Collection;
 
 public class CustomContentProvider extends ContentProvider {
 
-        private static IDSManager DSManager = ManagerFactory.getDS();
+    private static IDSManager DSManager = ManagerFactory.getDS();
     public static final String CP_TAG = "EntertainmentContent";
 
     private static final UriMatcher sUriMatcher = new UriMatcher(UriMatcher.NO_MATCH);

@@ -85,13 +85,23 @@ public class ListDsManager implements IDSManager {
     // ~~~~~~~~~~~~~~~~~
 
     @Override
-    public boolean checkNewInBusinessOrRecreation() {
-        if ( usersUpdates ||  businessesUpdates || recreationsUpdates)
+    public boolean checkNewInBusiness() {
+        if (businessesUpdates)
         {
-            usersUpdates = businessesUpdates = recreationsUpdates = false;
+            businessesUpdates = false;
             return true;
         }
 
+        return false;
+    }
+
+    @Override
+    public boolean checkNewRecreation() {
+        if (recreationsUpdates)
+        {
+            recreationsUpdates = false;
+            return true;
+        }
         return false;
     }
 
