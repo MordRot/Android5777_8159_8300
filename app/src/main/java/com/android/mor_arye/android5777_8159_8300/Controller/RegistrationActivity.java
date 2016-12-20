@@ -30,7 +30,7 @@ public class RegistrationActivity extends AppCompatActivity {
     public void onRegister(View view) {
         saveToShPref();
         saveToDB();
-        Toast.makeText(this,"You registered successfully",Toast.LENGTH_LONG);
+        Toast.makeText(this,"You registered successfully",Toast.LENGTH_LONG).show();
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
