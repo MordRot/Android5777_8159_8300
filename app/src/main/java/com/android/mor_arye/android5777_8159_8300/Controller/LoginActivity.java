@@ -29,6 +29,9 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        /*
+        temporary user creation
+         */
         final ContentValues newUser = new ContentValues();
         newUser.put("nameUser", "arye");
         newUser.put("password", "1234");
@@ -42,6 +45,8 @@ public class LoginActivity extends AppCompatActivity {
                 return null;
             }
         }.execute();
+        name = (TextView) findViewById(R.id.etUserName);
+        password = (TextView) findViewById(R.id.etPassword);
         GetPrefs();
     }
 
@@ -54,8 +59,6 @@ public class LoginActivity extends AppCompatActivity {
         editor.commit();
     }
     public void DeletePrefs() {
-        String n = name.getText().toString();
-        String p = password.getText().toString();
         SharedPreferences.Editor editor = sharedpreferences.edit();
         editor.remove(NAME_KEY);
         editor.remove(PASSWORD_KEY);
@@ -70,8 +73,6 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void GetPrefs() {
-        name = (TextView) findViewById(R.id.etUserName);
-        password = (TextView) findViewById(R.id.etPassword);
         sharedpreferences = getSharedPreferences(PREFS_NAME,
                 Context.MODE_PRIVATE);
 
@@ -82,30 +83,49 @@ public class LoginActivity extends AppCompatActivity {
             password.setText(sharedpreferences.getString(PASSWORD_KEY, ""));
         }
     }
-
+    public void onRegister(View view){
+        Intent myIntent = new Intent(LoginActivity.this, RegistrationActivity.class);
+        startActivity(myIntent);
+    }
     public void onLogin(View view) {
         new AsyncTask<String, Void, Cursor>() {
+            @Override
+            protected void onPreExecute(){
+                if (name.getText().toString() == "" || password.getText().toString() == "")
+                    cancel(true);
+            }
             @Override
             protected Cursor doInBackground(String... name) {
 
                 Uri uriOfAllUsers = Uri.parse("content://com.android.mor_arye.android5777_8159_8300/users");
-                Cursor result = getContentResolver().query(uriOfAllUsers, null,
-                        "nameUser='" + name + "'", null, null, null);
+                Cursor result = getContentResolver().query(uriOfAllUsers, null, null, null, null, null);
                 return result;
             }
 
             @Override
             protected void onPostExecute(Cursor result) {
-                if (result.moveToFirst() == false) {
-                    DeletePrefs();  // if there was any user, he's already doesn't exist
-                    Intent myIntent = new Intent(LoginActivity.this, RegistrationActivity.class);
-                    startActivity(myIntent);
-                } else{
-                    if (password.getText().toString().equals(
-                            result.getString(2)) == false)
+                boolean found = false;
+                int position = -1;
+                while (result.moveToNext() && !found) {
+                    if (result.getString(1).equals(name.getText().toString())) {
+                        found = true;
+                        position = result.getPosition();
+                    }
+                }
+                if (!found)
+                {
+                    Log.d(CustomContentProvider.CP_TAG, "user doesn't exist");
+                    clearTextViews();
+                    DeletePrefs();  // if there such user, he's already doesn't exist
+                }
+                else
+                {
+                    result.moveToPosition(position);
+                    if (!password.getText().toString().equals(result.getString(2)))
                     {
                         Log.d(CustomContentProvider.CP_TAG, "password is wrong");
                         clearTextViews();
+                        DeletePrefs();  // delete old prefs, password has changed
                     }
                     else
                     {
@@ -114,24 +134,8 @@ public class LoginActivity extends AppCompatActivity {
                         startActivity(myIntent);
                     }
                 }
-
+                result.close();
             }
         }.execute(name.getText().toString());
     }
 }
-/*
-    private void addUserToDSWithCP() {
-
-        final ContentValues newUser = new ContentValues();
-        newUser.put("nameUser", name.getText().toString());
-        newUser.put("password", password.getText().toString());
-        new AsyncTask<Void, Void, Void>() {
-            @Override
-            protected Void doInBackground(Void... params) {
-
-                getContentResolver().insert(
-                        Uri.parse("content://com.android.mor_arye.android5777_8159_8300/users"), newUser);
-            }
-        }.execute();
-    }
-    */
