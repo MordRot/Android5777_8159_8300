@@ -9,12 +9,12 @@ import com.android.mor_arye.android5777_8159_8300.Model.Backend.CustomContentPro
 import com.android.mor_arye.android5777_8159_8300.Model.Backend.IDSManager;
 import com.android.mor_arye.android5777_8159_8300.Model.Backend.ManagerFactory;
 
-public class ServiceUpdate extends Service {
+public class CheckForUpdateService extends Service {
     private static IDSManager DSManager = ManagerFactory.getDS();
     Intent businessUpdateIntent;
     Intent userUpdateIntent;
 
-    public ServiceUpdate() {
+    public CheckForUpdateService() {
         businessUpdateIntent = new Intent();
         businessUpdateIntent.setAction("UpdateDS");
         businessUpdateIntent.addCategory("business");

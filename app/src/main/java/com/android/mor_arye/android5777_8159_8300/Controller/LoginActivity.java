@@ -1,6 +1,5 @@
 package com.android.mor_arye.android5777_8159_8300.Controller;
 
-import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
@@ -116,7 +115,7 @@ public class LoginActivity extends AppCompatActivity {
                 {
                     Log.d(CustomContentProvider.CP_TAG, "user doesn't exist");
                     clearTextViews();
-                    DeletePrefs();  // if there such user, he's already doesn't exist
+                    DeletePrefs();  // if there was such user, he's already doesn't exist
                 }
                 else
                 {
@@ -130,7 +129,7 @@ public class LoginActivity extends AppCompatActivity {
                     else
                     {
                         SavePrefs();
-                        Intent myIntent = new Intent(LoginActivity.this, MainActivity.class);
+                        Intent myIntent = new Intent(LoginActivity.this, TestCP_Activity.class);
                         startActivity(myIntent);
                     }
                 }

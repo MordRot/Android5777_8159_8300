@@ -31,7 +31,7 @@ public class RegistrationActivity extends AppCompatActivity {
         saveToShPref();
         saveToDB();
         Toast.makeText(this,"You registered successfully",Toast.LENGTH_LONG).show();
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this, TestCP_Activity.class);
         startActivity(intent);
     }
 
