@@ -22,7 +22,8 @@ public class CheckForUpdateService extends IntentService {
     }
     @Override
     protected void onHandleIntent(Intent checkForUpdatesIntent){
-        Intent broadcastIntent = new Intent();
+        Intent businessUpdateIntent = new Intent("com.android.mor_arye.android5777_8159_8300.newUpdates").putExtra("table",'b');
+        Intent recreationUpdateIntent = new Intent("com.android.mor_arye.android5777_8159_8300.newUpdates").putExtra("table", 'r');
 
         while (true) {
             try {
@@ -30,11 +31,11 @@ public class CheckForUpdateService extends IntentService {
 
                 if (DSManager.checkNewInBusiness()) {
 
-                    sendBroadcast(broadcastIntent);
+                    sendBroadcast(businessUpdateIntent);
                 }
 
                 if (DSManager.checkNewRecreation()) {
-                    sendBroadcast(broadcastIntent);
+                    sendBroadcast(recreationUpdateIntent);
                 }
 
             } catch (InterruptedException e) {
