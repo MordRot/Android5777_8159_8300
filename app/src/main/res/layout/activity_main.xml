@@ -4,15 +4,13 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
     <Button
-        android:id = "@+id/addBusiness"
+        android:id = "@+id/addNewBusiness"
         android:layout_width = "match_parent"
         android:layout_height = "wrap_content"
-        android:text = "Add business"
-        android:onClick = "onAddBusiness"/>
+        android:text = "Add new business"/>
     <Button
-        android:id = "@+id/addRecreation"
+        android:id = "@+id/addNewRecreation"
         android:layout_width = "match_parent"
         android:layout_height = "wrap_content"
-        android:text = "Add recreation"
-        android:onClick = "onAddRecreation"/>
+        android:text = "Add new recreation"/>
 </LinearLayout>

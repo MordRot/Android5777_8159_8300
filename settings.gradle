@@ -1,1 +1,1 @@
-include ':app', ':br_app'
+include ':app'

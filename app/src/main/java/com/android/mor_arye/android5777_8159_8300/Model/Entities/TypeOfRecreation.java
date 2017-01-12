@@ -5,9 +5,19 @@ package com.android.mor_arye.android5777_8159_8300.Model.Entities;
  */
 
 public enum TypeOfRecreation {
-    HOTEL,
-    TRAVEL_AGENCY,
-    ENTERTAINMENT_SHOW,
-    AIRLINE_COMPANY,
-    OTHER
+    HOTEL("Hotel"),
+    TRAVEL_AGENCY("Traval agency"),
+    ENTERTAINMENT_SHOW("Entertainment show"),
+    AIRLINE_COMPANY("Airline company"),
+    OTHER("Other");
+
+    private String typeString;
+    private TypeOfRecreation(String type) {
+        this.typeString = type;
+    }
+
+    @Override
+    public String toString(){
+        return typeString;
+    }
 }

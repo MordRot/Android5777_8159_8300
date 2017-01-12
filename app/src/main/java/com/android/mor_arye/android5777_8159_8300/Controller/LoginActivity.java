@@ -129,7 +129,7 @@ public class LoginActivity extends AppCompatActivity {
                     else
                     {
                         SavePrefs();
-                        Intent myIntent = new Intent(LoginActivity.this, TestCP_Activity.class);
+                        Intent myIntent = new Intent(LoginActivity.this, MainActivity.class);
                         startActivity(myIntent);
                     }
                 }

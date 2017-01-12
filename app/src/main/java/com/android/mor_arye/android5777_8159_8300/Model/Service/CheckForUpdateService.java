@@ -32,10 +32,12 @@ public class CheckForUpdateService extends IntentService {
                 if (DSManager.checkNewInBusiness()) {
 
                     sendBroadcast(businessUpdateIntent);
+                    Toast.makeText(this, "sent update broadcast", Toast.LENGTH_SHORT).show();
                 }
 
                 if (DSManager.checkNewRecreation()) {
                     sendBroadcast(recreationUpdateIntent);
+                    Toast.makeText(this, "sent update broadcast", Toast.LENGTH_SHORT).show();
                 }
 
             } catch (InterruptedException e) {
