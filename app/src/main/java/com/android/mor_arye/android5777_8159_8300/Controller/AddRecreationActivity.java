@@ -112,6 +112,10 @@ public class AddRecreationActivity extends AppCompatActivity {
             throw ex;
         }
     }
+    private void setAllBusinessesOnSpinner()
+    {
+        // TODO
+    }
     private void setAllCountriesOnSpinner()
     {
         Locale[] locale = Locale.getAvailableLocales();
