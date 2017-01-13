@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -42,7 +43,14 @@ public class AddRecreationActivity extends AppCompatActivity {
         }
 
         public void onDateSet(DatePicker view, int year, int month, int day) {
-
+            EditText etDate;
+            if (this.getTag().equals("BeginningDatePicker"))
+                etDate = (EditText)getActivity().findViewById(R.id.etDateOfBeginning);
+            else
+                etDate = (EditText)getActivity().findViewById(R.id.etDateOfEnding);
+            String date = new String(Integer.toString(day) +
+                    '/' + Integer.toString(month + 1) + '/' + Integer.toString(year));
+            etDate.setText(date);
         }
     }
     @Override
@@ -56,13 +64,14 @@ public class AddRecreationActivity extends AppCompatActivity {
 
 
     public void onAddRecreation(View view) {
-        TextView name, address, phone, email, website, dateOfBeginning;
+        EditText type, country, dateOfBeginning, dateOfEnding, price, description, id;
         final ContentValues newRecreation = new ContentValues();
-        name = (TextView) findViewById(R.id.etNameOfBusiness);
-        address = (TextView) findViewById(R.id.etAddressOfBusiness);
-        phone = (TextView) findViewById(R.id.etPhoneNumber);
-        email = (TextView) findViewById(R.id.etEmail);
-        website = (TextView) findViewById(R.id.etWebSite);
+/*        type = (EditText) findViewById(R.id.etNameOfBusiness);
+        country = (EditText) findViewById(R.id.etAddressOfBusiness);
+        dateOfBeginning = (EditText) findViewById(R.id.etPhoneNumber);
+        dateOfEnding = (EditText) findViewById(R.id.etEmail);
+        price = (EditText) findViewById(R.id.etWebSite);
+*/
         try {
             newRecreation.put("typeOfRecreation", "HOTEL");
             newRecreation.put("nameOfCountry", "israel");
@@ -120,8 +129,12 @@ public class AddRecreationActivity extends AppCompatActivity {
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item, countries);
         citizenship.setAdapter(adapter);
     }
-    public void showDatePickerDialog(View v) {
+    public void showBeginningDatePickerDialog(View v) {
         DialogFragment newFragment = new DatePickerFragment();
-        newFragment.show(getSupportFragmentManager(), "datePicker");
+        newFragment.show(getSupportFragmentManager(), "BeginningDatePicker");
+    }
+    public void showEndingDatePickerDialog(View v) {
+        DialogFragment newFragment = new DatePickerFragment();
+        newFragment.show(getSupportFragmentManager(), "EndingDatePicker");
     }
 }
