@@ -51,7 +51,6 @@ public class ListDsManager implements IDSManager {
     @Override
     public void insertBusiness(ContentValues newBusiness) {
         businessesUpdates=true;
-
         businesses.add(new Business(
                 newBusiness.getAsString("nameBusiness"),
                 new Address(new Locale(newBusiness.getAsString("addressBusiness"))),
@@ -63,6 +62,7 @@ public class ListDsManager implements IDSManager {
 
     @Override
     public void insertRecreation(ContentValues newRecreation) {
+        recreationsUpdates = true;
         String dateB = newRecreation.getAsString("dateOfBeginning");
         String dateE = newRecreation.getAsString("dateOfEnding");
 

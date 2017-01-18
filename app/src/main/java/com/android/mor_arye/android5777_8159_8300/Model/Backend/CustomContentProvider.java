@@ -33,9 +33,7 @@ public class CustomContentProvider extends ContentProvider {
 
 
     @Override
-    public boolean onCreate() {
-        return false;
-    }
+    public boolean onCreate() { return false; }
 
     @Nullable
     @Override

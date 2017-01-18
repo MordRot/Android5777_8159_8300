@@ -1,5 +1,10 @@
 package com.android.mor_arye.android5777_8159_8300.Model.Backend;
 
+import android.content.ContentValues;
+import android.net.Uri;
+import android.os.AsyncTask;
+import android.util.Log;
+
 import com.android.mor_arye.android5777_8159_8300.Model.DataSource.ListDsManager;
 
 /**
@@ -12,7 +17,7 @@ public class ManagerFactory {
     private static IDSManager instance = null;
 
     public static IDSManager getDS(){
-
+        //Log.d(CustomContentProvider.CP_TAG, "inside ManagerFactory");
         if (instance == null)
             instance = new ListDsManager();
 
