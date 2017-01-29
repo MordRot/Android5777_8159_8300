@@ -137,7 +137,7 @@ public class AddRecreationActivity extends AppCompatActivity {
 
     Spinner spinnerBus;
     ArrayAdapter<businessIdName> adapterBus;
-
+/*
     private void setAllBusinessesOnSpinner()
     {
         final ArrayList<businessIdName> busList = new ArrayList<businessIdName>();
@@ -194,18 +194,16 @@ public class AddRecreationActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
                 businessIdName business = adapterBus.getItem(position);
-                Toast.makeText(AddRecreationActivity.this, "selected xxxx", Toast.LENGTH_SHORT).show();
-                Toast.makeText(AddRecreationActivity.this, "selected" + adapterBus.getItem(position), Toast.LENGTH_SHORT).show();
                 Log.d(CustomContentProvider.CP_TAG, "inside onItemSelected");
 //                spinnerBus.setSelection(position);
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
                 Log.d(CustomContentProvider.CP_TAG, "inside onNothingSelected");
-                Toast.makeText(AddRecreationActivity.this, "selected YYYY", Toast.LENGTH_SHORT).show();}
+            }
         });
     }
-
+*/
 
     ArrayAdapter adapterBus2;
     private void setAllBusinessesOnSpinner2()
@@ -236,13 +234,11 @@ public class AddRecreationActivity extends AppCompatActivity {
         spinnerBus = (Spinner) findViewById(R.id.businessList_spinner);
         adapterBus2 = new ArrayAdapter(this, android.R.layout.simple_spinner_item, busList);
         spinnerBus.setAdapter(adapterBus2);
-        Toast.makeText(AddRecreationActivity.this, "xxx", Toast.LENGTH_SHORT).show();
 
 
         spinnerBus.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
-                Toast.makeText(AddRecreationActivity.this, "yyy", Toast.LENGTH_SHORT).show();
                 Log.d(CustomContentProvider.CP_TAG, "inside onNothingSelected");
 //                businessIdName business = adapterBus2.getItem(position);
 //                spinnerBus.setSelection(position);

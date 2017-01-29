@@ -8,6 +8,8 @@ import android.widget.Toast;
 import com.android.mor_arye.android5777_8159_8300.Model.Backend.IDSManager;
 import com.android.mor_arye.android5777_8159_8300.Model.Backend.ManagerFactory;
 
+import static com.android.mor_arye.android5777_8159_8300.Model.Backend.CustomContentProvider.CP_TAG;
+
 public class CheckForUpdateService extends IntentService {
     public static final String SERVICE_TAG = "ServiceComponent";
     private static IDSManager DSManager = ManagerFactory.getDS();
@@ -18,6 +20,7 @@ public class CheckForUpdateService extends IntentService {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Toast.makeText(this, "service starting", Toast.LENGTH_SHORT).show();
+        Log.d(CP_TAG, "service starting");
         return super.onStartCommand(intent,flags,startId);
     }
     @Override
@@ -33,11 +36,13 @@ public class CheckForUpdateService extends IntentService {
 
                     sendBroadcast(businessUpdateIntent);
                     Toast.makeText(this, "sent update broadcast", Toast.LENGTH_SHORT).show();
+                    Log.d(CP_TAG, "sent update broadcast business");
                 }
 
                 if (DSManager.checkNewRecreation()) {
                     sendBroadcast(recreationUpdateIntent);
                     Toast.makeText(this, "sent update broadcast", Toast.LENGTH_SHORT).show();
+                    Log.d(CP_TAG, "sent update broadcast recreation");
                 }
 
             } catch (InterruptedException e) {
