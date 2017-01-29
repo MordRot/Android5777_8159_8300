@@ -9,22 +9,16 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.android.mor_arye.android5777_8159_8300.Model.Backend.CustomContentProvider;
 import com.android.mor_arye.android5777_8159_8300.Model.Entities.TypeOfRecreation;
 import com.android.mor_arye.android5777_8159_8300.R;
 
@@ -61,8 +55,7 @@ public class AddRecreationActivity extends AppCompatActivity {
         }
     }
 
-    Spinner recreations;
-    Spinner citizenship;
+    Spinner recreations, citizenship, spinnerBus;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,7 +79,7 @@ public class AddRecreationActivity extends AppCompatActivity {
                 newRecreation.put("dateOfEnding", (((EditText) findViewById(R.id.etDateOfEnding)).getText()).toString());
                 newRecreation.put("price", (((EditText) findViewById(R.id.etPrice)).getText()).toString());
                 newRecreation.put("description",  (((EditText) findViewById(R.id.etDescription)).getText()).toString());
-                newRecreation.put("idBusiness", 123);
+                newRecreation.put("idBusiness", (spinnerBus.getSelectedItem()).toString());
 
                 new AsyncTask<Void, Void, Void>() {
                     @Override
@@ -122,12 +115,11 @@ public class AddRecreationActivity extends AppCompatActivity {
 
     }
 
-
-    public class businessIdName {
+    public class BusinessIdName {
         int BusId;
         String busName;
-        public businessIdName(int idBuisnes, String busName) {
-            BusId = idBuisnes;
+        public BusinessIdName(int idBusiness, String busName) {
+            BusId = idBusiness;
             this.busName = busName;}
         @Override
         public String toString(){
@@ -135,118 +127,35 @@ public class AddRecreationActivity extends AppCompatActivity {
         }
     }
 
-    Spinner spinnerBus;
-    ArrayAdapter<businessIdName> adapterBus;
-/*
-    private void setAllBusinessesOnSpinner()
-    {
-        final ArrayList<businessIdName> busList = new ArrayList<businessIdName>();
-
-        new AsyncTask<Void, Void, Cursor>() {
-            @Override
-            protected Cursor doInBackground(Void... params) {
-//                Log.d(CustomContentProvider.CP_TAG, "inside doInBackground");
-                Uri uriOfAllUsers = Uri.parse("content://com.android.mor_arye.android5777_8159_8300/businesses");
-                Cursor result = getContentResolver().query(uriOfAllUsers, null, null, null, null, null);
-                return result;
-            }
-            protected void onPostExecute(Cursor result) {
-//                Log.d(CustomContentProvider.CP_TAG, "inside onPostExecute");
-                if (result.moveToFirst())
-                {
-//                    Log.d(CustomContentProvider.CP_TAG, "inside onPostExecute and if (result.moveToFirst())");
-                    do
-                { String businessName = result.getString(result.getColumnIndex("nameBusiness"));
-                    int businessId = Integer.parseInt(result.getString(result.getColumnIndex("idBusiness")));
-                    busList.add(new businessIdName(businessId, businessName));
-                }while(result.moveToNext()); } result.close();
-            }
-        }.execute();
-
-        spinnerBus = (Spinner) findViewById(R.id.businessList_spinner);
-        adapterBus = new ArrayAdapter<businessIdName>(this, android.R.layout.simple_spinner_item, busList)
-        {
-            @Override public View getDropDownView(int position, View convertView, ViewGroup parent) {
-//                if (convertView == null) { convertView = View.inflate(AddRecreationActivity.this, android.R.layout.simple_spinner_item, null); }
-                TextView label = new TextView(AddRecreationActivity.this);
-                label.setText(busList.get(position).busName);
-                return label;
-            }
-            @NonNull
-            @Override
-            public View getView(int position, View convertView, ViewGroup parent) {
-                if (convertView == null) { convertView = View.inflate(AddRecreationActivity.this, android.R.layout.simple_spinner_item, null); }
-                TextView label = new TextView(AddRecreationActivity.this);
-                label.setText(busList.get(position).busName);
-                return label;
-            }
-        };
-        spinnerBus.setAdapter(adapterBus);
-
-//        AdapterView.OnItemClickListener mMessageClickedHandler = new AdapterView.OnItemClickListener() {
-//            public void onItemClick(AdapterView parent, View businessSpinner, int position, long id)
-//        {
-//                Toast.makeText(AddRecreationActivity.this,"Click - selected" + adapterBus.getItem(position),Toast.LENGTH_SHORT).show();
-//            }
-//        };
-
-        spinnerBus.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
-                businessIdName business = adapterBus.getItem(position);
-                Log.d(CustomContentProvider.CP_TAG, "inside onItemSelected");
-//                spinnerBus.setSelection(position);
-            }
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                Log.d(CustomContentProvider.CP_TAG, "inside onNothingSelected");
-            }
-        });
-    }
-*/
-
-    ArrayAdapter adapterBus2;
     private void setAllBusinessesOnSpinner2()
     {
-        final ArrayList<businessIdName> busList = new ArrayList<businessIdName>();
-
         new AsyncTask<Void, Void, Cursor>() {
             @Override
             protected Cursor doInBackground(Void... params) {
 //                Log.d(CustomContentProvider.CP_TAG, "inside doInBackground");
-                Uri uriOfAllUsers = Uri.parse("content://com.android.mor_arye.android5777_8159_8300/businesses");
-                Cursor result = getContentResolver().query(uriOfAllUsers, null, null, null, null, null);
+                Uri uriOfAllBusinesses = Uri.parse("content://com.android.mor_arye.android5777_8159_8300/businesses");
+                Cursor result = getContentResolver().query(uriOfAllBusinesses, null, null, null, null, null);
                 return result;
             }
             protected void onPostExecute(Cursor result) {
-//                Log.d(CustomContentProvider.CP_TAG, "inside onPostExecute");
+
+                final ArrayList<BusinessIdName> busList = new ArrayList<BusinessIdName>();
                 if (result.moveToFirst())
                 {
-//                    Log.d(CustomContentProvider.CP_TAG, "inside onPostExecute and if (result.moveToFirst())");
                     do
-                    { String businessName = result.getString(result.getColumnIndex("nameBusiness"));
+                    {
+                        String businessName = result.getString(result.getColumnIndex("nameBusiness"));
                         int businessId = Integer.parseInt(result.getString(result.getColumnIndex("idBusiness")));
-                        busList.add(new businessIdName(businessId, businessName));
-                    }while(result.moveToNext()); } result.close();
+                        busList.add(new BusinessIdName(businessId, businessName));
+                    }
+                    while(result.moveToNext());
+                }
+                result.close();
+                spinnerBus = (Spinner) findViewById(R.id.businessList_spinner);
+                ArrayAdapter<BusinessIdName> adapterBus = new ArrayAdapter<BusinessIdName>(getApplicationContext(), android.R.layout.simple_spinner_item, busList)
+                spinnerBus.setAdapter(adapterBus);
             }
         }.execute();
-
-        spinnerBus = (Spinner) findViewById(R.id.businessList_spinner);
-        adapterBus2 = new ArrayAdapter(this, android.R.layout.simple_spinner_item, busList);
-        spinnerBus.setAdapter(adapterBus2);
-
-
-        spinnerBus.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
-                Log.d(CustomContentProvider.CP_TAG, "inside onNothingSelected");
-//                businessIdName business = adapterBus2.getItem(position);
-//                spinnerBus.setSelection(position);
-            }
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {}
-        });
-
     }
 
     private void setAllCountriesOnSpinner()
@@ -263,8 +172,8 @@ public class AddRecreationActivity extends AppCompatActivity {
         Collections.sort(countries, String.CASE_INSENSITIVE_ORDER);
 
         citizenship = (Spinner)findViewById(R.id.countries_spinner);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item, countries);
-        citizenship.setAdapter(adapter);
+        ArrayAdapter<String> countriesAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item, countries);
+        citizenship.setAdapter(countriesAdapter);
     }
     public void showBeginningDatePickerDialog(View v) {
         DialogFragment newFragment = new DatePickerFragment();

@@ -6,7 +6,7 @@ package com.android.mor_arye.android5777_8159_8300.Model.Entities;
 
 public enum TypeOfRecreation {
     HOTEL("Hotel"),
-    TRAVEL("Traval"),
+    TRAVEL("Travel"),
     ENTERTAINMENT_SHOW("Entertainment show"),
     AIRLINE_COMPANY("Airline company"),
     OTHER("Other");
