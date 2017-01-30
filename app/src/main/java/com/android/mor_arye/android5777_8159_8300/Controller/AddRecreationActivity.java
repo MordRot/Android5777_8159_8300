@@ -11,6 +11,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -19,6 +20,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.android.mor_arye.android5777_8159_8300.Model.Backend.CustomContentProvider;
 import com.android.mor_arye.android5777_8159_8300.Model.Entities.TypeOfRecreation;
 import com.android.mor_arye.android5777_8159_8300.R;
 
@@ -73,13 +75,13 @@ public class AddRecreationActivity extends AppCompatActivity {
         final ContentValues newRecreation = new ContentValues();
 
             try {
-                newRecreation.put("typeOfRecreation", (recreations.getSelectedItem()).toString());
+                newRecreation.put("typeOfRecreation", (recreations.getSelectedItem()).toString().toUpperCase());
                 newRecreation.put("nameOfCountry", (citizenship.getSelectedItem()).toString());
                 newRecreation.put("dateOfBeginning", (((EditText) findViewById(R.id.etDateOfEnding)).getText()).toString());
                 newRecreation.put("dateOfEnding", (((EditText) findViewById(R.id.etDateOfEnding)).getText()).toString());
                 newRecreation.put("price", (((EditText) findViewById(R.id.etPrice)).getText()).toString());
                 newRecreation.put("description",  (((EditText) findViewById(R.id.etDescription)).getText()).toString());
-                newRecreation.put("idBusiness", (spinnerBus.getSelectedItem()).toString());
+                newRecreation.put("idBusiness", ((BusinessIdName) spinnerBus.getSelectedItem()).BusId);
 
                 new AsyncTask<Void, Void, Void>() {
                     @Override
@@ -152,7 +154,7 @@ public class AddRecreationActivity extends AppCompatActivity {
                 }
                 result.close();
                 spinnerBus = (Spinner) findViewById(R.id.businessList_spinner);
-                ArrayAdapter<BusinessIdName> adapterBus = new ArrayAdapter<BusinessIdName>(getApplicationContext(), android.R.layout.simple_spinner_item, busList)
+                ArrayAdapter<BusinessIdName> adapterBus = new ArrayAdapter<BusinessIdName>(getApplicationContext(), android.R.layout.simple_spinner_item, busList);
                 spinnerBus.setAdapter(adapterBus);
             }
         }.execute();
