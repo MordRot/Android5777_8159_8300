@@ -31,7 +31,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
 //        Log.d(CustomContentProvider.CP_TAG, "inside onCreate of LoginActivity");
-        init(); // TODO erase - temporary
+        //init(); // TODO erase - temporary
 
         name = (TextView) findViewById(R.id.etUserName);
         password = (TextView) findViewById(R.id.etPassword);
@@ -140,12 +140,12 @@ public class LoginActivity extends AppCompatActivity {
         }.execute(name.getText().toString());
     }
 
+    /*
+           temporary
+            */
+    // TODO erase
+    /*private void init() {
 
-    private void init() {
-        /*
-        temporary
-         */
-        // TODO erase
 
         //region User
         final ContentValues newUser = new ContentValues();
@@ -228,5 +228,5 @@ public class LoginActivity extends AppCompatActivity {
         }.execute();
         //endregion
 
-    }
+    }*/
 }

@@ -1,9 +1,11 @@
 package com.android.mor_arye.android5777_8159_8300.Controller;
 
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.ContentValues;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
@@ -93,23 +95,16 @@ public class AddRecreationActivity extends AppCompatActivity {
                         return null;
                     }
                 }.execute();
-
-                final Dialog dialog = new Dialog(this);
-                dialog.setContentView(R.layout.dialog);
-                TextView text = (TextView) dialog.findViewById(R.id.dialogText);
-                text.setText("Recreation added sucsessfuly!");
-                Button dialogButton = (Button) dialog.findViewById(R.id.dialogButtonOK);
-                // if button is clicked, close the dialog
-                dialogButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        dialog.dismiss();
-                        Intent myIntent = new Intent(AddRecreationActivity.this, MainActivity.class);
-                        startActivity(myIntent);
-                    }
-                });
-
-                dialog.show();
+                AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+                alertDialog.setTitle("Alert");
+                alertDialog.setMessage("Recreation added successfully!");
+                alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+                alertDialog.show();
             }
             catch (Exception ex){
                 throw ex;
