@@ -22,7 +22,7 @@ public class Business {
 
         this.idBusiness = currentID++;
         this.nameBusiness = nameBusiness;
-        this.addressBusiness = addressBusiness;
+        this.addressBusiness = addressBusiness;     // TODO to make it string?
         this.phoneNumber = phoneNumber;
         this.emailAddress = emailAddress;
         this.websiteLink = websiteLink;
