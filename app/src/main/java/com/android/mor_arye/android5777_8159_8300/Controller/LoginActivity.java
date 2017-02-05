@@ -30,7 +30,6 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-//        Log.d(CustomContentProvider.CP_TAG, "inside onCreate of LoginActivity");
         //init(); // TODO erase - temporary
 
         name = (TextView) findViewById(R.id.etUserName);
