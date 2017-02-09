@@ -35,7 +35,12 @@ public class TestCP_Activity extends AppCompatActivity {
             @Override
             protected Void doInBackground(Void... params) {
 
-                GregorianCalendar date = ((ArrayList<Recreation>) ManagerFactory.getDS().getAllRecreation()).get(0).getDateOfEnding();
+                GregorianCalendar date = null;
+                try {
+                    date = ((ArrayList<Recreation>) ManagerFactory.getDS().getAllRecreation()).get(0).getDateOfEnding();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 Log.d(CustomContentProvider.CP_TAG,  Integer.toString(date.get(Calendar.DATE)) + "/" +Integer.toString(date.get(Calendar.MONTH)) + "/" + Integer.toString(date.get(Calendar.YEAR))) ;
 
                 return null;

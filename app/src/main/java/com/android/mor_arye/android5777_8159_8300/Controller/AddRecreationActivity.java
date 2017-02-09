@@ -16,11 +16,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.mor_arye.android5777_8159_8300.Model.Backend.CustomContentProvider;
 import com.android.mor_arye.android5777_8159_8300.Model.Entities.TypeOfRecreation;
@@ -65,8 +64,7 @@ public class AddRecreationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_recreation);
         setAllCountriesOnSpinner();
-//        setAllBusinessesOnSpinner();
-        setAllBusinessesOnSpinner2();
+        setAllBusinessesOnSpinner();
         recreations = (Spinner) findViewById(R.id.typeOfRecreation_spinner);
         recreations.setAdapter(new ArrayAdapter<TypeOfRecreation>(this, android.R.layout.simple_spinner_item, TypeOfRecreation.values()));
     }
@@ -107,7 +105,8 @@ public class AddRecreationActivity extends AppCompatActivity {
                 alertDialog.show();
             }
             catch (Exception ex){
-                throw ex;
+                Log.d(CustomContentProvider.CP_TAG, ex.getMessage());
+                Toast.makeText(this, "Maybe you don't have any business.\nFirst add one", Toast.LENGTH_SHORT).show();
             }
 
     }
@@ -124,12 +123,11 @@ public class AddRecreationActivity extends AppCompatActivity {
         }
     }
 
-    private void setAllBusinessesOnSpinner2()
+    private void setAllBusinessesOnSpinner()
     {
         new AsyncTask<Void, Void, Cursor>() {
             @Override
             protected Cursor doInBackground(Void... params) {
-//                Log.d(CustomContentProvider.CP_TAG, "inside doInBackground");
                 Uri uriOfAllBusinesses = Uri.parse("content://com.android.mor_arye.android5777_8159_8300/businesses");
                 Cursor result = getContentResolver().query(uriOfAllBusinesses, null, null, null, null, null);
                 return result;
@@ -146,6 +144,12 @@ public class AddRecreationActivity extends AppCompatActivity {
                         busList.add(new BusinessIdName(businessId, businessName));
                     }
                     while(result.moveToNext());
+                }
+                else   {
+                    Toast.makeText(AddRecreationActivity.this, "First add a business", Toast.LENGTH_SHORT).show();
+                    Intent myIntent = new Intent(AddRecreationActivity.this, AddBusinessActivity.class);
+                    startActivity(myIntent);
+
                 }
                 result.close();
                 spinnerBus = (Spinner) findViewById(R.id.businessList_spinner);

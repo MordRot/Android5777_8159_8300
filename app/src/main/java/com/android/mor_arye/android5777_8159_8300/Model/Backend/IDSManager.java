@@ -20,7 +20,7 @@ public interface IDSManager {
     public boolean checkNewInBusiness();
     public boolean checkNewRecreation();
     public Collection<User> getAllUsers();
-    public Collection<Business> getAllBusiness();
-    public Collection<Recreation> getAllRecreation();
+    public Collection<Business> getAllBusiness() throws Exception;
+    public Collection<Recreation> getAllRecreation() throws Exception;
 //    public void checkChanges();
 }

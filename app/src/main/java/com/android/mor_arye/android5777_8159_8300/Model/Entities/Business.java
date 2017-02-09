@@ -15,14 +15,30 @@ public class Business {
     private String emailAddress;
     private String websiteLink;
 
-    public Business(String nameBusiness, Address addressBusiness,
+    public Business(int idBusiness,
+                    String nameBusiness,
+                    Address addressBusiness,
+                    String phoneNumber,
+                    String emailAddress,
+                    String websiteLink) {
+
+        this.idBusiness = idBusiness;
+        this.nameBusiness = nameBusiness;
+        this.addressBusiness = addressBusiness;
+        this.phoneNumber = phoneNumber;
+        this.emailAddress = emailAddress;
+        this.websiteLink = websiteLink;
+    }
+
+    public Business(String nameBusiness,
+                    Address addressBusiness,
                     String phoneNumber,
                     String emailAddress,
                     String websiteLink) {
 
         this.idBusiness = currentID++;
         this.nameBusiness = nameBusiness;
-        this.addressBusiness = addressBusiness;
+        this.addressBusiness = addressBusiness;     // TODO to make it string?
         this.phoneNumber = phoneNumber;
         this.emailAddress = emailAddress;
         this.websiteLink = websiteLink;
