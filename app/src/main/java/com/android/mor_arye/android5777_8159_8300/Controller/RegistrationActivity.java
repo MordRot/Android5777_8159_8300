@@ -29,8 +29,7 @@ public class RegistrationActivity extends AppCompatActivity {
 
     public void onRegister(View view) {
         saveToShPref();
-        saveToDB();
-        Toast.makeText(this,"You registered successfully",Toast.LENGTH_LONG).show();
+        saveToDS();
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
@@ -48,7 +47,7 @@ public class RegistrationActivity extends AppCompatActivity {
         editRegister.commit();
     }
 
-    private void saveToDB() {
+    private void saveToDS() {
         final ContentValues newUser = new ContentValues();
 
         newUser.put("nameUser", ((TextView) findViewById(R.id.NameEdit)).getText().toString());
@@ -64,5 +63,6 @@ public class RegistrationActivity extends AppCompatActivity {
                 return null;
             }
         }.execute();
+        Toast.makeText(this,"You registered successfully",Toast.LENGTH_LONG).show();
     }
 }

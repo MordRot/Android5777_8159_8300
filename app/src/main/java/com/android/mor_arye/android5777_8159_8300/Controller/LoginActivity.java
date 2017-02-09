@@ -39,6 +39,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void SavePrefs() {
+        sharedpreferences = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
         String n = name.getText().toString();
         String p = password.getText().toString();
         SharedPreferences.Editor editor = sharedpreferences.edit();
@@ -47,6 +48,7 @@ public class LoginActivity extends AppCompatActivity {
         editor.commit();
     }
     public void DeletePrefs() {
+        sharedpreferences = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedpreferences.edit();
         editor.remove(NAME_KEY);
         editor.remove(PASSWORD_KEY);
