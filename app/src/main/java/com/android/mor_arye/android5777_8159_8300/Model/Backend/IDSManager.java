@@ -19,7 +19,7 @@ public interface IDSManager {
     public void insertRecreation(ContentValues newRecreation);
     public boolean checkNewInBusiness();
     public boolean checkNewRecreation();
-    public Collection<User> getAllUsers();
+    public Collection<User> getAllUsers() throws Exception;
     public Collection<Business> getAllBusiness() throws Exception;
     public Collection<Recreation> getAllRecreation() throws Exception;
 //    public void checkChanges();

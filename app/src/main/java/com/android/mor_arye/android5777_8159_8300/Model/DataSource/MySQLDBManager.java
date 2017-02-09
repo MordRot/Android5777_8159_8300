@@ -94,7 +94,7 @@ public class MySQLDBManager implements IDSManager {
     @Override
     public void insertUser(ContentValues newUser) {
         try {
-            String results = POST(WEB_URL + "/addUser.php", newUser);
+            String results = POST(WEB_URL + "%E2%80%8F%E2%80%8FaddUser.php", newUser);
             if (results.equals("")) {
                 throw new Exception("An error occurred on the server's side");
             }
@@ -110,7 +110,7 @@ public class MySQLDBManager implements IDSManager {
     @Override
     public void insertBusiness(ContentValues newBusiness) {
         try {
-            String results = POST(WEB_URL + "/addBusiness.php", newBusiness);
+            String results = POST(WEB_URL + "%E2%80%8F%E2%80%8FaddBusiness.php", newBusiness);
             if (results.equals("")) {
                 throw new Exception("An error occurred on the server's side");
             }
@@ -126,7 +126,7 @@ public class MySQLDBManager implements IDSManager {
     @Override
     public void insertRecreation(ContentValues newRecreation) {
         try {
-            String results = POST(WEB_URL + "/addRecreation.php", newRecreation);
+            String results = POST(WEB_URL + "addRecreation.php", newRecreation);
             if (results.equals("")) {
                 throw new Exception("An error occurred on the server's side");
             }
@@ -141,24 +141,46 @@ public class MySQLDBManager implements IDSManager {
 
     @Override
     public boolean checkNewInBusiness() {
+        if (businessesUpdates)
+        {
+            businessesUpdates = false;
+            return true;
+        }
+
         return false;
     }
 
     @Override
     public boolean checkNewRecreation() {
+        if (recreationsUpdates)
+        {
+            recreationsUpdates = false;
+            return true;
+        }
         return false;
     }
 
     @Override
-    public Collection<User> getAllUsers() {
-        return null;
+    public Collection<User> getAllUsers() throws Exception{
+        List<User> usersList = new ArrayList<>();
+        JSONArray array = new JSONObject(GET(WEB_URL + "%E2%80%8F%E2%80%8F%E2%80%8F%E2%80%8FgetUser.php")).getJSONArray("User");
+        for (int i = 0; i < array.length(); i++) {
+            final JSONObject userJson = array.getJSONObject(i);
+
+            usersList.add(new User(
+                    userJson.getString("nameUser"),
+                    userJson.getString("password")
+            ));
+        }
+
+        return usersList;
     }
 
     @Override
     public Collection<Business> getAllBusiness() throws Exception {
 
         List<Business> businessesList = new ArrayList<>();
-        JSONArray array = new JSONObject(GET(WEB_URL + "/getBusiness.php")).getJSONArray("Businesses");
+        JSONArray array = new JSONObject(GET(WEB_URL + "%E2%80%8F%E2%80%8FgetBusiness.php")).getJSONArray("Businesses");
         for (int i = 0; i < array.length(); i++) {
             final JSONObject businessJson = array.getJSONObject(i);
 
@@ -178,7 +200,7 @@ public class MySQLDBManager implements IDSManager {
     @Override
     public Collection<Recreation> getAllRecreation() throws Exception {
         List<Recreation> RecreationsList = new ArrayList<>();
-        JSONArray array = new JSONObject(GET(WEB_URL + "/getRecreation.php")).getJSONArray("Recreations");
+        JSONArray array = new JSONObject(GET(WEB_URL + "getRecreation.php")).getJSONArray("Recreations");
         for (int i = 0; i < array.length(); i++) {
             final JSONObject recreationsJson = array.getJSONObject(i);
 

@@ -6,6 +6,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import com.android.mor_arye.android5777_8159_8300.Model.DataSource.ListDsManager;
+import com.android.mor_arye.android5777_8159_8300.Model.DataSource.MySQLDBManager;
 
 /**
  * Created by mor on 26 נובמבר 2016.
@@ -19,7 +20,8 @@ public class ManagerFactory {
     public static IDSManager getDS(){
         //Log.d(CustomContentProvider.CP_TAG, "inside ManagerFactory");
         if (instance == null)
-            instance = new ListDsManager();
+//            instance = new ListDsManager();
+            instance = new MySQLDBManager();
 
         return instance;
     }
