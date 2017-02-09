@@ -29,7 +29,7 @@ public class RegistrationActivity extends AppCompatActivity {
 
     public void onRegister(View view) {
         saveToShPref();
-        saveToDS();
+        saveToDB();
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
@@ -47,7 +47,7 @@ public class RegistrationActivity extends AppCompatActivity {
         editRegister.commit();
     }
 
-    private void saveToDS() {
+    private void saveToDB() {
         final ContentValues newUser = new ContentValues();
 
         newUser.put("nameUser", ((TextView) findViewById(R.id.NameEdit)).getText().toString());
