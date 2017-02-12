@@ -15,6 +15,10 @@ public class Business {
     private String emailAddress;
     private String websiteLink;
 
+    public String toString() {
+        return nameBusiness;
+    }
+
     public Business(int idBusiness,
                     String nameBusiness,
                     Address addressBusiness,

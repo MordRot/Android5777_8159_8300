@@ -25,9 +25,11 @@ import com.android.mor_arye.android5777_8159_8300.Model.Backend.CustomContentPro
 import com.android.mor_arye.android5777_8159_8300.Model.Entities.TypeOfRecreation;
 import com.android.mor_arye.android5777_8159_8300.R;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.GregorianCalendar;
 import java.util.Locale;
 
 public class AddRecreationActivity extends AppCompatActivity {
@@ -52,9 +54,11 @@ public class AddRecreationActivity extends AppCompatActivity {
                 etDate = (EditText)getActivity().findViewById(R.id.etDateOfBeginning);
             else
                 etDate = (EditText)getActivity().findViewById(R.id.etDateOfEnding);
-            String date = new String(Integer.toString(day) +
+            /*String date = new String(Integer.toString(day) +
                     '/' + Integer.toString(month + 1) + '/' + Integer.toString(year));
-            etDate.setText(date);
+            etDate.setText(date);*/
+            GregorianCalendar gc = new GregorianCalendar(year, month, day);
+            etDate.setText(format(gc));
         }
     }
 
@@ -73,14 +77,18 @@ public class AddRecreationActivity extends AppCompatActivity {
     public void onAddRecreation(View view) {
 
         final ContentValues newRecreation = new ContentValues();
-
             try {
+                String dateB = (((EditText) findViewById(R.id.etDateOfBeginning)).getText()).toString();
+                String dateE = (((EditText) findViewById(R.id.etDateOfEnding)).getText()).toString();
+                String price = (((EditText) findViewById(R.id.etPrice)).getText()).toString();
+                if (dateB.equals("") || dateE.equals("") || price.equals(""))
+                    throw new IllegalArgumentException("You must fill all fields");
                 newRecreation.put("typeOfRecreation", (recreations.getSelectedItem()).toString().toUpperCase());
                 newRecreation.put("nameOfCountry", (citizenship.getSelectedItem()).toString());
-                newRecreation.put("dateOfBeginning", (((EditText) findViewById(R.id.etDateOfEnding)).getText()).toString());
-                newRecreation.put("dateOfEnding", (((EditText) findViewById(R.id.etDateOfEnding)).getText()).toString());
-                newRecreation.put("price", (((EditText) findViewById(R.id.etPrice)).getText()).toString());
-                newRecreation.put("description",  (((EditText) findViewById(R.id.etDescription)).getText()).toString());
+                newRecreation.put("dateOfBeginning", dateB);
+                newRecreation.put("dateOfEnding", dateE);
+                newRecreation.put("price", price);
+                newRecreation.put("description", (((EditText) findViewById(R.id.etDescription)).getText()).toString());
                 newRecreation.put("idBusiness", ((BusinessIdName) spinnerBus.getSelectedItem()).BusId);
 
                 new AsyncTask<Void, Void, Void>() {
@@ -104,11 +112,15 @@ public class AddRecreationActivity extends AppCompatActivity {
                         });
                 alertDialog.show();
             }
-            catch (Exception ex){
+            catch (IllegalArgumentException e)
+            {
+                Log.d(CustomContentProvider.CP_TAG, e.getMessage());
+                Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+            catch (Exception ex) {
                 Log.d(CustomContentProvider.CP_TAG, ex.getMessage());
                 Toast.makeText(this, "Maybe you don't have any business.\nFirst add one", Toast.LENGTH_SHORT).show();
             }
-
     }
 
     public class BusinessIdName {
@@ -183,5 +195,11 @@ public class AddRecreationActivity extends AppCompatActivity {
     public void showEndingDatePickerDialog(View v) {
         DialogFragment newFragment = new DatePickerFragment();
         newFragment.show(getSupportFragmentManager(), "EndingDatePicker");
+    }
+    public static String format(GregorianCalendar calendar){
+        SimpleDateFormat fmt = new SimpleDateFormat("dd-MMM-yyyy");
+        fmt.setCalendar(calendar);
+        String dateFormatted = fmt.format(calendar.getTime());
+        return dateFormatted;
     }
 }

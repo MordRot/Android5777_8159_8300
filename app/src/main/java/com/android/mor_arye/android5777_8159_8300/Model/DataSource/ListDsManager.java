@@ -11,8 +11,12 @@ import com.android.mor_arye.android5777_8159_8300.Model.Entities.Business;
 import com.android.mor_arye.android5777_8159_8300.Model.Entities.TypeOfRecreation;
 import com.android.mor_arye.android5777_8159_8300.Model.Entities.User;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
@@ -65,21 +69,29 @@ public class ListDsManager implements IDSManager {
     @Override
     public void insertRecreation(ContentValues newRecreation) {
         recreationsUpdates = true;
-        String dateB = newRecreation.getAsString("dateOfBeginning");
-        String dateE = newRecreation.getAsString("dateOfEnding");
-
+        GregorianCalendar calB = new GregorianCalendar();
+        GregorianCalendar calE = new GregorianCalendar();
+        try {
+            calB = strToCal(newRecreation.getAsString("dateOfBeginning"));
+            calE = strToCal(newRecreation.getAsString("dateOfEnding"));
+        }
+        catch (Exception e)
+        {
+            Log.d("Date error", e.getMessage());
+        }
         recreations.add(new Recreation(
                 TypeOfRecreation.valueOf(newRecreation.getAsString("typeOfRecreation")),
                 newRecreation.getAsString("nameOfCountry"),
-                new GregorianCalendar(
-                        new Integer(dateB.substring(6,10)),
-                        new Integer(dateB.substring(3,5)),
-                        new Integer(dateB.substring(0,2))),
-                new GregorianCalendar(
-                        new Integer(dateE.substring(6,10)),
-                        new Integer(dateE.substring(3,5)),
-                        new Integer(dateE.substring(0,2))),
-                newRecreation.getAsDouble("price"),
+                    /*new GregorianCalendar(
+                            new Integer(strDateB.substring(6,10)),
+                            new Integer(strDateB.substring(3,5)),
+                            new Integer(strDateB.substring(0,2))),
+                    new GregorianCalendar(
+                            new Integer(strDateE.substring(6,10)),
+                            new Integer(strDateE.substring(3,5)),
+                            new Integer(strDateE.substring(0,2))),*/
+                calB, calE,
+                (newRecreation.getAsDouble("price")),
                 newRecreation.getAsString("description"),
                 newRecreation.getAsInteger("idBusiness")
         ));
@@ -115,16 +127,25 @@ public class ListDsManager implements IDSManager {
     }
 
     @Override
-    public Collection<Business> getAllBusiness() {
+    public Collection<Business> getAllBusinesses() {
         return businesses;
     }
 
     @Override
-    public Collection<Recreation> getAllRecreation() {
+    public Collection<Recreation> getAllRecreations() {
         return recreations;
     }
     // ~~~~~~~~~~~~~~
 
+    public GregorianCalendar strToCal(String strDate) throws Exception
+    {
+        DateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
+        Date date = df.parse(strDate);
+        GregorianCalendar cal = new GregorianCalendar();
+        cal.setTime(date);
+
+        return cal;
+    }
 //    @Override
 //    public void checkChanges() {    }
 }

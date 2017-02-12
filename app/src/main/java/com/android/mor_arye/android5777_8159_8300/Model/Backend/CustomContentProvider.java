@@ -42,7 +42,7 @@ public class CustomContentProvider extends ContentProvider {
             int uriCode = sUriMatcher.match(uri);
             switch (uriCode) {
                 case 1: // businesses
-                    Collection<Business> businesses = DSManager.getAllBusiness();
+                    Collection<Business> businesses = DSManager.getAllBusinesses();
                     MatrixCursor businessMatrix = new MatrixCursor(new String[]{"idBusiness", "nameBusiness", "addressBusiness", "phoneNumber", "emailAddress", "websiteLink"});
                     for (Business bus : businesses) {
                         businessMatrix.addRow(new Object[]{bus.getIdBusiness(), bus.getNameBusiness(), bus.getAddressBusiness(), bus.getPhoneNumber(), bus.getEmailAddress(), bus.getWebsiteLink()});
@@ -50,7 +50,7 @@ public class CustomContentProvider extends ContentProvider {
                     return businessMatrix;
 
                 case 2: // recreations
-                    Collection<Recreation> recreations = DSManager.getAllRecreation();
+                    Collection<Recreation> recreations = DSManager.getAllRecreations();
                     MatrixCursor RecreationMatrix = new MatrixCursor(new String[] {"typeOfRecreation", "nameOfCountry", "dateOfBeginning", "dateOfEnding", "price", "description", "idBusiness"});
                     for ( Recreation rec : recreations) {
                         RecreationMatrix.addRow(new Object[]{rec.getTypeOfRecreation(), rec.getNameOfCountry(), rec.getDateOfBeginning(), rec.getDateOfEnding(), rec.getPrice(), rec.getDescription(), rec.getIdBusiness()});

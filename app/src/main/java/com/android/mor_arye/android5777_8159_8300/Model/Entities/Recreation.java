@@ -1,5 +1,7 @@
 package com.android.mor_arye.android5777_8159_8300.Model.Entities;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.GregorianCalendar;
 
 /**
@@ -15,6 +17,14 @@ public class Recreation {
     String description;
     int idBusiness;
 
+    public String toString() {
+        String name = "Country: " + nameOfCountry;
+        DateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
+        String dateOfBeginning = df.format(getDateOfBeginning().getTime());
+        String dateOfEnding = df.format(getDateOfEnding().getTime());
+
+        return name + '\n' + dateOfBeginning + '\n' + dateOfEnding + '\n' + getTypeOfRecreation();
+    }
 
     public Recreation(TypeOfRecreation typeOfRecreation,
                       String nameOfCountry,
@@ -34,7 +44,7 @@ public class Recreation {
     }
 
 
-    //<editor-fold desc="geters and seters">
+    //<editor-fold desc="getters and setters">
     public TypeOfRecreation getTypeOfRecreation() {
         return typeOfRecreation;
     }

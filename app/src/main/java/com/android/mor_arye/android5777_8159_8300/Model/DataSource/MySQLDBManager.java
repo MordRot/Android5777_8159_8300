@@ -177,7 +177,7 @@ public class MySQLDBManager implements IDSManager {
     }
 
     @Override
-    public Collection<Business> getAllBusiness() throws Exception {
+    public Collection<Business> getAllBusinesses() throws Exception {
 
         List<Business> businessesList = new ArrayList<>();
         JSONArray array = new JSONObject(GET(WEB_URL + "%E2%80%8F%E2%80%8FgetBusiness.php")).getJSONArray("Businesses");
@@ -198,7 +198,7 @@ public class MySQLDBManager implements IDSManager {
     }
 
     @Override
-    public Collection<Recreation> getAllRecreation() throws Exception {
+    public Collection<Recreation> getAllRecreations() throws Exception {
         List<Recreation> RecreationsList = new ArrayList<>();
         JSONArray array = new JSONObject(GET(WEB_URL + "getRecreation.php")).getJSONArray("Recreations");
         for (int i = 0; i < array.length(); i++) {

@@ -37,7 +37,7 @@ public class TestCP_Activity extends AppCompatActivity {
 
                 GregorianCalendar date = null;
                 try {
-                    date = ((ArrayList<Recreation>) ManagerFactory.getDS().getAllRecreation()).get(0).getDateOfEnding();
+                    date = ((ArrayList<Recreation>) ManagerFactory.getDS().getAllRecreations()).get(0).getDateOfEnding();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
