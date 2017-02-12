@@ -49,7 +49,7 @@ public class AddBusinessActivity extends AppCompatActivity {
                 }
             }.execute();
             AlertDialog alertDialog = new AlertDialog.Builder(this).create();
-            alertDialog.setTitle("Alert");
+            alertDialog.setTitle("Message");
             alertDialog.setMessage("Business added successfully!");
             alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
                     new DialogInterface.OnClickListener() {

@@ -22,7 +22,6 @@
         <provider
             android:name=".Model.Backend.CustomContentProvider"
             android:authorities="com.android.mor_arye.android5777_8159_8300"
-            android:readPermission="android.permission.permRead"
             android:exported="true" />
 
         <service

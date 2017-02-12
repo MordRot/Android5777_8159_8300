@@ -8,7 +8,7 @@ import java.util.GregorianCalendar;
 
 public class Recreation {
     TypeOfRecreation typeOfRecreation;
-    String NameOfCountry;
+    String nameOfCountry;
     GregorianCalendar dateOfBeginning;
     GregorianCalendar dateOfEnding;
     double price;
@@ -25,7 +25,7 @@ public class Recreation {
                       int idBusiness) {
 
         this.typeOfRecreation = typeOfRecreation;
-        NameOfCountry = nameOfCountry;
+        this.nameOfCountry = nameOfCountry;
         this.dateOfBeginning = dateOfBeginning;
         this.dateOfEnding = dateOfEnding;
         this.price = price;
@@ -44,11 +44,11 @@ public class Recreation {
     }
 
     public String getNameOfCountry() {
-        return NameOfCountry;
+        return nameOfCountry;
     }
 
     public void setNameOfCountry(String nameOfCountry) {
-        NameOfCountry = nameOfCountry;
+        this.nameOfCountry = nameOfCountry;
     }
 
     public GregorianCalendar getDateOfBeginning() {
