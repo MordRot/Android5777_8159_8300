@@ -10,6 +10,7 @@ import android.widget.Button;
 import com.android.mor_arye.android5777_8159_8300.Model.Backend.IDSManager;
 import com.android.mor_arye.android5777_8159_8300.Model.Backend.ManagerFactory;
 import com.android.mor_arye.android5777_8159_8300.Model.Entities.Business;
+import com.android.mor_arye.android5777_8159_8300.Model.Entities.Recreation;
 import com.android.mor_arye.android5777_8159_8300.Model.Service.CheckForUpdateService;
 import com.android.mor_arye.android5777_8159_8300.R;
 
@@ -46,14 +47,11 @@ public class MainActivity extends AppCompatActivity {
         try
         {
             Log.d("checkDS","Businesses: ");
-            for (Business b: DSManager.getAllBusinesses())
-            {
-                Log.d("checkDS",DSManager.getAllBusinesses().toString() + ", ");
-            }
+            Log.d("checkDS",DSManager.getAllBusinesses().toString() + ", ");
             Log.d("checkDS","\nRecreations: ");
-            for (Business b: DSManager.getAllBusinesses())
+            for (Recreation r: DSManager.getAllRecreations())
             {
-                Log.d("checkDS",DSManager.getAllRecreations().toString() + ", ");
+                Log.d("checkDS",r.toString() + ", ");
             }
         }
         catch (Exception ex)

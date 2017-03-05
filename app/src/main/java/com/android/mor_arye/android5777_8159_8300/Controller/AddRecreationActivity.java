@@ -62,7 +62,7 @@ public class AddRecreationActivity extends AppCompatActivity {
         }
     }
 
-    Spinner recreations, citizenship, spinnerBus;
+    Spinner recreations, citizenship, spinnerBus, typeOfRecreationSpinner;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,6 +70,7 @@ public class AddRecreationActivity extends AppCompatActivity {
         setAllCountriesOnSpinner();
         setAllBusinessesOnSpinner();
         recreations = (Spinner) findViewById(R.id.typeOfRecreation_spinner);
+        typeOfRecreationSpinner = (Spinner) findViewById(R.id.typeOfRecreation_spinner);
         recreations.setAdapter(new ArrayAdapter<TypeOfRecreation>(this, android.R.layout.simple_spinner_item, TypeOfRecreation.values()));
     }
 
@@ -83,7 +84,7 @@ public class AddRecreationActivity extends AppCompatActivity {
                 String price = (((EditText) findViewById(R.id.etPrice)).getText()).toString();
                 if (dateB.equals("") || dateE.equals("") || price.equals(""))
                     throw new IllegalArgumentException("You must fill all fields");
-                newRecreation.put("typeOfRecreation", (recreations.getSelectedItem()).toString().toUpperCase());
+                newRecreation.put("typeOfRecreation", ((TypeOfRecreation) typeOfRecreationSpinner.getSelectedItem()).name());
                 newRecreation.put("nameOfCountry", (citizenship.getSelectedItem()).toString());
                 newRecreation.put("dateOfBeginning", dateB);
                 newRecreation.put("dateOfEnding", dateE);

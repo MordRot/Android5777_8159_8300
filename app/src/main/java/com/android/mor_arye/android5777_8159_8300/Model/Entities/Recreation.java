@@ -23,7 +23,8 @@ public class Recreation {
         String dateOfBeginning = df.format(getDateOfBeginning().getTime());
         String dateOfEnding = df.format(getDateOfEnding().getTime());
 
-        return name + '\n' + dateOfBeginning + '\n' + dateOfEnding + '\n' + getTypeOfRecreation();
+        return name + '\n' + dateOfBeginning + '\n' + dateOfEnding + '\n'
+                + getTypeOfRecreation() + '\n' + description;
     }
 
     public Recreation(TypeOfRecreation typeOfRecreation,

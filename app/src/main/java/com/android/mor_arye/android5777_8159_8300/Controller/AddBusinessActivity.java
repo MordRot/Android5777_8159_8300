@@ -9,10 +9,14 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.mor_arye.android5777_8159_8300.Model.Backend.CustomContentProvider;
 import com.android.mor_arye.android5777_8159_8300.R;
 
 public class AddBusinessActivity extends AppCompatActivity {
@@ -25,13 +29,15 @@ public class AddBusinessActivity extends AppCompatActivity {
 
     public void onAddBusiness(View view) {
         TextView name, address, phone, email, website;
-        name = (TextView) findViewById(R.id.etNameOfBusiness);
-        address = (TextView) findViewById(R.id.etAddressOfBusiness);
-        phone = (TextView) findViewById(R.id.etPhoneNumber);
-        email = (TextView) findViewById(R.id.etEmail);
-        website = (TextView) findViewById(R.id.etWebSite);
+        name = (EditText) findViewById(R.id.etNameOfBusiness);
+        address = (EditText) findViewById(R.id.etAddressOfBusiness);
+        phone = (EditText) findViewById(R.id.etPhoneNumber);
+        email = (EditText) findViewById(R.id.etEmail);
+        website = (EditText) findViewById(R.id.etWebSite);
+        final ContentValues newBusiness = new ContentValues();
         try {
-            final ContentValues newBusiness = new ContentValues();
+            if (name.getText().toString().equals(""))
+                throw new IllegalArgumentException("You must fill at least a name");
             newBusiness.put("nameBusiness", name.getText().toString());
             newBusiness.put("addressBusiness", address.getText().toString());
             newBusiness.put("phoneNumber", phone.getText().toString());
@@ -59,8 +65,10 @@ public class AddBusinessActivity extends AppCompatActivity {
                     });
             alertDialog.show();
         }
-        catch (Exception ex){
-            throw ex;
+        catch (IllegalArgumentException e)
+        {
+            Log.d(CustomContentProvider.CP_TAG, e.getMessage());
+            Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
         }
     }
 

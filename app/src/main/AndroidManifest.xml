@@ -29,7 +29,10 @@
             android:exported="false" />
 
         <activity android:name=".Controller.AddBusinessActivity" />
-        <activity android:name=".Controller.AddRecreationActivity"></activity>
+        <activity
+            android:name=".Controller.AddRecreationActivity"
+            android:windowSoftInputMode="adjustPan">
+        </activity>
     </application>
 
 </manifest>

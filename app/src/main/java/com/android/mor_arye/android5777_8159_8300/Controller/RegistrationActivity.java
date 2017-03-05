@@ -8,10 +8,12 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.mor_arye.android5777_8159_8300.Model.Backend.CustomContentProvider;
 import com.android.mor_arye.android5777_8159_8300.R;
 
 import static com.android.mor_arye.android5777_8159_8300.Controller.LoginActivity.NAME_KEY;
@@ -28,10 +30,23 @@ public class RegistrationActivity extends AppCompatActivity {
     }
 
     public void onRegister(View view) {
-        saveToShPref();
-        saveToDB();
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
+        try
+        {
+            if (((TextView) findViewById(R.id.NameEdit)).getText().toString().equals("") ||
+                    ((TextView) findViewById(R.id.passwordEdit)).getText().toString().equals(""))
+                throw new IllegalArgumentException("You must fill all fields");
+            saveToShPref();
+            saveToDB();
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+        }
+        catch (IllegalArgumentException e)
+        {
+            Log.d(CustomContentProvider.CP_TAG, e.getMessage());
+            Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+
+
     }
 
 
@@ -52,17 +67,22 @@ public class RegistrationActivity extends AppCompatActivity {
 
         newUser.put("nameUser", ((TextView) findViewById(R.id.NameEdit)).getText().toString());
         newUser.put("password", ((TextView) findViewById(R.id.passwordEdit)).getText().toString());
+        try {
+            new AsyncTask<Void, Void, Void>() {
+                @Override
+                protected Void doInBackground(Void... params) {
 
-        new AsyncTask<Void, Void, Void>() {
-            @Override
-            protected Void doInBackground(Void... params) {
+                    getContentResolver().insert(
+                            Uri.parse("content://com.android.mor_arye.android5777_8159_8300/users"), newUser);
 
-                getContentResolver().insert(
-                        Uri.parse("content://com.android.mor_arye.android5777_8159_8300/users"), newUser);
-
-                return null;
-            }
-        }.execute();
-        Toast.makeText(this,"You registered successfully",Toast.LENGTH_LONG).show();
+                    return null;
+                }
+            }.execute();
+            Toast.makeText(this, "You registered successfully", Toast.LENGTH_LONG).show();
+        }
+        catch (Exception ex) {
+            Log.d(CustomContentProvider.CP_TAG, ex.getMessage());
+            Toast.makeText(this, ex.getMessage(), Toast.LENGTH_SHORT).show();
+        }
     }
 }

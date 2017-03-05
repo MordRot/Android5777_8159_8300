@@ -1,6 +1,5 @@
 package com.android.mor_arye.android5777_8159_8300.Controller;
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -34,10 +33,10 @@ public class LoginActivity extends AppCompatActivity {
 
         name = (TextView) findViewById(R.id.etUserName);
         password = (TextView) findViewById(R.id.etPassword);
-        GetPrefs();
+        getPrefs();
     }
 
-    public void SavePrefs() {
+    public void savePrefs() {
         sharedpreferences = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
         String n = name.getText().toString();
         String p = password.getText().toString();
@@ -46,7 +45,7 @@ public class LoginActivity extends AppCompatActivity {
         editor.putString(PASSWORD_KEY, p);
         editor.commit();
     }
-    public void DeletePrefs() {
+    public void deletePrefs() {
         sharedpreferences = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedpreferences.edit();
         editor.remove(NAME_KEY);
@@ -61,7 +60,7 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    public void GetPrefs() {
+    public void getPrefs() {
         sharedpreferences = getSharedPreferences(PREFS_NAME,
                 Context.MODE_PRIVATE);
 
@@ -69,7 +68,7 @@ public class LoginActivity extends AppCompatActivity {
             name.setText(sharedpreferences.getString(NAME_KEY, ""));
         }
         if (sharedpreferences.contains(PASSWORD_KEY)) {
-            password.setText(sharedpreferences.getString(PASSWORD_KEY, ""));
+            password.setText(sharedpreferences.getString(PASSWORD_KEY,""));
         }
     }
     public void onRegister(View view){
@@ -116,7 +115,7 @@ public class LoginActivity extends AppCompatActivity {
                     runOnUiThread(new Runnable() {
                         public void run() {Toast.makeText(LoginActivity.this, "User doesn't exist", Toast.LENGTH_SHORT).show();}});
                     clearTextViews();
-                    DeletePrefs();  // if there was such user, he's already doesn't exist
+                    deletePrefs();  // if there was such user, he's already doesn't exist
                 }
                 else
                 {
@@ -127,11 +126,11 @@ public class LoginActivity extends AppCompatActivity {
                             public void run() {Toast.makeText(LoginActivity.this, "Password is wrong", Toast.LENGTH_SHORT).show();}});
                         Log.d(CustomContentProvider.CP_TAG, "password is wrong");
                         clearTextViews();
-                        DeletePrefs();  // delete old prefs, password has changed
+                        deletePrefs();  // delete old prefs, password has changed
                     }
                     else
                     {
-                        SavePrefs();
+                        savePrefs();
                         Intent myIntent = new Intent(LoginActivity.this, MainActivity.class);
                         startActivity(myIntent);
                     }

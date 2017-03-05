@@ -34,7 +34,7 @@ public class ListDsManager implements IDSManager {
 
     private boolean usersUpdates = false;
     private boolean businessesUpdates = false;
-    private boolean recreationsUpdates = false;
+    private boolean recreationsUpdates =    false;
 
     // constructor
     public ListDsManager() {
