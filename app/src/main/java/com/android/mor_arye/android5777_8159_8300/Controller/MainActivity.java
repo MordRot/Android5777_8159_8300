@@ -18,6 +18,7 @@ import com.android.mor_arye.android5777_8159_8300.R;
 
 public class MainActivity extends AppCompatActivity {
 
+    public static final String DS_TAG = "testDS";
     public static IDSManager DSManager = ManagerFactory.getDS();
 
     @Override
@@ -48,17 +49,16 @@ public class MainActivity extends AppCompatActivity {
     {
         try
         {
-            Log.d("checkDS","Businesses: ");
-            Log.d("checkDS",DSManager.getAllBusinesses().toString() + ", ");
-            Log.d("checkDS","\nRecreations: ");
+            Log.d(DS_TAG,"Businesses: " + DSManager.getAllBusinesses().toString() + '\n');
+            Log.d(DS_TAG,"\nRecreations: ");
             for (Recreation r: DSManager.getAllRecreations())
             {
-                Log.d("checkDS",r.toString() + ", ");
+                Log.d(DS_TAG,r.toString() + ", ");
             }
         }
         catch (Exception ex)
         {
-            Log.d("checkDS", ex.getMessage());
+            Log.d(DS_TAG, ex.getMessage());
         }
     }
 }
