@@ -13,6 +13,8 @@ import com.android.mor_arye.android5777_8159_8300.Model.Entities.Business;
 import com.android.mor_arye.android5777_8159_8300.Model.Entities.Recreation;
 import com.android.mor_arye.android5777_8159_8300.Model.Entities.User;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Collection;
 
 /**
@@ -53,7 +55,10 @@ public class CustomContentProvider extends ContentProvider {
                     Collection<Recreation> recreations = DSManager.getAllRecreations();
                     MatrixCursor RecreationMatrix = new MatrixCursor(new String[] {"typeOfRecreation", "nameOfCountry", "dateOfBeginning", "dateOfEnding", "price", "description", "idBusiness"});
                     for ( Recreation rec : recreations) {
-                        RecreationMatrix.addRow(new Object[]{rec.getTypeOfRecreation().name(), rec.getNameOfCountry(), rec.getDateOfBeginning(), rec.getDateOfEnding(), rec.getPrice(), rec.getDescription(), rec.getIdBusiness()});
+                        RecreationMatrix.addRow(new Object[]{rec.getTypeOfRecreation().name(), rec.getNameOfCountry(),
+                                new SimpleDateFormat("dd-MMM-yyyy").format(rec.getDateOfBeginning().getTime()),
+                                new SimpleDateFormat("dd-MMM-yyyy").format(rec.getDateOfEnding().getTime()),
+                                rec.getPrice(), rec.getDescription(), rec.getIdBusiness()});
                     }
                     return RecreationMatrix;
 

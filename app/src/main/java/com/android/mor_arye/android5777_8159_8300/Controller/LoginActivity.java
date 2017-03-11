@@ -45,6 +45,7 @@ public class LoginActivity extends AppCompatActivity {
         editor.putString(PASSWORD_KEY, p);
         editor.commit();
     }
+
     public void deletePrefs() {
         sharedpreferences = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedpreferences.edit();
@@ -52,6 +53,7 @@ public class LoginActivity extends AppCompatActivity {
         editor.remove(PASSWORD_KEY);
         editor.apply();
     }
+
     public void clearTextViews() {
         name = (TextView) findViewById(R.id.etUserName);
         password = (TextView) findViewById(R.id.etPassword);
@@ -68,19 +70,42 @@ public class LoginActivity extends AppCompatActivity {
             name.setText(sharedpreferences.getString(NAME_KEY, ""));
         }
         if (sharedpreferences.contains(PASSWORD_KEY)) {
-            password.setText(sharedpreferences.getString(PASSWORD_KEY,""));
+            password.setText(sharedpreferences.getString(PASSWORD_KEY, ""));
         }
     }
-    public void onRegister(View view){
+
+    public void onRegister(View view) {
         Intent myIntent = new Intent(LoginActivity.this, RegistrationActivity.class);
         startActivity(myIntent);
     }
+
     public void onLogin(View view) {
+        if (name.getText().toString().equals("") || password.getText().toString().equals("")) {
+            Toast.makeText(LoginActivity.this, "Enter user name and password", Toast.LENGTH_SHORT).show();
+        }
+        else
+        {
+            if (name.getText().toString().equals(sharedpreferences.getString(NAME_KEY, "")) &&
+                    password.getText().toString().equals(sharedpreferences.getString(PASSWORD_KEY, "")))
+            {
+                savePrefs();
+                Intent myIntent = new Intent(LoginActivity.this, MainActivity.class);
+                startActivity(myIntent);
+            }
+            else
+                Toast.makeText(LoginActivity.this, "user doesn't exist", Toast.LENGTH_SHORT).show();
+        }
+    }
+/*
+    //  Old login with user and password verification
+
+    public void onLogin(View view) {
+
         new AsyncTask<String, Void, Cursor>() {
             @Override
             protected void onPreExecute(){
 
-                if (name.getText().toString() == "" || password.getText().toString() == "") {
+                if (name.getText().toString().equals("") || password.getText().toString().equals("")) {
                     runOnUiThread(new Runnable() {
                         public void run() {
                             Toast.makeText(LoginActivity.this, "Enter user name and password", Toast.LENGTH_SHORT).show();
@@ -139,11 +164,11 @@ public class LoginActivity extends AppCompatActivity {
             }
         }.execute(name.getText().toString());
     }
-
+/*
     /*
            temporary
             */
-    // TODO erase
+        // TODO erase
     /*private void init() {
 
 
