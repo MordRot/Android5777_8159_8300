@@ -19,7 +19,6 @@ import com.android.mor_arye.android5777_8159_8300.R;
 public class MainActivity extends AppCompatActivity {
 
     public static final String DS_TAG = "testDS";
-    public static IDSManager DSManager = ManagerFactory.getDS();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,8 +44,10 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public void checkDS(View view)
+    public void testDS(View view)
     {
+        IDSManager DSManager = ManagerFactory.getDS();
+
         try
         {
             Log.d(DS_TAG,"Businesses: " + DSManager.getAllBusinesses().toString() + '\n');

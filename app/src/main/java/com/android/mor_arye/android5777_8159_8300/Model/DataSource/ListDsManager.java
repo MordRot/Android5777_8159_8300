@@ -47,16 +47,15 @@ public class ListDsManager implements IDSManager {
     // ~~~~~~ insert ~~~~~~
     @Override
     public void insertUser(ContentValues newUser) {
-        usersUpdates =true;
         users.add(new User(
                 newUser.getAsString("nameUser"),
                 newUser.getAsString("password")
         ));
+        usersUpdates =true;
     }
 
     @Override
     public void insertBusiness(ContentValues newBusiness) {
-        businessesUpdates=true;
         businesses.add(new Business(
                 newBusiness.getAsString("nameBusiness"),
                 new Address(new Locale(newBusiness.getAsString("addressBusiness"))),
@@ -64,11 +63,11 @@ public class ListDsManager implements IDSManager {
                 newBusiness.getAsString("emailAddress"),
                 newBusiness.getAsString("websiteLink")
         ));
+        businessesUpdates=true;
     }
 
     @Override
     public void insertRecreation(ContentValues newRecreation) {
-        recreationsUpdates = true;
         GregorianCalendar calB = new GregorianCalendar();
         GregorianCalendar calE = new GregorianCalendar();
         try {
@@ -95,6 +94,7 @@ public class ListDsManager implements IDSManager {
                 newRecreation.getAsString("description"),
                 newRecreation.getAsInteger("idBusiness")
         ));
+        recreationsUpdates = true;
     }
     // ~~~~~~~~~~~~~~~~~
 
