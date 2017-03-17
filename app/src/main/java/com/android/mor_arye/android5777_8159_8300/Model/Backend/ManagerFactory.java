@@ -20,8 +20,8 @@ public class ManagerFactory {
     public static IDSManager getDS(){
         //Log.d(CustomContentProvider.CP_TAG, "inside ManagerFactory");
         if (instance == null)
-            instance = new ListDsManager();
-//            instance = new MySQLDBManager();
+//            instance = new ListDsManager();
+            instance = new MySQLDBManager();
 
         return instance;
     }

@@ -2,6 +2,8 @@ package com.android.mor_arye.android5777_8159_8300.Model.DataSource;
 
 import android.content.ContentValues;
 import android.location.Address;
+import android.os.AsyncTask;
+import android.util.Log;
 
 import com.android.mor_arye.android5777_8159_8300.Model.Backend.IDSManager;
 import com.android.mor_arye.android5777_8159_8300.Model.Entities.Business;
@@ -19,17 +21,25 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
+
+import static com.android.mor_arye.android5777_8159_8300.Model.Backend.CustomContentProvider.CP_TAG;
 
 /**
  * Created by mor on 04 פברואר 2017.
  */
 
 public class MySQLDBManager implements IDSManager {
+
+    String BusinessLastDateUpdated ="";
+    String AttractionLastDateUpdated = "";
 
     private boolean usersUpdates = false;
     private boolean businessesUpdates = false;
@@ -94,7 +104,7 @@ public class MySQLDBManager implements IDSManager {
     @Override
     public void insertUser(ContentValues newUser) {
         try {
-            String results = POST(WEB_URL + "%E2%80%8F%E2%80%8FaddUser.php", newUser);
+            String results = POST(WEB_URL + "addUser.php", newUser);
             if (results.equals("")) {
                 throw new Exception("An error occurred on the server's side");
             }
@@ -105,12 +115,38 @@ public class MySQLDBManager implements IDSManager {
         } catch (Exception e) {
             throw new IllegalArgumentException(e.getMessage());
         }
+
+        new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... params) {
+                try {
+                    SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
+                    String currentTime= df.format(new Date());
+
+                    ContentValues dateNow = new ContentValues();
+                    dateNow.put("TimeUsers",currentTime);
+
+                    String results = POST(WEB_URL + "updateTimeUsers.php", dateNow);
+
+                    if (results.equals("")) {
+                        throw new Exception("An error occurred on the server's side");
+                    }
+                    if (results.substring(0, 5).equalsIgnoreCase("error")) {
+                        throw new Exception(results.substring(5));
+                    }
+                }
+                catch (Exception e) {
+                    throw new IllegalArgumentException(e.getMessage());
+                }
+                return null;
+            }
+        }.execute();
     }
 
     @Override
     public void insertBusiness(ContentValues newBusiness) {
         try {
-            String results = POST(WEB_URL + "%E2%80%8F%E2%80%8FaddBusiness.php", newBusiness);
+            String results = POST(WEB_URL + "addBusiness.php", newBusiness);
             if (results.equals("")) {
                 throw new Exception("An error occurred on the server's side");
             }
@@ -121,6 +157,34 @@ public class MySQLDBManager implements IDSManager {
         } catch (Exception e) {
             throw new IllegalArgumentException(e.getMessage());
         }
+
+        new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... params) {
+                try {
+                    SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
+                    String currentTime= df.format(new Date());
+
+                    ContentValues dateNow = new ContentValues();
+                    dateNow.put("TimeBusiness",currentTime);
+
+                    String results = POST(WEB_URL + "updateTimeBusiness.php", dateNow);
+
+                    Log.d(CP_TAG, "B1 update Time in insert Business " + currentTime);
+
+                    if (results.equals("")) {
+                        throw new Exception("An error occurred on the server's side");
+                    }
+                    if (results.substring(0, 5).equalsIgnoreCase("error")) {
+                        throw new Exception(results.substring(5));
+                    }
+                }
+                catch (Exception e) {
+                    throw new IllegalArgumentException(e.getMessage());
+                }
+                return null;
+            }
+        }.execute();
     }
 
     @Override
@@ -137,25 +201,69 @@ public class MySQLDBManager implements IDSManager {
         } catch (Exception e) {
             throw new IllegalArgumentException(e.getMessage());
         }
+
+        new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... params) {
+        try {
+            SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
+            String currentTime= df.format(new Date());
+
+            ContentValues dateNow = new ContentValues();
+            dateNow.put("TimeRecreation",currentTime);
+
+            String results = POST(WEB_URL + "updateTimeRecreation.php", dateNow);
+
+            Log.d(CP_TAG, "R1 update Time in insert Recreation " + currentTime);
+
+            if (results.equals("")) {
+                throw new Exception("An error occurred on the server's side");
+            }
+            if (results.substring(0, 5).equalsIgnoreCase("error")) {
+                throw new Exception(results.substring(5));
+            }
+        }
+        catch (Exception e) {
+            throw new IllegalArgumentException(e.getMessage());
+        }
+                return null;
+            }
+        }.execute();
     }
 
     @Override
     public boolean checkNewInBusiness() {
-        if (businessesUpdates)
-        {
-            businessesUpdates = false;
-            return true;
-        }
+        try {
+            JSONArray array = new JSONObject(GET(WEB_URL + "getChangesTime.php")).getJSONArray("ChangesTime");
+            JSONObject updateTable=array.getJSONObject(0);
+            if (!BusinessLastDateUpdated.equals(updateTable.getString("business")))
+            {
+                                                    Log.d(CP_TAG,"B2 " + BusinessLastDateUpdated + " ! " + updateTable.getString("business"));
+                BusinessLastDateUpdated = updateTable.getString("business");
+                return true;
+            }
+            return false;
 
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return false;
     }
 
     @Override
     public boolean checkNewRecreation() {
-        if (recreationsUpdates)
-        {
-            recreationsUpdates = false;
-            return true;
+        try {
+            JSONArray array = new JSONObject(GET(WEB_URL + "getChangesTime.php")).getJSONArray("ChangesTime");
+            JSONObject updateTable=array.getJSONObject(0);
+            if (!AttractionLastDateUpdated.equals(updateTable.getString("recreation")))
+            {                                           Log.d(CP_TAG, "R2 " + AttractionLastDateUpdated + " ! " + updateTable.getString("recreation"));
+                AttractionLastDateUpdated = updateTable.getString("recreation");
+                return true;
+            }
+            return false;
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return false;
     }
@@ -163,7 +271,7 @@ public class MySQLDBManager implements IDSManager {
     @Override
     public Collection<User> getAllUsers() throws Exception{
         List<User> usersList = new ArrayList<>();
-        JSONArray array = new JSONObject(GET(WEB_URL + "%E2%80%8F%E2%80%8F%E2%80%8F%E2%80%8FgetUser.php")).getJSONArray("User");
+        JSONArray array = new JSONObject(GET(WEB_URL + "getUser.php")).getJSONArray("User");
         for (int i = 0; i < array.length(); i++) {
             final JSONObject userJson = array.getJSONObject(i);
 
@@ -180,7 +288,7 @@ public class MySQLDBManager implements IDSManager {
     public Collection<Business> getAllBusinesses() throws Exception {
 
         List<Business> businessesList = new ArrayList<>();
-        JSONArray array = new JSONObject(GET(WEB_URL + "%E2%80%8F%E2%80%8FgetBusiness.php")).getJSONArray("Businesses");
+        JSONArray array = new JSONObject(GET(WEB_URL + "getBusiness.php")).getJSONArray("Businesses");
         for (int i = 0; i < array.length(); i++) {
             final JSONObject businessJson = array.getJSONObject(i);
 

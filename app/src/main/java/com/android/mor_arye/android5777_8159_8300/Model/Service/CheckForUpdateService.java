@@ -37,13 +37,13 @@ public class CheckForUpdateService extends IntentService {
 
                     sendBroadcast(businessUpdateIntent);
                     Toast.makeText(this, "sent update broadcast", Toast.LENGTH_SHORT).show();
-                    Log.d(CP_TAG, "sent update broadcast business");
+                    Log.d(CP_TAG, "B3 sent broadcast business");
                 }
 
                 if (DSManager.checkNewRecreation()) {
                     sendBroadcast(recreationUpdateIntent);
                     Toast.makeText(this, "sent update broadcast", Toast.LENGTH_SHORT).show();
-                    Log.d(CP_TAG, "sent update broadcast recreation");
+                    Log.d(CP_TAG, "R3 sent broadcast recreation");
                 }
 
             } catch (InterruptedException e) {
