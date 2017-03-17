@@ -42,7 +42,19 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(myIntent);
             }
         });
+        final Button button = (Button) findViewById(R.id.testDS);
+        button.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                try {
+                    testDS(v);
+                }
+                catch (Exception e){
+                    Log.d(DS_TAG, e.getMessage());
+                }
+            }
+        });
     }
+
 
     public void testDS(View view)
     {

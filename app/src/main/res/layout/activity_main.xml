@@ -15,9 +15,8 @@
         android:text = "Add new recreation"/>
 
     <Button
+        android:id = "@+id/testDS"
         android:text="Check data source"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="testDS"
-        android:id="@+id/button" />
+        android:layout_height="wrap_content"/>
 </LinearLayout>
