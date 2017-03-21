@@ -42,7 +42,7 @@ public class RegistrationActivity extends AppCompatActivity {
         }
         catch (IllegalArgumentException e)
         {
-            Log.d(CustomContentProvider.CP_TAG, e.getMessage());
+            Log.d(CustomContentProvider.CP_TAG, "in onRegister in RegistrationActivity " +  e.getMessage());
             Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
         }
 
@@ -81,8 +81,8 @@ public class RegistrationActivity extends AppCompatActivity {
             Toast.makeText(this, "You registered successfully", Toast.LENGTH_LONG).show();
         }
         catch (Exception ex) {
-            Log.d(CustomContentProvider.CP_TAG, ex.getMessage());
-            Toast.makeText(this, ex.getMessage(), Toast.LENGTH_SHORT).show();
+            Log.d(CustomContentProvider.CP_TAG, "in saveToDB in RegistrationActivity " +  ex.getMessage());
+//            Toast.makeText(this, ex.getMessage(), Toast.LENGTH_SHORT).show();
         }
     }
 }

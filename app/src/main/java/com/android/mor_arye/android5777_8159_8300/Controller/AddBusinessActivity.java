@@ -67,7 +67,7 @@ public class AddBusinessActivity extends AppCompatActivity {
         }
         catch (IllegalArgumentException e)
         {
-            Log.d(CustomContentProvider.CP_TAG, e.getMessage());
+            Log.d(CustomContentProvider.CP_TAG, "in onAddBusiness in AddBusinessActivity " + e.getMessage());
             Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
         }
     }

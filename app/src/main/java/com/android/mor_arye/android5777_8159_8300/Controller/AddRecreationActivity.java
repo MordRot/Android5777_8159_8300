@@ -117,11 +117,11 @@ public class AddRecreationActivity extends AppCompatActivity {
         }
         catch (IllegalArgumentException e)
         {
-            Log.d(CustomContentProvider.CP_TAG, e.getMessage());
+            Log.d(CustomContentProvider.CP_TAG, "in onAddRecreation in AddRecreationActivity " + e.getMessage());
             Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
         }
         catch (Exception ex) {
-            Log.d(CustomContentProvider.CP_TAG, ex.getMessage());
+            Log.d(CustomContentProvider.CP_TAG, "in onAddRecreation in AddRecreationActivity " + ex.getMessage());
             Toast.makeText(this, "Maybe you don't have any business.\nFirst add one", Toast.LENGTH_SHORT).show();
         }
     }
@@ -175,7 +175,7 @@ public class AddRecreationActivity extends AppCompatActivity {
             }.execute();
         }
         catch (Exception e){
-            Log.d(DS_TAG, e.getMessage());
+            Log.d(DS_TAG, "in setAllBusinessesOnSpinner in AddRecreationActivity " + e.getMessage());
         }
 
     }
@@ -199,7 +199,7 @@ public class AddRecreationActivity extends AppCompatActivity {
             citizenship.setAdapter(countriesAdapter);
         }
         catch (Exception e){
-            Log.d(DS_TAG, e.getMessage());
+            Log.d(DS_TAG, "in setAllCountriesOnSpinner in AddRecreationActivity " + e.getMessage());
         }
 
     }
@@ -209,7 +209,7 @@ public class AddRecreationActivity extends AppCompatActivity {
             newFragment.show(getSupportFragmentManager(), "BeginningDatePicker");
         }
         catch (Exception e){
-            Log.d(DS_TAG, e.getMessage());
+            Log.d(DS_TAG, "in showBeginningDatePickerDialog in AddRecreationActivity " + e.getMessage());
         }
 
     }
@@ -219,7 +219,7 @@ public class AddRecreationActivity extends AppCompatActivity {
             newFragment.show(getSupportFragmentManager(), "EndingDatePicker");
         }
         catch (Exception e){
-            Log.d(DS_TAG, e.getMessage());
+            Log.d(DS_TAG, "in showEndingDatePickerDialog in AddRecreationActivity " +  e.getMessage());
         }
 
     }
@@ -231,7 +231,7 @@ public class AddRecreationActivity extends AppCompatActivity {
             return dateFormatted;
         }
         catch (Exception e){
-            Log.d(DS_TAG, e.getMessage());
+            Log.d(DS_TAG, "in format in AddRecreationActivity " + e.getMessage());
         }
         return "";
     }

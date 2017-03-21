@@ -325,8 +325,9 @@ public class MySQLDBManager implements IDSManager {
             return businessesList;
         } catch (Exception e) {
             Log.d(CP_TAG, "inside getAllBusinesses " + e.getMessage());
+            throw e;
         }
-        return  new ArrayList<>();
+//        return  new ArrayList<>();
     }
 
     @Override
@@ -362,8 +363,9 @@ public class MySQLDBManager implements IDSManager {
             return RecreationsList;
         } catch (Exception e) {
             Log.d(CP_TAG, "inside getAllRecreations " + e.getMessage());
+            throw e;
         }
-        return new ArrayList<>();
+//        return new ArrayList<>();
     }
 }
 

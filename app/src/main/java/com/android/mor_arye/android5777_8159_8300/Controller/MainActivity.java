@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
             });
         }
         catch (Exception e){
-            Log.d(DS_TAG, e.getMessage());
+            Log.d(DS_TAG, "in onCreate in MainActivity " + e.getMessage());
         }
 
         final Button button = (Button) findViewById(R.id.testDS);
@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
                     testDS(v);
                 }
                 catch (Exception e){
-                    Log.d(DS_TAG, e.getMessage());
+                    Log.d(DS_TAG,  "in setOnClickListener in MainActivity " +  e.getMessage());
                 }
             }
         });
@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
         catch (Exception ex)
         {
             Log.d(DS_TAG, ex.getMessage());
-            Log.d(CP_TAG, ex.getMessage());
+            Log.d(CP_TAG, "in testDS in MainActivity " +  ex.getMessage());
         }
     }
 }
