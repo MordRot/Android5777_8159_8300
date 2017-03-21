@@ -10,7 +10,7 @@ public class Business {
     private static int currentID = 1;
     private int idBusiness;
     private String nameBusiness;
-    private Address addressBusiness;
+    private String addressBusiness;
     private String phoneNumber;
     private String emailAddress;
     private String websiteLink;
@@ -21,7 +21,7 @@ public class Business {
 
     public Business(int idBusiness,
                     String nameBusiness,
-                    Address addressBusiness,
+                    String addressBusiness,
                     String phoneNumber,
                     String emailAddress,
                     String websiteLink) {
@@ -35,7 +35,7 @@ public class Business {
     }
 
     public Business(String nameBusiness,
-                    Address addressBusiness,
+                    String addressBusiness,
                     String phoneNumber,
                     String emailAddress,
                     String websiteLink) {
@@ -66,11 +66,11 @@ public class Business {
         this.nameBusiness = nameBusiness;
     }
 
-    public Address getAddressBusiness() {
+    public String getAddressBusiness() {
         return addressBusiness;
     }
 
-    public void setAddressBusiness(Address addressBusiness) {
+    public void setAddressBusiness(String addressBusiness) {
         this.addressBusiness = addressBusiness;
     }
 

@@ -315,7 +315,7 @@ public class MySQLDBManager implements IDSManager {
                 businessesList.add(new Business(
                         businessJson.getInt("idBusiness"),
                         businessJson.getString("nameBusiness"),
-                        new Address(new Locale(businessJson.getString("addressBusiness"))),
+                        businessJson.getString("addressBusiness"),
                         businessJson.getString("phoneNumber"),
                         businessJson.getString("emailAddress"),
                         businessJson.getString("websiteLink")

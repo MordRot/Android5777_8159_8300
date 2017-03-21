@@ -58,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 catch (Exception e){
                     Log.d(DS_TAG,  "in setOnClickListener in MainActivity " +  e.getMessage());
+                    Log.d(CP_TAG,  "in setOnClickListener in MainActivity " +  e.getMessage());
                 }
             }
         });
