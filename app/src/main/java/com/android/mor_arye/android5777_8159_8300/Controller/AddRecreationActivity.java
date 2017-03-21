@@ -32,6 +32,8 @@ import java.util.Collections;
 import java.util.GregorianCalendar;
 import java.util.Locale;
 
+import static com.android.mor_arye.android5777_8159_8300.Controller.MainActivity.DS_TAG;
+
 public class AddRecreationActivity extends AppCompatActivity {
     public static class DatePickerFragment extends DialogFragment
             implements DatePickerDialog.OnDateSetListener {
@@ -78,50 +80,50 @@ public class AddRecreationActivity extends AppCompatActivity {
     public void onAddRecreation(View view) {
 
         final ContentValues newRecreation = new ContentValues();
-            try {
-                String dateB = (((EditText) findViewById(R.id.etDateOfBeginning)).getText()).toString();
-                String dateE = (((EditText) findViewById(R.id.etDateOfEnding)).getText()).toString();
-                String price = (((EditText) findViewById(R.id.etPrice)).getText()).toString();
-                if (dateB.equals("") || dateE.equals("") || price.equals(""))
-                    throw new IllegalArgumentException("You must fill all fields");
-                newRecreation.put("typeOfRecreation", ((TypeOfRecreation) typeOfRecreationSpinner.getSelectedItem()).name());
-                newRecreation.put("nameOfCountry", (citizenship.getSelectedItem()).toString());
-                newRecreation.put("dateOfBeginning", dateB);
-                newRecreation.put("dateOfEnding", dateE);
-                newRecreation.put("price", price);
-                newRecreation.put("description", (((EditText) findViewById(R.id.etDescription)).getText()).toString());
-                newRecreation.put("idBusiness", ((BusinessIdName) spinnerBus.getSelectedItem()).BusId);
+        try {
+            String dateB = (((EditText) findViewById(R.id.etDateOfBeginning)).getText()).toString();
+            String dateE = (((EditText) findViewById(R.id.etDateOfEnding)).getText()).toString();
+            String price = (((EditText) findViewById(R.id.etPrice)).getText()).toString();
+            if (dateB.equals("") || dateE.equals("") || price.equals(""))
+                throw new IllegalArgumentException("You must fill all fields");
+            newRecreation.put("typeOfRecreation", ((TypeOfRecreation) typeOfRecreationSpinner.getSelectedItem()).name());
+            newRecreation.put("nameOfCountry", (citizenship.getSelectedItem()).toString());
+            newRecreation.put("dateOfBeginning", dateB);
+            newRecreation.put("dateOfEnding", dateE);
+            newRecreation.put("price", price);
+            newRecreation.put("description", (((EditText) findViewById(R.id.etDescription)).getText()).toString());
+            newRecreation.put("idBusiness", ((BusinessIdName) spinnerBus.getSelectedItem()).BusId);
 
-                new AsyncTask<Void, Void, Void>() {
-                    @Override
-                    protected Void doInBackground(Void... params) {
+            new AsyncTask<Void, Void, Void>() {
+                @Override
+                protected Void doInBackground(Void... params) {
 
-                        getContentResolver().insert(
-                                Uri.parse("content://com.android.mor_arye.android5777_8159_8300/recreations"), newRecreation);
+                    getContentResolver().insert(
+                            Uri.parse("content://com.android.mor_arye.android5777_8159_8300/recreations"), newRecreation);
 
-                        return null;
-                    }
-                }.execute();
-                AlertDialog alertDialog = new AlertDialog.Builder(this).create();
-                alertDialog.setTitle("Message");
-                alertDialog.setMessage("Recreation added successfully!");
-                alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        });
-                alertDialog.show();
-            }
-            catch (IllegalArgumentException e)
-            {
-                Log.d(CustomContentProvider.CP_TAG, e.getMessage());
-                Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-            catch (Exception ex) {
-                Log.d(CustomContentProvider.CP_TAG, ex.getMessage());
-                Toast.makeText(this, "Maybe you don't have any business.\nFirst add one", Toast.LENGTH_SHORT).show();
-            }
+                    return null;
+                }
+            }.execute();
+            AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+            alertDialog.setTitle("Message");
+            alertDialog.setMessage("Recreation added successfully!");
+            alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+            alertDialog.show();
+        }
+        catch (IllegalArgumentException e)
+        {
+            Log.d(CustomContentProvider.CP_TAG, e.getMessage());
+            Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+        catch (Exception ex) {
+            Log.d(CustomContentProvider.CP_TAG, ex.getMessage());
+            Toast.makeText(this, "Maybe you don't have any business.\nFirst add one", Toast.LENGTH_SHORT).show();
+        }
     }
 
     public class BusinessIdName {
@@ -138,69 +140,99 @@ public class AddRecreationActivity extends AppCompatActivity {
 
     private void setAllBusinessesOnSpinner()
     {
-        new AsyncTask<Void, Void, Cursor>() {
-            @Override
-            protected Cursor doInBackground(Void... params) {
-                Uri uriOfAllBusinesses = Uri.parse("content://com.android.mor_arye.android5777_8159_8300/businesses");
-                Cursor result = getContentResolver().query(uriOfAllBusinesses, null, null, null, null, null);
-                return result;
-            }
-            protected void onPostExecute(Cursor result) {
+        try{
+            new AsyncTask<Void, Void, Cursor>() {
+                @Override
+                protected Cursor doInBackground(Void... params) {
+                    Uri uriOfAllBusinesses = Uri.parse("content://com.android.mor_arye.android5777_8159_8300/businesses");
+                    Cursor result = getContentResolver().query(uriOfAllBusinesses, null, null, null, null, null);
+                    return result;
+                }
+                protected void onPostExecute(Cursor result) {
 
-                final ArrayList<BusinessIdName> busList = new ArrayList<BusinessIdName>();
-                if (result.moveToFirst())
-                {
-                    do
+                    final ArrayList<BusinessIdName> busList = new ArrayList<BusinessIdName>();
+                    if (result.moveToFirst())
                     {
-                        String businessName = result.getString(result.getColumnIndex("nameBusiness"));
-                        int businessId = Integer.parseInt(result.getString(result.getColumnIndex("idBusiness")));
-                        busList.add(new BusinessIdName(businessId, businessName));
+                        do
+                        {
+                            String businessName = result.getString(result.getColumnIndex("nameBusiness"));
+                            int businessId = Integer.parseInt(result.getString(result.getColumnIndex("idBusiness")));
+                            busList.add(new BusinessIdName(businessId, businessName));
+                        }
+                        while(result.moveToNext());
                     }
-                    while(result.moveToNext());
-                }
-                else   {
-                    Toast.makeText(AddRecreationActivity.this, "First add a business", Toast.LENGTH_SHORT).show();
-                    Intent myIntent = new Intent(AddRecreationActivity.this, AddBusinessActivity.class);
-                    startActivity(myIntent);
+                    else   {
+                        Toast.makeText(AddRecreationActivity.this, "First add a business", Toast.LENGTH_SHORT).show();
+                        Intent myIntent = new Intent(AddRecreationActivity.this, AddBusinessActivity.class);
+                        startActivity(myIntent);
 
+                    }
+                    result.close();
+                    spinnerBus = (Spinner) findViewById(R.id.businessList_spinner);
+                    ArrayAdapter<BusinessIdName> adapterBus = new ArrayAdapter<BusinessIdName>(getApplicationContext(), android.R.layout.simple_spinner_item, busList);
+                    spinnerBus.setAdapter(adapterBus);
                 }
-                result.close();
-                spinnerBus = (Spinner) findViewById(R.id.businessList_spinner);
-                ArrayAdapter<BusinessIdName> adapterBus = new ArrayAdapter<BusinessIdName>(getApplicationContext(), android.R.layout.simple_spinner_item, busList);
-                spinnerBus.setAdapter(adapterBus);
-            }
-        }.execute();
+            }.execute();
+        }
+        catch (Exception e){
+            Log.d(DS_TAG, e.getMessage());
+        }
+
     }
 
     private void setAllCountriesOnSpinner()
     {
-        Locale[] locale = Locale.getAvailableLocales();
-        ArrayList<String> countries = new ArrayList<String>();
-        String country;
-        for( Locale loc : locale ){
-            country = loc.getDisplayCountry();
-            if( country.length() > 0 && !countries.contains(country) ){
-                countries.add( country );
+        try{
+            Locale[] locale = Locale.getAvailableLocales();
+            ArrayList<String> countries = new ArrayList<String>();
+            String country;
+            for( Locale loc : locale ){
+                country = loc.getDisplayCountry();
+                if( country.length() > 0 && !countries.contains(country) ){
+                    countries.add( country );
+                }
             }
-        }
-        Collections.sort(countries, String.CASE_INSENSITIVE_ORDER);
+            Collections.sort(countries, String.CASE_INSENSITIVE_ORDER);
 
-        citizenship = (Spinner)findViewById(R.id.countries_spinner);
-        ArrayAdapter<String> countriesAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item, countries);
-        citizenship.setAdapter(countriesAdapter);
+            citizenship = (Spinner)findViewById(R.id.countries_spinner);
+            ArrayAdapter<String> countriesAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item, countries);
+            citizenship.setAdapter(countriesAdapter);
+        }
+        catch (Exception e){
+            Log.d(DS_TAG, e.getMessage());
+        }
+
     }
     public void showBeginningDatePickerDialog(View v) {
-        DialogFragment newFragment = new DatePickerFragment();
-        newFragment.show(getSupportFragmentManager(), "BeginningDatePicker");
+        try{
+            DialogFragment newFragment = new DatePickerFragment();
+            newFragment.show(getSupportFragmentManager(), "BeginningDatePicker");
+        }
+        catch (Exception e){
+            Log.d(DS_TAG, e.getMessage());
+        }
+
     }
     public void showEndingDatePickerDialog(View v) {
-        DialogFragment newFragment = new DatePickerFragment();
-        newFragment.show(getSupportFragmentManager(), "EndingDatePicker");
+        try{
+            DialogFragment newFragment = new DatePickerFragment();
+            newFragment.show(getSupportFragmentManager(), "EndingDatePicker");
+        }
+        catch (Exception e){
+            Log.d(DS_TAG, e.getMessage());
+        }
+
     }
     public static String format(GregorianCalendar calendar){
-        SimpleDateFormat fmt = new SimpleDateFormat("dd-MMM-yyyy");
-        fmt.setCalendar(calendar);
-        String dateFormatted = fmt.format(calendar.getTime());
-        return dateFormatted;
+        try{
+            SimpleDateFormat fmt = new SimpleDateFormat("dd-MMM-yyyy");
+            fmt.setCalendar(calendar);
+            String dateFormatted = fmt.format(calendar.getTime());
+            return dateFormatted;
+        }
+        catch (Exception e){
+            Log.d(DS_TAG, e.getMessage());
+        }
+        return "";
     }
 }

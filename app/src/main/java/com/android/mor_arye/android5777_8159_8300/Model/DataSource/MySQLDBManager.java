@@ -63,6 +63,7 @@ public class MySQLDBManager implements IDSManager {
             // print result
             return response.toString();
         } else {
+            Log.d(CP_TAG, "else in GET " );
             return "";
         }
     }
@@ -97,7 +98,10 @@ public class MySQLDBManager implements IDSManager {
             }
             in.close();
             return response.toString();
-        } else return "";
+        } else {
+            Log.d(CP_TAG, "else in POST " );
+            return "";
+        }
     }
 
 
@@ -113,6 +117,7 @@ public class MySQLDBManager implements IDSManager {
             }
             usersUpdates = true;
         } catch (Exception e) {
+            Log.d(CP_TAG, "inside insertUser " + e.getMessage());
             throw new IllegalArgumentException(e.getMessage());
         }
 
@@ -136,6 +141,7 @@ public class MySQLDBManager implements IDSManager {
                     }
                 }
                 catch (Exception e) {
+                    Log.d(CP_TAG, "inside insertUser " + e.getMessage());
                     throw new IllegalArgumentException(e.getMessage());
                 }
                 return null;
@@ -155,6 +161,7 @@ public class MySQLDBManager implements IDSManager {
             }
             businessesUpdates = true;
         } catch (Exception e) {
+            Log.d(CP_TAG, "inside insertBusiness " + e.getMessage());
             throw new IllegalArgumentException(e.getMessage());
         }
 
@@ -180,6 +187,7 @@ public class MySQLDBManager implements IDSManager {
                     }
                 }
                 catch (Exception e) {
+                    Log.d(CP_TAG, "inside insertBusiness " + e.getMessage());
                     throw new IllegalArgumentException(e.getMessage());
                 }
                 return null;
@@ -199,33 +207,37 @@ public class MySQLDBManager implements IDSManager {
             }
             recreationsUpdates = true;
         } catch (Exception e) {
+            Log.d(CP_TAG, "inside insertRecreation " + e.getMessage());
             throw new IllegalArgumentException(e.getMessage());
         }
 
         new AsyncTask<Void, Void, Void>() {
             @Override
             protected Void doInBackground(Void... params) {
-        try {
-            SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
-            String currentTime= df.format(new Date());
+                try {
+                    SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
+                    String currentTime= df.format(new Date());
 
-            ContentValues dateNow = new ContentValues();
-            dateNow.put("TimeRecreation",currentTime);
+                    ContentValues dateNow = new ContentValues();
+                    dateNow.put("TimeRecreation",currentTime);
 
-            String results = POST(WEB_URL + "updateTimeRecreation.php", dateNow);
+                    String results = POST(WEB_URL + "updateTimeRecreation.php", dateNow);
 
-            Log.d(CP_TAG, "R1 update Time in insert Recreation " + currentTime);
+                    Log.d(CP_TAG, "R1 update Time in insert Recreation " + currentTime);
 
-            if (results.equals("")) {
-                throw new Exception("An error occurred on the server's side");
-            }
-            if (results.substring(0, 5).equalsIgnoreCase("error")) {
-                throw new Exception(results.substring(5));
-            }
-        }
-        catch (Exception e) {
-            throw new IllegalArgumentException(e.getMessage());
-        }
+                    if (results.equals("")) {
+                        Log.d(CP_TAG, "An error occurred on the server's side");
+                        throw new Exception("An error occurred on the server's side");
+                    }
+                    if (results.substring(0, 5).equalsIgnoreCase("error")) {
+                        Log.d(CP_TAG, results.substring(5));
+                        throw new Exception(results.substring(5));
+                    }
+                }
+                catch (Exception e) {
+                    Log.d(CP_TAG, "inside insertRecreation " + e.getMessage());
+                    throw new IllegalArgumentException(e.getMessage());
+                }
                 return null;
             }
         }.execute();
@@ -238,13 +250,14 @@ public class MySQLDBManager implements IDSManager {
             JSONObject updateTable=array.getJSONObject(0);
             if (!BusinessLastDateUpdated.equals(updateTable.getString("business")))
             {
-                                                    Log.d(CP_TAG,"B2 " + BusinessLastDateUpdated + " ! " + updateTable.getString("business"));
+                Log.d(CP_TAG,"B2 " + BusinessLastDateUpdated + " ! " + updateTable.getString("business"));
                 BusinessLastDateUpdated = updateTable.getString("business");
                 return true;
             }
             return false;
 
         } catch (Exception e) {
+            Log.d(CP_TAG, "inside checkNewInBusiness " + e.getMessage());
             e.printStackTrace();
         }
         return false;
@@ -263,6 +276,7 @@ public class MySQLDBManager implements IDSManager {
             return false;
 
         } catch (Exception e) {
+            Log.d(CP_TAG, "inside checkNewRecreation " + e.getMessage());
             e.printStackTrace();
         }
         return false;
@@ -270,71 +284,86 @@ public class MySQLDBManager implements IDSManager {
 
     @Override
     public Collection<User> getAllUsers() throws Exception{
-        List<User> usersList = new ArrayList<>();
-        JSONArray array = new JSONObject(GET(WEB_URL + "getUser.php")).getJSONArray("User");
-        for (int i = 0; i < array.length(); i++) {
-            final JSONObject userJson = array.getJSONObject(i);
+        try {
+            List<User> usersList = new ArrayList<>();
+            JSONArray array = new JSONObject(GET(WEB_URL + "getUser.php")).getJSONArray("User");
+            for (int i = 0; i < array.length(); i++) {
+                final JSONObject userJson = array.getJSONObject(i);
 
-            usersList.add(new User(
-                    userJson.getString("nameUser"),
-                    userJson.getString("password")
-            ));
+                usersList.add(new User(
+                        userJson.getString("nameUser"),
+                        userJson.getString("password")
+                ));
+            }
+            return usersList;
+
+        } catch (Exception e) {
+            Log.d(CP_TAG, "inside getAllUsers " + e.getMessage());
+//        e.printStackTrace();
         }
-
-        return usersList;
+        return new ArrayList<User>();
     }
 
     @Override
     public Collection<Business> getAllBusinesses() throws Exception {
+        try{
+            List<Business> businessesList = new ArrayList<>();
+            JSONArray array = new JSONObject(GET(WEB_URL + "getBusiness.php")).getJSONArray("Businesses");
+            for (int i = 0; i < array.length(); i++) {
+                final JSONObject businessJson = array.getJSONObject(i);
 
-        List<Business> businessesList = new ArrayList<>();
-        JSONArray array = new JSONObject(GET(WEB_URL + "getBusiness.php")).getJSONArray("Businesses");
-        for (int i = 0; i < array.length(); i++) {
-            final JSONObject businessJson = array.getJSONObject(i);
+                businessesList.add(new Business(
+                        businessJson.getInt("idBusiness"),
+                        businessJson.getString("nameBusiness"),
+                        new Address(new Locale(businessJson.getString("addressBusiness"))),
+                        businessJson.getString("phoneNumber"),
+                        businessJson.getString("emailAddress"),
+                        businessJson.getString("websiteLink")
+                ));
+            }
 
-            businessesList.add(new Business(
-                    businessJson.getInt("idBusiness"),
-                    businessJson.getString("nameBusiness"),
-                    new Address(new Locale(businessJson.getString("addressBusiness"))),
-                    businessJson.getString("phoneNumber"),
-                    businessJson.getString("emailAddress"),
-                    businessJson.getString("websiteLink")
-            ));
+            return businessesList;
+        } catch (Exception e) {
+            Log.d(CP_TAG, "inside getAllBusinesses " + e.getMessage());
         }
-
-        return businessesList;
+        return  new ArrayList<>();
     }
 
     @Override
     public Collection<Recreation> getAllRecreations() throws Exception {
-        List<Recreation> RecreationsList = new ArrayList<>();
-        JSONArray array = new JSONObject(GET(WEB_URL + "getRecreation.php")).getJSONArray("Recreations");
-        for (int i = 0; i < array.length(); i++) {
-            final JSONObject recreationsJson = array.getJSONObject(i);
+        try {
+            List<Recreation> RecreationsList = new ArrayList<>();
+            JSONArray array = new JSONObject(GET(WEB_URL + "getRecreation.php")).getJSONArray("Recreations");
+            for (int i = 0; i < array.length(); i++) {
+                final JSONObject recreationsJson = array.getJSONObject(i);
 
-            String dateB = recreationsJson.getString("dateOfBeginning");
-            String dateE = recreationsJson.getString("dateOfEnding");
+                String dateB = recreationsJson.getString("dateOfBeginning");
+                String dateE = recreationsJson.getString("dateOfEnding");
 
-            RecreationsList.add(new Recreation(
-                    TypeOfRecreation.valueOf(recreationsJson.getString("typeOfRecreation")),
-                    recreationsJson.getString("nameOfCountry"),
+                RecreationsList.add(new Recreation(
+                        TypeOfRecreation.valueOf(recreationsJson.getString("typeOfRecreation")),
+                        recreationsJson.getString("nameOfCountry"),
 
-                    new GregorianCalendar(
-                            new Integer(dateB.substring(6, 10)),
-                            new Integer(dateB.substring(3, 5)),
-                            new Integer(dateB.substring(0, 2))),
-                    new GregorianCalendar(
-                            new Integer(dateE.substring(6, 10)),
-                            new Integer(dateE.substring(3, 5)),
-                            new Integer(dateE.substring(0, 2))),
+                        new GregorianCalendar(
+                                new Integer(dateB.substring(6, 10)),
+                                new Integer(dateB.substring(3, 5)),
+                                new Integer(dateB.substring(0, 2))),
+                        new GregorianCalendar(
+                                new Integer(dateE.substring(6, 10)),
+                                new Integer(dateE.substring(3, 5)),
+                                new Integer(dateE.substring(0, 2))),
 
 
-                    recreationsJson.getDouble("price"),
-                    recreationsJson.getString("description"),
-                    recreationsJson.getInt("idBusiness")
-            ));
+                        recreationsJson.getDouble("price"),
+                        recreationsJson.getString("description"),
+                        recreationsJson.getInt("idBusiness")
+                ));
+            }
+            return RecreationsList;
+        } catch (Exception e) {
+            Log.d(CP_TAG, "inside getAllRecreations " + e.getMessage());
         }
-        return RecreationsList;
+        return new ArrayList<>();
     }
 }
 

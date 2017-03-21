@@ -16,32 +16,40 @@ import com.android.mor_arye.android5777_8159_8300.Model.Entities.Recreation;
 import com.android.mor_arye.android5777_8159_8300.Model.Service.CheckForUpdateService;
 import com.android.mor_arye.android5777_8159_8300.R;
 
+import static com.android.mor_arye.android5777_8159_8300.Model.Backend.CustomContentProvider.CP_TAG;
+
 public class MainActivity extends AppCompatActivity {
 
     public static final String DS_TAG = "testDS";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        Intent checkForUpdates = new Intent(this, CheckForUpdateService.class);
-        startService(checkForUpdates);
+        try {
+            super.onCreate(savedInstanceState);
+            setContentView(R.layout.activity_main);
+            Intent checkForUpdates = new Intent(this, CheckForUpdateService.class);
+            startService(checkForUpdates);
 
-        final Button addBusiness = (Button) findViewById(R.id.addNewBusiness);
-        addBusiness.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Intent myIntent = new Intent(MainActivity.this, AddBusinessActivity.class);
-                startActivity(myIntent);
-            }
-        });
+            final Button addBusiness = (Button) findViewById(R.id.addNewBusiness);
+            addBusiness.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    Intent myIntent = new Intent(MainActivity.this, AddBusinessActivity.class);
+                    startActivity(myIntent);
+                }
+            });
 
-        final Button addRecreation = (Button) findViewById(R.id.addNewRecreation);
-        addRecreation.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Intent myIntent = new Intent(MainActivity.this, AddRecreationActivity.class);
-                startActivity(myIntent);
-            }
-        });
+            final Button addRecreation = (Button) findViewById(R.id.addNewRecreation);
+            addRecreation.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    Intent myIntent = new Intent(MainActivity.this, AddRecreationActivity.class);
+                    startActivity(myIntent);
+                }
+            });
+        }
+        catch (Exception e){
+            Log.d(DS_TAG, e.getMessage());
+        }
+
         final Button button = (Button) findViewById(R.id.testDS);
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -72,6 +80,7 @@ public class MainActivity extends AppCompatActivity {
         catch (Exception ex)
         {
             Log.d(DS_TAG, ex.getMessage());
+            Log.d(CP_TAG, ex.getMessage());
         }
     }
 }
