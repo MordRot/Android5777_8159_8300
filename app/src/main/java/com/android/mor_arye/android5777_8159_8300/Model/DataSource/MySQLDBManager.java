@@ -250,7 +250,7 @@ public class MySQLDBManager implements IDSManager {
             JSONObject updateTable=array.getJSONObject(0);
             if (!BusinessLastDateUpdated.equals(updateTable.getString("business")))
             {
-                Log.d(CP_TAG,"B2 " + BusinessLastDateUpdated + " ! " + updateTable.getString("business"));
+                Log.d(CP_TAG,"B2 " + BusinessLastDateUpdated + " != " + updateTable.getString("business"));
                 BusinessLastDateUpdated = updateTable.getString("business");
                 return true;
             }
@@ -269,7 +269,7 @@ public class MySQLDBManager implements IDSManager {
             JSONArray array = new JSONObject(GET(WEB_URL + "getChangesTime.php")).getJSONArray("ChangesTime");
             JSONObject updateTable=array.getJSONObject(0);
             if (!AttractionLastDateUpdated.equals(updateTable.getString("recreation")))
-            {                                           Log.d(CP_TAG, "R2 " + AttractionLastDateUpdated + " ! " + updateTable.getString("recreation"));
+            {                                           Log.d(CP_TAG, "R2 " + AttractionLastDateUpdated + " != " + updateTable.getString("recreation"));
                 AttractionLastDateUpdated = updateTable.getString("recreation");
                 return true;
             }
@@ -338,13 +338,38 @@ public class MySQLDBManager implements IDSManager {
             for (int i = 0; i < array.length(); i++) {
                 final JSONObject recreationsJson = array.getJSONObject(i);
 
-                String dateB = recreationsJson.getString("dateOfBeginning");
-                String dateE = recreationsJson.getString("dateOfEnding");
+                //~~ TypeOfRecreation:
+                TypeOfRecreation tor;
+                try {
+                    tor = TypeOfRecreation.valueOf(recreationsJson.getString("typeOfRecreation"));
+                }
+                catch (Exception e){
+                    tor = TypeOfRecreation.TRAVEL;
+                    Log.d(CP_TAG, "inside getAllRecreations, the TypeOfRecreation didn't work: " + e.getMessage());
+                }
+                // ~~
+
+                //~~ date:
+                GregorianCalendar calB;
+                GregorianCalendar calE;
+                try {
+//                String dateE = recreationsJson.getString("dateOfEnding");
+//                String dateB = recreationsJson.getString("dateOfBeginning");
+
+                    calB = strToCal(recreationsJson.getString("dateOfBeginning"));
+                    calE = strToCal(recreationsJson.getString("dateOfEnding"));
+                }
+                catch (Exception e){
+                    Log.d(CP_TAG, "inside getAllRecreations, the date didn't work: " + e.getMessage());
+                    calB = new GregorianCalendar(Locale.getDefault());
+                    calE = new GregorianCalendar(Locale.getDefault());
+                }
+                //~~
 
                 RecreationsList.add(new Recreation(
-                        TypeOfRecreation.valueOf(recreationsJson.getString("typeOfRecreation")),
+                        tor,
                         recreationsJson.getString("nameOfCountry"),
-
+/*
                         new GregorianCalendar(
                                 new Integer(dateB.substring(6, 10)),
                                 new Integer(dateB.substring(3, 5)),
@@ -353,8 +378,9 @@ public class MySQLDBManager implements IDSManager {
                                 new Integer(dateE.substring(6, 10)),
                                 new Integer(dateE.substring(3, 5)),
                                 new Integer(dateE.substring(0, 2))),
-
-
+*/
+                        calB,
+                        calE,
                         recreationsJson.getDouble("price"),
                         recreationsJson.getString("description"),
                         recreationsJson.getInt("idBusiness")
@@ -365,7 +391,25 @@ public class MySQLDBManager implements IDSManager {
             Log.d(CP_TAG, "inside getAllRecreations " + e.getMessage());
             throw e;
         }
-//        return new ArrayList<>();
+
     }
+
+    public GregorianCalendar strToCal(String strDate)
+    {
+        Date date;
+        DateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
+        try{
+            date = df.parse(strDate);
+        }
+        catch (Exception e){
+            Log.d(CP_TAG, "in strToCal in MySQLDBManager " + e.getMessage());
+            date = new Date();
+        }
+        GregorianCalendar cal = new GregorianCalendar();
+        cal.setTime(date);
+
+        return cal;
+    }
+
 }
 

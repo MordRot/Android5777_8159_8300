@@ -31,7 +31,7 @@ public class CheckForUpdateService extends IntentService {
 
         while (true) {
             try {
-                Thread.sleep(10000);
+                Thread.sleep(5000); //TODO change to 10000?
 
                 if (DSManager.checkNewInBusiness()) {
 
