@@ -18,7 +18,6 @@ public class ManagerFactory {
     private static IDSManager instance = null;
 
     public static IDSManager getDS(){
-        //Log.d(CustomContentProvider.CP_TAG, "inside ManagerFactory");
         if (instance == null)
 //            instance = new ListDsManager();
             instance = new MySQLDBManager();

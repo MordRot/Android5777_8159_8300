@@ -37,6 +37,15 @@ public class CustomContentProvider extends ContentProvider {
     @Override
     public boolean onCreate() { return false; }
 
+    /**
+     * get from the DB and return
+     * @param uri
+     * @param projection
+     * @param selection
+     * @param selectionArgs
+     * @param sortOrder
+     * @return
+     */
     @Nullable
     @Override
     public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
@@ -74,8 +83,10 @@ public class CustomContentProvider extends ContentProvider {
             }
         }
         catch (Exception ex) {
-            Log.d(CP_TAG, ex.getMessage());
-            return null;
+            Log.d(CP_TAG, "in query in CustomContentProvider: " + ex.getMessage());
+            throw new IllegalArgumentException(ex.getMessage());
+//            MatrixCursor emptyMatrix = new MatrixCursor(new String[]{""});
+//            return emptyMatrix;
         }
     }
 
@@ -85,30 +96,36 @@ public class CustomContentProvider extends ContentProvider {
         return null;
     }
 
+    /**
+     * insert to the DB
+     * @param uri
+     * @param values
+     * @return
+     */
     @Nullable
     @Override
     public Uri insert(Uri uri, ContentValues values) {
-       try {
+        try {
 
-           int uriCode = sUriMatcher.match(uri);
-           switch (uriCode) {
-               case 1:
-                   DSManager.insertBusiness(values);
-                   return null;
-               case 2:
-                   DSManager.insertRecreation(values);
-                   return null;
-               case 3:
-                   DSManager.insertUser(values);
-                   return null;
-               default:
-                   throw new IllegalArgumentException("invalid query, no such path.");
-           }
-       }
-       catch (Exception ex) {
-           Log.d(CP_TAG, ex.getMessage());
-           return null;
-       }
+            int uriCode = sUriMatcher.match(uri);
+            switch (uriCode) {
+                case 1:
+                    DSManager.insertBusiness(values);
+                    return null;
+                case 2:
+                    DSManager.insertRecreation(values);
+                    return null;
+                case 3:
+                    DSManager.insertUser(values);
+                    return null;
+                default:
+                    throw new IllegalArgumentException("invalid query, no such path.");
+            }
+        }
+        catch (Exception ex) {
+            Log.d(CP_TAG, "in insert in CustomContentProvider: " + ex.getMessage());
+            return null;
+        }
     }
 
     @Override

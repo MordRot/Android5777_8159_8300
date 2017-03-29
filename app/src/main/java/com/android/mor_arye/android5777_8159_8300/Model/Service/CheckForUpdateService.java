@@ -24,6 +24,11 @@ public class CheckForUpdateService extends IntentService {
         Log.d(CP_TAG, "service starting");
         return super.onStartCommand(intent,flags,startId);
     }
+
+    /**
+     * check every few seconds if there was updates and send broadcast
+     * @param checkForUpdatesIntent
+     */
     @Override
     protected void onHandleIntent(Intent checkForUpdatesIntent){
         Intent businessUpdateIntent = new Intent("com.android.mor_arye.android5777_8159_8300.newUpdates").putExtra("table",'b');
@@ -31,7 +36,7 @@ public class CheckForUpdateService extends IntentService {
 
         while (true) {
             try {
-                Thread.sleep(5000); //TODO change to 10000?
+                Thread.sleep(20000); //TODO change to 10000?
 
                 if (DSManager.checkNewInBusiness()) {
 
@@ -48,6 +53,7 @@ public class CheckForUpdateService extends IntentService {
 
             } catch (InterruptedException e) {
                 Log.d(SERVICE_TAG, "ERROR in Service");
+                Log.d(CP_TAG, "ERROR in Service");
                 Thread.currentThread().interrupt();
             }
         }

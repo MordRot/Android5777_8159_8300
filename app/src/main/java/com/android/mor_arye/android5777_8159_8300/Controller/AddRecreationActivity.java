@@ -8,6 +8,7 @@ import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.database.MatrixCursor;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -33,23 +34,45 @@ import java.util.GregorianCalendar;
 import java.util.Locale;
 
 import static com.android.mor_arye.android5777_8159_8300.Controller.MainActivity.DS_TAG;
+import static com.android.mor_arye.android5777_8159_8300.Model.Backend.CustomContentProvider.CP_TAG;
 
 public class AddRecreationActivity extends AppCompatActivity {
+    /**
+     * for Date Picker Fragment dialog
+     */
     public static class DatePickerFragment extends DialogFragment
             implements DatePickerDialog.OnDateSetListener {
 
+        /**
+         * create the dialog
+         * @param savedInstanceState
+         * @return
+         */
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
             // Use the current date as the default date in the picker
-            final Calendar c = Calendar.getInstance();
-            int year = c.get(Calendar.YEAR);
-            int month = c.get(Calendar.MONTH);
-            int day = c.get(Calendar.DAY_OF_MONTH);
+            try {
+                final Calendar c = Calendar.getInstance();
+                int year = c.get(Calendar.YEAR);
+                int month = c.get(Calendar.MONTH);
+                int day = c.get(Calendar.DAY_OF_MONTH);
 
-            // Create a new instance of DatePickerDialog and return it
-            return new DatePickerDialog(getActivity(), this, year, month, day);
+                // Create a new instance of DatePickerDialog and return it
+                return new DatePickerDialog(getActivity(), this, year, month, day);
+            }
+            catch (Exception e){
+                Log.d(CP_TAG, "in onCreateDialog in AddRecreationActivity " + e.getMessage());
+            }
+            return null;
         }
 
+        /**
+         * choose a date
+         * @param view
+         * @param year
+         * @param month
+         * @param day
+         */
         public void onDateSet(DatePicker view, int year, int month, int day) {
             EditText etDate;
             if (this.getTag().equals("BeginningDatePicker"))
@@ -67,16 +90,24 @@ public class AddRecreationActivity extends AppCompatActivity {
     Spinner recreations, citizenship, spinnerBus, typeOfRecreationSpinner;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_recreation);
-        setAllCountriesOnSpinner();
-        setAllBusinessesOnSpinner();
-        recreations = (Spinner) findViewById(R.id.typeOfRecreation_spinner);
-        typeOfRecreationSpinner = (Spinner) findViewById(R.id.typeOfRecreation_spinner);
-        recreations.setAdapter(new ArrayAdapter<TypeOfRecreation>(this, android.R.layout.simple_spinner_item, TypeOfRecreation.values()));
+        try{
+            super.onCreate(savedInstanceState);
+            setContentView(R.layout.activity_add_recreation);
+            setAllCountriesOnSpinner();
+            setAllBusinessesOnSpinner();
+            recreations = (Spinner) findViewById(R.id.typeOfRecreation_spinner);
+            typeOfRecreationSpinner = (Spinner) findViewById(R.id.typeOfRecreation_spinner);
+            recreations.setAdapter(new ArrayAdapter<TypeOfRecreation>(this, android.R.layout.simple_spinner_item, TypeOfRecreation.values()));
+        }
+        catch (Exception e){
+            Log.d(CP_TAG, "in onCreate in AddRecreationActivity " + e.getMessage());
+        }
     }
 
-
+    /**
+     * on pressing the add new recreation button
+     * @param view
+     */
     public void onAddRecreation(View view) {
 
         final ContentValues newRecreation = new ContentValues();
@@ -126,6 +157,9 @@ public class AddRecreationActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * new entity for business - just name and id
+     */
     public class BusinessIdName {
         int BusId;
         String busName;
@@ -138,48 +172,80 @@ public class AddRecreationActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * set the spinner for the list of business
+     */
     private void setAllBusinessesOnSpinner()
     {
         try{
             new AsyncTask<Void, Void, Cursor>() {
                 @Override
                 protected Cursor doInBackground(Void... params) {
+                    try{
                     Uri uriOfAllBusinesses = Uri.parse("content://com.android.mor_arye.android5777_8159_8300/businesses");
                     Cursor result = getContentResolver().query(uriOfAllBusinesses, null, null, null, null, null);
                     return result;
+                    }
+                    catch (Exception e){
+                        // There is a connection problem.
+                        //Toast.makeText(AddRecreationActivity.this, "You don't have internet", Toast.LENGTH_SHORT).show(); //TODO to show toast in AsyncTask
+                        Log.d(CP_TAG, "in doInBackground in setAllBusinessesOnSpinner in AddRecreationActivity, You probably don't have internet: " + e.getMessage());
+                        MatrixCursor emptyMatrix = new MatrixCursor(new String[]{"connectionProblem"});
+                        emptyMatrix.addRow(new Object[]{"You don't have internet"});
+                        return emptyMatrix;
+
+                    }
                 }
                 protected void onPostExecute(Cursor result) {
+                    try{ //check if there is a connection problem.
+                        result.moveToFirst();
+                        String connectionProblem = result.getString(result.getColumnIndex("connectionProblem"));
+                        result.close();
+                        Toast.makeText(AddRecreationActivity.this, connectionProblem, Toast.LENGTH_SHORT).show();
+                        Intent myIntent = new Intent(AddRecreationActivity.this, MainActivity.class);
+                        startActivity(myIntent);
+                    }
+                    catch (Exception e){} // There isn't a problem
 
                     final ArrayList<BusinessIdName> busList = new ArrayList<BusinessIdName>();
-                    if (result.moveToFirst())
-                    {
-                        do
+                    try{
+                        if (result.moveToFirst())
                         {
-                            String businessName = result.getString(result.getColumnIndex("nameBusiness"));
-                            int businessId = Integer.parseInt(result.getString(result.getColumnIndex("idBusiness")));
-                            busList.add(new BusinessIdName(businessId, businessName));
+                            do
+                            {
+                                String businessName = result.getString(result.getColumnIndex("nameBusiness"));
+                                int businessId = Integer.parseInt(result.getString(result.getColumnIndex("idBusiness")));
+                                busList.add(new BusinessIdName(businessId, businessName));
+                            }
+                            while(result.moveToNext());
                         }
-                        while(result.moveToNext());
-                    }
-                    else   {
-                        Toast.makeText(AddRecreationActivity.this, "First add a business", Toast.LENGTH_SHORT).show();
-                        Intent myIntent = new Intent(AddRecreationActivity.this, AddBusinessActivity.class);
-                        startActivity(myIntent);
+                        else   {
+                            Toast.makeText(AddRecreationActivity.this, "First add a business", Toast.LENGTH_SHORT).show();
+                            Intent myIntent = new Intent(AddRecreationActivity.this, AddBusinessActivity.class);
+                            startActivity(myIntent);
 
+                        }
+                        result.close();
                     }
-                    result.close();
+                    catch (Exception e){
+                        Log.d(CP_TAG, "in onPostExecute in setAllBusinessesOnSpinner in AddRecreationActivity " + e.getMessage());
+                    }
                     spinnerBus = (Spinner) findViewById(R.id.businessList_spinner);
                     ArrayAdapter<BusinessIdName> adapterBus = new ArrayAdapter<BusinessIdName>(getApplicationContext(), android.R.layout.simple_spinner_item, busList);
                     spinnerBus.setAdapter(adapterBus);
+
                 }
             }.execute();
         }
         catch (Exception e){
-            Log.d(DS_TAG, "in setAllBusinessesOnSpinner in AddRecreationActivity " + e.getMessage());
+            Log.d(CP_TAG, "in setAllBusinessesOnSpinner in AddRecreationActivity " + e.getMessage());
         }
 
     }
 
+    /**
+     * set the spinner for the list of countries
+     */
     private void setAllCountriesOnSpinner()
     {
         try{
@@ -199,30 +265,46 @@ public class AddRecreationActivity extends AppCompatActivity {
             citizenship.setAdapter(countriesAdapter);
         }
         catch (Exception e){
-            Log.d(DS_TAG, "in setAllCountriesOnSpinner in AddRecreationActivity " + e.getMessage());
+            Log.d(CP_TAG, "in setAllCountriesOnSpinner in AddRecreationActivity " + e.getMessage());
         }
 
     }
+
+    /**
+     * date dialog for the beginning of the recreation
+     * @param v
+     */
     public void showBeginningDatePickerDialog(View v) {
         try{
             DialogFragment newFragment = new DatePickerFragment();
             newFragment.show(getSupportFragmentManager(), "BeginningDatePicker");
         }
         catch (Exception e){
-            Log.d(DS_TAG, "in showBeginningDatePickerDialog in AddRecreationActivity " + e.getMessage());
+            Log.d(CP_TAG, "in showBeginningDatePickerDialog in AddRecreationActivity " + e.getMessage());
         }
 
     }
+
+    /**
+     * date dialog for the ending of the recreation
+     * @param v
+     */
     public void showEndingDatePickerDialog(View v) {
         try{
             DialogFragment newFragment = new DatePickerFragment();
             newFragment.show(getSupportFragmentManager(), "EndingDatePicker");
         }
         catch (Exception e){
-            Log.d(DS_TAG, "in showEndingDatePickerDialog in AddRecreationActivity " +  e.getMessage());
+            Log.d(CP_TAG, "in showEndingDatePickerDialog in AddRecreationActivity " +  e.getMessage());
         }
 
     }
+
+    /**
+     * date format
+     * @param calendar
+     * @return
+     */
     public static String format(GregorianCalendar calendar){
         try{
             SimpleDateFormat fmt = new SimpleDateFormat("dd-MMM-yyyy");
@@ -231,7 +313,7 @@ public class AddRecreationActivity extends AppCompatActivity {
             return dateFormatted;
         }
         catch (Exception e){
-            Log.d(DS_TAG, "in format in AddRecreationActivity " + e.getMessage());
+            Log.d(CP_TAG, "in format in AddRecreationActivity " + e.getMessage());
         }
         return "";
     }

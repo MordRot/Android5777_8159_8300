@@ -20,6 +20,9 @@ import static com.android.mor_arye.android5777_8159_8300.Controller.LoginActivit
 import static com.android.mor_arye.android5777_8159_8300.Controller.LoginActivity.PASSWORD_KEY;
 import static com.android.mor_arye.android5777_8159_8300.Controller.LoginActivity.PREFS_NAME;
 
+/**
+ * Activity to Register a new user
+ */
 public class RegistrationActivity extends AppCompatActivity {
 
 //  SharedPreferences shPrefRegister;
@@ -29,6 +32,10 @@ public class RegistrationActivity extends AppCompatActivity {
         setContentView(R.layout.activity_registration);
     }
 
+    /**
+     * a button to Register
+     * @param view
+     */
     public void onRegister(View view) {
         try
         {
@@ -49,7 +56,9 @@ public class RegistrationActivity extends AppCompatActivity {
 
     }
 
-
+    /**
+     * save the password and name in the shared preferences
+     */
     private void saveToShPref() {
 
         editRegister = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE).edit();
@@ -62,6 +71,9 @@ public class RegistrationActivity extends AppCompatActivity {
         editRegister.commit();
     }
 
+    /**
+     * save the password and name in the DB
+     */
     private void saveToDB() {
         final ContentValues newUser = new ContentValues();
 

@@ -27,6 +27,10 @@ public class AddBusinessActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_business);
     }
 
+    /**
+     * on pressing the add new business button
+     * @param view
+     */
     public void onAddBusiness(View view) {
         TextView name, address, phone, email, website;
         name = (EditText) findViewById(R.id.etNameOfBusiness);

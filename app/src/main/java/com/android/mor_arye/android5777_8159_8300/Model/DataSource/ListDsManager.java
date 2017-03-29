@@ -36,7 +36,9 @@ public class ListDsManager implements IDSManager {
     private boolean businessesUpdates = false;
     private boolean recreationsUpdates =    false;
 
-    // constructor
+    /**
+     * constructor
+     */
     public ListDsManager() {
         users = new ArrayList<>();
         businesses = new ArrayList<>();
@@ -45,6 +47,11 @@ public class ListDsManager implements IDSManager {
 
 
     // ~~~~~~ insert ~~~~~~
+
+    /**
+     * insert user
+     * @param newUser
+     */
     @Override
     public void insertUser(ContentValues newUser) {
         users.add(new User(
@@ -54,6 +61,10 @@ public class ListDsManager implements IDSManager {
         usersUpdates =true;
     }
 
+    /**
+     * insert business
+     * @param newBusiness
+     */
     @Override
     public void insertBusiness(ContentValues newBusiness) {
         businesses.add(new Business(
@@ -66,6 +77,10 @@ public class ListDsManager implements IDSManager {
         businessesUpdates=true;
     }
 
+    /**
+     * insert Recreation
+     * @param newRecreation
+     */
     @Override
     public void insertRecreation(ContentValues newRecreation) {
         GregorianCalendar calB = new GregorianCalendar();
@@ -98,6 +113,10 @@ public class ListDsManager implements IDSManager {
     }
     // ~~~~~~~~~~~~~~~~~
 
+    /**
+     * check if there is a new business
+     * @return
+     */
     @Override
     public boolean checkNewInBusiness() {
         if (businessesUpdates)
@@ -109,6 +128,10 @@ public class ListDsManager implements IDSManager {
         return false;
     }
 
+    /**
+     * check if there is a new recreation
+     * @return
+     */
     @Override
     public boolean checkNewRecreation() {
         if (recreationsUpdates)
@@ -121,22 +144,41 @@ public class ListDsManager implements IDSManager {
 
 
     // ~~~~~~~ get all collections ~~~~~~~
+
+    /**
+     * get all the users
+     * @return
+     */
     @Override
     public Collection<User> getAllUsers() {
         return users;
     }
 
+    /**
+     * get all the businesses
+     * @return
+     */
     @Override
     public Collection<Business> getAllBusinesses() {
         return businesses;
     }
 
+    /**
+     * get all the recreations
+     * @return
+     */
     @Override
     public Collection<Recreation> getAllRecreations() {
         return recreations;
     }
     // ~~~~~~~~~~~~~~
 
+    /**
+     * convert string to calendar
+     * @param strDate
+     * @return
+     * @throws Exception
+     */
     public GregorianCalendar strToCal(String strDate) throws Exception
     {
         DateFormat df = new SimpleDateFormat("dd-MMM-yyyy");

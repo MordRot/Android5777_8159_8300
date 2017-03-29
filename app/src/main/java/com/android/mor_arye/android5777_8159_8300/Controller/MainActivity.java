@@ -41,13 +41,19 @@ public class MainActivity extends AppCompatActivity {
             final Button addRecreation = (Button) findViewById(R.id.addNewRecreation);
             addRecreation.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    Intent myIntent = new Intent(MainActivity.this, AddRecreationActivity.class);
-                    startActivity(myIntent);
+                    try {
+                        Intent myIntent = new Intent(MainActivity.this, AddRecreationActivity.class);
+                        startActivity(myIntent);
+                    }
+                        catch (Exception e){
+                            Log.d(CP_TAG, "in Button addRecreation in MainActivity " + e.getMessage());
+                        }
                 }
             });
         }
         catch (Exception e){
             Log.d(DS_TAG, "in onCreate in MainActivity " + e.getMessage());
+            Log.d(CP_TAG, "in onCreate in MainActivity " + e.getMessage());
         }
 
         final Button button = (Button) findViewById(R.id.testDS);
@@ -64,7 +70,10 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-
+    /**
+     * check the data source
+     * @param view
+     */
     public void testDS(View view)
     {
         IDSManager DSManager = ManagerFactory.getDS();

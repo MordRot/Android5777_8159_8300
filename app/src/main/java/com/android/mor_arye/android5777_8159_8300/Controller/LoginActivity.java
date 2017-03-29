@@ -29,13 +29,14 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        //init(); // TODO erase - temporary
-
         name = (TextView) findViewById(R.id.etUserName);
         password = (TextView) findViewById(R.id.etPassword);
         getPrefs();
     }
 
+    /**
+     * save the password and name in the shared preferences
+     */
     public void savePrefs() {
         sharedpreferences = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
         String n = name.getText().toString();
@@ -46,6 +47,9 @@ public class LoginActivity extends AppCompatActivity {
         editor.commit();
     }
 
+    /**
+     * delete the password and name from the shared preferences
+     */
     public void deletePrefs() {
         sharedpreferences = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedpreferences.edit();
@@ -54,6 +58,9 @@ public class LoginActivity extends AppCompatActivity {
         editor.apply();
     }
 
+    /**
+     * erase the text
+     */
     public void clearTextViews() {
         name = (TextView) findViewById(R.id.etUserName);
         password = (TextView) findViewById(R.id.etPassword);
@@ -62,6 +69,9 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * get the password and name from the shared preferences
+     */
     public void getPrefs() {
         sharedpreferences = getSharedPreferences(PREFS_NAME,
                 Context.MODE_PRIVATE);
@@ -74,11 +84,19 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * to register new user button
+     * @param view
+     */
     public void onRegister(View view) {
         Intent myIntent = new Intent(LoginActivity.this, RegistrationActivity.class);
         startActivity(myIntent);
     }
 
+    /**
+     * a log in button
+     * @param view
+     */
     public void onLogin(View view) {
         if (name.getText().toString().equals("") || password.getText().toString().equals("")) {
             Toast.makeText(LoginActivity.this, "Enter user name and password", Toast.LENGTH_SHORT).show();
@@ -168,7 +186,6 @@ public class LoginActivity extends AppCompatActivity {
     /*
            temporary
             */
-        // TODO erase
     /*private void init() {
 
 

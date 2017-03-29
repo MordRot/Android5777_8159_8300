@@ -1,10 +1,14 @@
 package com.android.mor_arye.android5777_8159_8300.Model.DataSource;
 
 import android.content.ContentValues;
+import android.content.Intent;
 import android.location.Address;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.Toast;
 
+import com.android.mor_arye.android5777_8159_8300.Controller.AddRecreationActivity;
+import com.android.mor_arye.android5777_8159_8300.Controller.MainActivity;
 import com.android.mor_arye.android5777_8159_8300.Model.Backend.IDSManager;
 import com.android.mor_arye.android5777_8159_8300.Model.Entities.Business;
 import com.android.mor_arye.android5777_8159_8300.Model.Entities.Recreation;
@@ -48,9 +52,27 @@ public class MySQLDBManager implements IDSManager {
 
     private final String WEB_URL = "http://rothkoff.vlab.jct.ac.il/";
 
+/*    public MySQLDBManager() {
+        try{ //check if there is a connection problem.
+            URL obj = new URL(WEB_URL  + "getBusiness.php");
+            HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+            if (con.getResponseCode() != HttpURLConnection.HTTP_OK)
+            Toast.makeText(MySQLDBManager.this, "", Toast.LENGTH_SHORT).show(); //TODO how to do a toast?
+        }
+        catch (Exception e){} // There isn't a problem
+    }
+*/
+
+    /**
+     * get from the DB
+     * @param url
+     * @return
+     * @throws Exception
+     */
     private static String GET(String url) throws Exception {
+        try{
         URL obj = new URL(url);
-        HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+         HttpURLConnection con = (HttpURLConnection) obj.openConnection();
         con.setRequestMethod("GET");
         if (con.getResponseCode() == HttpURLConnection.HTTP_OK) { // success
             BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
@@ -66,9 +88,21 @@ public class MySQLDBManager implements IDSManager {
             Log.d(CP_TAG, "else in GET " );
             return "";
         }
+        } catch (Exception e) {
+            Log.d(CP_TAG, "inside GET in MySQLDBManager: " + e.getMessage());
+            return "";
+        }
     }
 
+    /**
+     * post - insert to the DB
+     * @param url
+     * @param params
+     * @return
+     * @throws IOException
+     */
     private static String POST(String url, ContentValues params) throws IOException {
+        try{
         StringBuilder postData = new StringBuilder();
         for (String param : params.keySet()) {
             if (postData.length() != 0) postData.append('&');
@@ -102,9 +136,16 @@ public class MySQLDBManager implements IDSManager {
             Log.d(CP_TAG, "else in POST " );
             return "";
         }
+        } catch (Exception e) {
+            Log.d(CP_TAG, "inside GET in MySQLDBManager: " + e.getMessage());
+            return "";
+        }
     }
 
-
+    /**&
+     * insert user
+     * @param newUser
+     */
     @Override
     public void insertUser(ContentValues newUser) {
         try {
@@ -117,10 +158,12 @@ public class MySQLDBManager implements IDSManager {
             }
             usersUpdates = true;
         } catch (Exception e) {
-            Log.d(CP_TAG, "inside insertUser " + e.getMessage());
+            Log.d(CP_TAG, "inside insertUser in MySQLDBManager: " + e.getMessage());
             throw new IllegalArgumentException(e.getMessage());
         }
-
+/**
+ * update the date of changes
+ */
         new AsyncTask<Void, Void, Void>() {
             @Override
             protected Void doInBackground(Void... params) {
@@ -141,7 +184,7 @@ public class MySQLDBManager implements IDSManager {
                     }
                 }
                 catch (Exception e) {
-                    Log.d(CP_TAG, "inside insertUser " + e.getMessage());
+                    Log.d(CP_TAG, "in insertUser in MySQLDBManager: " + e.getMessage());
                     throw new IllegalArgumentException(e.getMessage());
                 }
                 return null;
@@ -149,6 +192,10 @@ public class MySQLDBManager implements IDSManager {
         }.execute();
     }
 
+    /**
+     * insert business
+     * @param newBusiness
+     */
     @Override
     public void insertBusiness(ContentValues newBusiness) {
         try {
@@ -161,10 +208,13 @@ public class MySQLDBManager implements IDSManager {
             }
             businessesUpdates = true;
         } catch (Exception e) {
-            Log.d(CP_TAG, "inside insertBusiness " + e.getMessage());
+            Log.d(CP_TAG, "inside insertBusiness in MySQLDBManager: " + e.getMessage());
             throw new IllegalArgumentException(e.getMessage());
         }
 
+        /**
+         * update the date of changes
+         */
         new AsyncTask<Void, Void, Void>() {
             @Override
             protected Void doInBackground(Void... params) {
@@ -187,7 +237,7 @@ public class MySQLDBManager implements IDSManager {
                     }
                 }
                 catch (Exception e) {
-                    Log.d(CP_TAG, "inside insertBusiness " + e.getMessage());
+                    Log.d(CP_TAG, "inside insertBusiness in MySQLDBManager:" + e.getMessage());
                     throw new IllegalArgumentException(e.getMessage());
                 }
                 return null;
@@ -195,6 +245,10 @@ public class MySQLDBManager implements IDSManager {
         }.execute();
     }
 
+    /**
+     * insert Recreation
+     * @param newRecreation
+     */
     @Override
     public void insertRecreation(ContentValues newRecreation) {
         try {
@@ -207,10 +261,13 @@ public class MySQLDBManager implements IDSManager {
             }
             recreationsUpdates = true;
         } catch (Exception e) {
-            Log.d(CP_TAG, "inside insertRecreation " + e.getMessage());
+            Log.d(CP_TAG, "inside insertRecreation in MySQLDBManager: " + e.getMessage());
             throw new IllegalArgumentException(e.getMessage());
         }
 
+        /**
+         * update the date of changes
+         */
         new AsyncTask<Void, Void, Void>() {
             @Override
             protected Void doInBackground(Void... params) {
@@ -235,7 +292,7 @@ public class MySQLDBManager implements IDSManager {
                     }
                 }
                 catch (Exception e) {
-                    Log.d(CP_TAG, "inside insertRecreation " + e.getMessage());
+                    Log.d(CP_TAG, "inside insertRecreation in MySQLDBManager: " + e.getMessage());
                     throw new IllegalArgumentException(e.getMessage());
                 }
                 return null;
@@ -243,6 +300,10 @@ public class MySQLDBManager implements IDSManager {
         }.execute();
     }
 
+    /**
+     * check if there is a new business
+     * @return
+     */
     @Override
     public boolean checkNewInBusiness() {
         try {
@@ -257,12 +318,15 @@ public class MySQLDBManager implements IDSManager {
             return false;
 
         } catch (Exception e) {
-            Log.d(CP_TAG, "inside checkNewInBusiness " + e.getMessage());
-            e.printStackTrace();
+            Log.d(CP_TAG, "inside checkNewInBusiness in MySQLDBManager: " + e.getMessage());
         }
         return false;
     }
 
+    /**
+     * check if there is a new recreation
+     * @return
+     */
     @Override
     public boolean checkNewRecreation() {
         try {
@@ -276,12 +340,18 @@ public class MySQLDBManager implements IDSManager {
             return false;
 
         } catch (Exception e) {
-            Log.d(CP_TAG, "inside checkNewRecreation " + e.getMessage());
-            e.printStackTrace();
+            Log.d(CP_TAG, "inside checkNewRecreation in MySQLDBManager: " + e.getMessage());
         }
         return false;
     }
 
+    // ~~~~~~~ get all collections ~~~~~~~
+
+    /**
+     * get all the users
+     * @return
+     * @throws Exception
+     */
     @Override
     public Collection<User> getAllUsers() throws Exception{
         try {
@@ -298,12 +368,17 @@ public class MySQLDBManager implements IDSManager {
             return usersList;
 
         } catch (Exception e) {
-            Log.d(CP_TAG, "inside getAllUsers " + e.getMessage());
+            Log.d(CP_TAG, "inside getAllUsers in MySQLDBManager: " + e.getMessage());
 //        e.printStackTrace();
         }
-        return new ArrayList<User>();
+        return new ArrayList<>();
     }
 
+    /**
+     * get all the businesses
+     * @return
+     * @throws Exception
+     */
     @Override
     public Collection<Business> getAllBusinesses() throws Exception {
         try{
@@ -324,12 +399,17 @@ public class MySQLDBManager implements IDSManager {
 
             return businessesList;
         } catch (Exception e) {
-            Log.d(CP_TAG, "inside getAllBusinesses " + e.getMessage());
+            Log.d(CP_TAG, "inside getAllBusinesses in MySQLDBManager: " + e.getMessage());
             throw e;
         }
 //        return  new ArrayList<>();
     }
 
+    /**
+     * get all the recreations
+     * @return
+     * @throws Exception
+     */
     @Override
     public Collection<Recreation> getAllRecreations() throws Exception {
         try {
@@ -345,7 +425,7 @@ public class MySQLDBManager implements IDSManager {
                 }
                 catch (Exception e){
                     tor = TypeOfRecreation.TRAVEL;
-                    Log.d(CP_TAG, "inside getAllRecreations, the TypeOfRecreation didn't work: " + e.getMessage());
+                    Log.d(CP_TAG, "in getAllRecreations in MySQLDBManager: , the TypeOfRecreation didn't work: " + e.getMessage());
                 }
                 // ~~
 
@@ -360,7 +440,7 @@ public class MySQLDBManager implements IDSManager {
                     calE = strToCal(recreationsJson.getString("dateOfEnding"));
                 }
                 catch (Exception e){
-                    Log.d(CP_TAG, "inside getAllRecreations, the date didn't work: " + e.getMessage());
+                    Log.d(CP_TAG, "in getAllRecreations in MySQLDBManager: , the date didn't work: " + e.getMessage());
                     calB = new GregorianCalendar(Locale.getDefault());
                     calE = new GregorianCalendar(Locale.getDefault());
                 }
@@ -388,12 +468,17 @@ public class MySQLDBManager implements IDSManager {
             }
             return RecreationsList;
         } catch (Exception e) {
-            Log.d(CP_TAG, "inside getAllRecreations " + e.getMessage());
+            Log.d(CP_TAG, "inside getAllRecreations in MySQLDBManager: " + e.getMessage());
             throw e;
         }
 
     }
 
+    /**
+     * convert string to calendar
+     * @param strDate
+     * @return
+     */
     public GregorianCalendar strToCal(String strDate)
     {
         Date date;
