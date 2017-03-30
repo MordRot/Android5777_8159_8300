@@ -9,7 +9,7 @@ import com.android.mor_arye.android5777_8159_8300.Model.DataSource.ListDsManager
 import com.android.mor_arye.android5777_8159_8300.Model.DataSource.MySQLDBManager;
 
 /**
- * Created by mor on 26 נובמבר 2016.
+ * Created by mor on 26  2016.
  */
 // factory singleton
 

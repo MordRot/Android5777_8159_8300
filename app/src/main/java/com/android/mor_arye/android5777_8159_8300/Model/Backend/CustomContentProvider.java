@@ -18,7 +18,7 @@ import java.text.SimpleDateFormat;
 import java.util.Collection;
 
 /**
- * Created by mor on 30 נובמבר 2016.
+ * Created by mor on 30  2016.
  */
 
 public class CustomContentProvider extends ContentProvider {

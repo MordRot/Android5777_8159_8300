@@ -36,7 +36,7 @@ public class CheckForUpdateService extends IntentService {
 
         while (true) {
             try {
-                Thread.sleep(20000); //TODO change to 10000?
+                Thread.sleep(10000);
 
                 if (DSManager.checkNewInBusiness()) {
 
@@ -62,7 +62,7 @@ public class CheckForUpdateService extends IntentService {
 apparently not needed, no component will bind to the service
     @Override
     public IBinder onBind(Intent intent) {
-        // TODO: Return the communication channel to the service.
+
         throw new UnsupportedOperationException("Not yet implemented");
     }
 */

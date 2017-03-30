@@ -3,7 +3,7 @@ package com.android.mor_arye.android5777_8159_8300.Model.Entities;
 import android.location.Address;
 
 /**
- * Created by mor on 20 נובמבר 2016.
+ * Created by mor on 20 2016.
  */
 
 public class Business {
@@ -42,14 +42,14 @@ public class Business {
 
         this.idBusiness = currentID++;
         this.nameBusiness = nameBusiness;
-        this.addressBusiness = addressBusiness;     // TODO to make it string?
+        this.addressBusiness = addressBusiness;
         this.phoneNumber = phoneNumber;
         this.emailAddress = emailAddress;
         this.websiteLink = websiteLink;
     }
 
     //<editor-fold desc="geters and seters">
-    //TODO get/set idBusiness? integer overflow
+
     public int getIdBusiness() {
         return idBusiness;
     }

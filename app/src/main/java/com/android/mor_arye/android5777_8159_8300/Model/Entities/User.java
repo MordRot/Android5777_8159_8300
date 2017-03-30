@@ -1,7 +1,7 @@
 package com.android.mor_arye.android5777_8159_8300.Model.Entities;
 
 /**
- * Created by mor on 23 נובמבר 2016.
+ * Created by mor on 23  2016.
  */
 
 public class User {

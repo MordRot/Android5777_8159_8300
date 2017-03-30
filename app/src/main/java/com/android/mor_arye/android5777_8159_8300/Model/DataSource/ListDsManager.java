@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.Locale;
 
 /**
- * Created by mor on 26 נובמבר 2016.
+ * Created by mor on 26  2016.
  */
 
 

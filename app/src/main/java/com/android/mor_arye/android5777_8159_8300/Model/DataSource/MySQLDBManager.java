@@ -37,7 +37,7 @@ import java.util.Locale;
 import static com.android.mor_arye.android5777_8159_8300.Model.Backend.CustomContentProvider.CP_TAG;
 
 /**
- * Created by mor on 04 פברואר 2017.
+ * Created by mor on 04  2017.
  */
 
 public class MySQLDBManager implements IDSManager {
@@ -57,7 +57,7 @@ public class MySQLDBManager implements IDSManager {
             URL obj = new URL(WEB_URL  + "getBusiness.php");
             HttpURLConnection con = (HttpURLConnection) obj.openConnection();
             if (con.getResponseCode() != HttpURLConnection.HTTP_OK)
-            Toast.makeText(MySQLDBManager.this, "", Toast.LENGTH_SHORT).show(); //TODO how to do a toast?
+            Toast.makeText(MySQLDBManager.this, "", Toast.LENGTH_SHORT).show(); /
         }
         catch (Exception e){} // There isn't a problem
     }

@@ -188,7 +188,7 @@ public class AddRecreationActivity extends AppCompatActivity {
                     }
                     catch (Exception e){
                         // There is a connection problem.
-                        //Toast.makeText(AddRecreationActivity.this, "You don't have internet", Toast.LENGTH_SHORT).show(); //TODO to show toast in AsyncTask
+                        //Toast.makeText(AddRecreationActivity.this, "You don't have internet", Toast.LENGTH_SHORT).show();
                         Log.d(CP_TAG, "in doInBackground in setAllBusinessesOnSpinner in AddRecreationActivity, You probably don't have internet: " + e.getMessage());
                         MatrixCursor emptyMatrix = new MatrixCursor(new String[]{"connectionProblem"});
                         emptyMatrix.addRow(new Object[]{"You don't have internet"});
